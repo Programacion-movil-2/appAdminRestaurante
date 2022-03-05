@@ -8,13 +8,12 @@ export default class App extends React.Component {
   render(){
     return (
       <View style={styles.container}>
-      <View>
-        <FixedHeader/>
-      </View>
-      <Inputs name="Email" icon="user"/>
-     </View>
+    //   <View>
+    //     <FixedHeader/>
+    //   </View>
+    //   <Inputs name="Email" icon="user"/>
       
-     
+     </View>
       
   
     );
