@@ -13,21 +13,20 @@ class Inputs extends Component {
     render(){
         return(
             <View 
-            style={[styles.InputContainer, {borderColor: this.state.isFocused 
+            style={[styles.container, {borderColor: this.state.isFocused 
             ? '#0779ef':'#eee'}]}>
                 <Input 
                 placeholder={this.props.name}
                 onFocus={this.onFocusChange}
-                inputContainerStyle={styles.InputContainer}
-                inputStyle={style.InputText}
+                inputContainerStyle={styles.inputContainer}
+                inputStyle={styles.inputText}
                 secureTextEntry={this.props.pass}
                 leftIcon={
                     <Icon
                     name={this.props.Icon}
                     size={22}
                     color={this.state.isFocused 
-                        ? '#0779e4':'gray'}
-                    >
+                        ? '#0779e4':'gray'} >
 
                     </Icon>
                 }
@@ -41,9 +40,18 @@ class Inputs extends Component {
 
 const styles = StyleSheet.create({
 
-    styleInput:{
-        borderColor: this.state.isFocused ?
+    container:{
+        width:'90%',
+        height:50,
+        borderRadius:100,
+        marginVertical:10,
+        borderWidth: 3.5
     },
+    inputContainer:{
+        color:'#0779e4',
+        fontWeight:'bold',
+        marginLeft: 5
+    }
 });
 
 export default Inputs;
