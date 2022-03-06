@@ -15,10 +15,22 @@ const Header = ({containerStyle, title}) => {
         >
             {/* Left */}
 
-            {/* Left */}
+            {/* Title */}
+            <View
+                style ={{
+                    flfex:1,
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}
+            >
+                <Text style ={{...FONTS.h3 }}>
+                </Text>   
+            
+            </View>
 
-            {/* Left */}
+            {/* Right */}
 
         </View>
     )
 }
+export default Header;
