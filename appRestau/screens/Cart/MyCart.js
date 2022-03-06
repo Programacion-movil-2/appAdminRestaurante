@@ -11,7 +11,6 @@ import{
     StepperInput
 
 }from "../../componentes";
-//.....______,_____,_______,carpetaIconos,carpetaComida
 import{FONTS, SIZES, COLORS, icons, dummyData} from "../../componentes";
 
 const MyCart = ({ navigation }) => {
