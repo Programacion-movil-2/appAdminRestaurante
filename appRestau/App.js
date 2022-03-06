@@ -4,12 +4,12 @@ import { StyleSheet, Text, View } from 'react-native';
 //import FixedHeader from './elements/fixedHeader';
 //import Inputs from './elements/inputs';
 import productDetail from './screens/Restaurant';
-
+import MyCard from './screens/Tarjeta/MyCard';
 export default class App extends React.Component {
   render() {
     return (
       <View>
-        <productDetail/>
+        <MyCard/>
       </View>
 
 
