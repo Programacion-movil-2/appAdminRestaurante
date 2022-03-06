@@ -1,12 +1,16 @@
 import React from 'react';
 import {
     SafeAreaView,
+    View,
+    Text,
+    StyleSheet,
     TouchableOpacity,
     Image,
     FlatList
 } from 'react-native';
 
 import { icons, images, SIZE, COLORS, FONT } from '../constants'
+
 const MainCategorias = () => {
 
     const initialCurrentLocation = {
@@ -337,6 +341,15 @@ const MainCategorias = () => {
         setSelectedCategory(category)
     }
 
+    function getCategoryNameById(id) {
+        let category = categories.filter(a => a.id == id)
+
+        if (category.length > 0)
+            return category[0].name
+
+        return ""
+    }
+
 
     function renderHeader() {
         return (
@@ -368,7 +381,7 @@ const MainCategorias = () => {
                             borderRadius: SIZE.radius
                         }}
                     >
-                        <Text style={{ ...FONT.h3 }}>Location</Text>
+                        <Text style={{ ...FONT.h3 }}>Restaurante</Text>
                     </View>
                 </View>
                 <TouchableOpacity
@@ -441,10 +454,6 @@ const MainCategorias = () => {
                 </TouchableOpacity>
             )
         }
-
-
-
-
         return (
             <View style={{ padding: SIZE.padding * 2 }}>
                 <Text style={{ ...FONT.h1 }}>Menú</Text>
@@ -463,16 +472,18 @@ const MainCategorias = () => {
     }
 
     function renderRestaurantList() {
-        const renderItem = ({ item }) => {
+        const renderItem = ({ item }) => (
             <TouchableOpacity
                 style={{ marginBottom: SIZE.padding * 2 }}
-            //onPress -> navegate to restaurant screen
-
+                onPress={() => navigation.navigate("Restaurant", {
+                    item,
+                    currentLocation
+                })}
             >
-                {/*Image*/}
+                {/* Image */}
                 <View
                     style={{
-                        marginBottom:SIZE.padding
+                        marginBottom: SIZE.padding
                     }}
                 >
                     <Image
@@ -484,49 +495,86 @@ const MainCategorias = () => {
                             borderRadius: SIZE.radius
                         }}
                     />
+
                     <View
                         style={{
                             position: 'absolute',
                             bottom: 0,
                             height: 50,
-                            width: SIZE.width = 0.3,
+                            width: SIZE.width * 0.3,
                             backgroundColor: COLORS.white,
                             borderTopRightRadius: SIZE.radius,
-                            borderTopLeftRadius: SIZE.radius,
+                            borderBottomLeftRadius: SIZE.radius,
                             alignItems: 'center',
                             justifyContent: 'center',
-                            ...style.shadow
+                            ...Styles.shadow
                         }}
                     >
                         <Text style={{ ...FONT.h4 }}>{item.duration}</Text>
                     </View>
                 </View>
-                {/*Restaurant info*/}
-                <Text style={{ ...FONT.body2 }}>item.name</Text>
+                
+                {/* Restaurant Info */}
+                <Text style={{ ...FONT.body2 }}>{item.name}</Text>
 
                 <View
                     style={{
-                        marginTop:SIZE.padding,
-                        flexDirection:'row'
+                        marginTop: SIZE.padding,
+                        flexDirection: 'row'
                     }}
                 >
-                    {/*Rating*/}
+                    {/* Rating */}
                     <Image
                         source={icons.star}
                         style={{
-                            height:20,
-                            width:20,
-                            tintColor:COLORS.primary,
-                            marginRight:10
+                            height: 20,
+                            width: 20,
+                            tintColor: COLORS.primary,
+                            marginRight: 10
                         }}
                     />
-                    <Text style={{ ...FONT.body}}>{item.rating}</Text>
+                    <Text style={{ ...FONT.body3 }}>{item.rating}</Text>
 
+                    {/*--------------------------------*/}
+                    {/* Categories */}
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            marginLeft: 10
+                        }}
+                    >
+                        {
+                            item.categories.map((categoryId) => {
+                                return (
+                                    <View
+                                        style={{ flexDirection: 'row' }}
+                                        key={categoryId}
+                                    >
+                                        <Text style={{ ...FONT.body3 }}>{getCategoryNameById(categoryId)}</Text>
+                                        <Text style={{ ...FONT.h3, color: COLORS.darkgray }}> . </Text>
+                                    </View>
+                                )
+                            })
+                        }
+
+                        {/* Price */}
+                        {
+                            [1, 2, 3].map((priceRating) => (
+                                <Text
+                                    key={priceRating}
+                                    style={{
+                                        ...FONT.body3,
+                                        color: (priceRating <= item.priceRating) ? COLORS.black : COLORS.darkgray
+                                    }}
+                                >$</Text>
+                            ))
+                        }
+                    </View>
                 </View>
+
+
             </TouchableOpacity>
-        }
-
-
+        )
 
         return (
             <FlatList
@@ -538,11 +586,8 @@ const MainCategorias = () => {
                     paddingBottom: 30
                 }}
             />
-
         )
-
     }
-
     return (
         <SafeAreaView style={Styles.container}>
             {renderHeader()}
