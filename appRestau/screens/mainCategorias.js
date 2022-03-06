@@ -9,12 +9,12 @@ import {
     FlatList
 } from 'react-native';
 
-import { icons, images, SIZE, COLORS, FONT } from '../constants'
+import { icons,images, SIZE, COLORS, FONT } from '../constants'
 const MainCategorias = () => {
 
     function renderHeader() {
         return (
-            <view style={{ flexDirection: 'row', height: 50 }}>
+            <View style={{ flexDirection: 'row', height: 50 }}>
                 <TouchableOpacity
                     style={{
                         width: 50,
@@ -22,7 +22,7 @@ const MainCategorias = () => {
                         justifyContent: 'center'
                     }}
                 >
-                    <image
+                    <Image
                         source={icons.nearby}
                         resizeMode="contain"
                         style={{
@@ -31,8 +31,8 @@ const MainCategorias = () => {
                         }}
                     />
                 </TouchableOpacity>
-                <view style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                    <view
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                    <View
                         style={{
                             width: '70%',
                             height: "100",
@@ -42,9 +42,9 @@ const MainCategorias = () => {
                             borderRadius: SIZE.radius
                         }}
                     >
-                        <Text style={{ ...FONTS.h3 }}>Location</Text>
-                    </view>
-                </view>
+                        <Text style={{ ...FONT.h3 }}>Location</Text>
+                    </View>
+                </View>
                 <TouchableOpacity
                     style={{
                         width: 50,
@@ -61,7 +61,7 @@ const MainCategorias = () => {
                         }}
                     />
                 </TouchableOpacity>
-            </view>
+            </View>
         )           
     }               
                     

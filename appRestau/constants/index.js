@@ -2,7 +2,7 @@
 // import GOOGLE_API_KEY from "./maps"
 // export { icons, images, COLORS, SIZES, FONTS, GOOGLE_API_KEY };
 import constants from "./constants";
-import theme, { COLORS, SIZES, FONTS } from "./theme";
+import theme, { COLORS, SIZES, FONTS,FONT,SIZE } from "./theme";
 import images from "./images";
 import icons from "./icons";
 import dummyData from "./dummyData"
@@ -16,5 +16,7 @@ export {
     images,
     icons,
     dummyData,
+    SIZE,
+    FONT,
 }
 

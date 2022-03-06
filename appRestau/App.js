@@ -1,14 +1,14 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import SinginScreen from './screens/SinginScreen';
-import MyCard from './screens/Tarjeta/MyCard';
+import MainCategorias from './screens/mainCategorias';
+
 
 export default class App extends React.Component {
   render(){
     return (
 
       <SafeAreaView style={styles.root}>
-        <MyCard />
+        <MainCategorias />
       </SafeAreaView>
       
   
