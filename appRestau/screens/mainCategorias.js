@@ -9,12 +9,41 @@ import {
     FlatList
 } from 'react-native';
 
-const mainCategory = () =>{
+import {icons,images,SIZE,COLORS,FONT} from '../constants'
+const MainCategorias = () =>{
+
+    function renderHeader() {
+        return(
+            <view>
+                
+            </view>
+        )
+        
+    }
+
+
     return(
-        <View>
-            <Text>Home</Text>
-        </View>
+        <SafeAreaView style={Styles.container}>
+        {renderHeader()}
+        </SafeAreaView>
     )
 }
+const Styles = StyleSheet.create({
+    container:{
+        flex:1,
+        backgroundColor: COLORS.lightGray4
+    },
+    shadow:{
+        shadowColor: '#000',
+        shadowOffset:{
+            width:0,
+            height:3
+        },
+        shadowOpacity:0.1,
+        shadowRadius:3,
+        elevation:1,
 
-const styles = StyleSheet
+    }
+})
+
+export default MainCategorias;
