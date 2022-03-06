@@ -1,24 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
+//import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import FixedHeader from './elements/fixedHeader';
-import Inputs from './elements/inputs';
+//import FixedHeader from './elements/fixedHeader';
+//import Inputs from './elements/inputs';
+import productDetail from './screens/Restaurant';
 
 export default class App extends React.Component {
-  render(){
+  render() {
     return (
-      <View style={styles.container}>
-    //   <View>
-    //     <FixedHeader/>
-    //   </View>
-    //   <Inputs name="Email" icon="user"/>
-      
-     </View>
-      
-  
+      <View>
+        <productDetail/>
+      </View>
+
+
     );
   }
-  
+
 }
 
 const styles = StyleSheet.create({
