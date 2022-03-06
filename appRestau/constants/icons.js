@@ -75,7 +75,6 @@ export default {
     cross,
     cart,
     menu,
-    search,
     filter,
     down_arrow,
     favourite,

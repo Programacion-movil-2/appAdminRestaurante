@@ -1,5 +1,5 @@
 import Header from "./Header";
-import HorizontalFoodCard from "./HorizontalFoodCart";
+import HorizontalFoodCard from "./HorizontalFoodCard";
 import VerticalFoodCard from "./VerticalFoodCard";
 
 export {
