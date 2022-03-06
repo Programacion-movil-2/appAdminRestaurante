@@ -9,7 +9,7 @@ import {
     FlatList
 } from 'react-native';
 
-import { icons, images, SIZE, COLORS, FONT, FONTS } from '../constants'
+import { icons, images, SIZE, COLORS, FONT } from '../constants'
 const MainCategorias = () => {
 
     const initialCurrentLocation = {
@@ -417,9 +417,9 @@ const MainCategorias = () => {
                             borderRadius: 25,
                             alignItems: "center",
                             justifyContent: "center",
-                            backgroundColor: (selectedCategory?.id == item.id) ? 
-                            COLORS.white : COLORS.lightGray
-               
+                            backgroundColor: (selectedCategory?.id == item.id) ?
+                                COLORS.white : COLORS.lightGray
+
                         }}
                     >
                         <Image
@@ -434,9 +434,9 @@ const MainCategorias = () => {
 
                     <Text
                         style={{
-                            marginTop: SIZES.padding,
+                            marginTop: SIZE.padding,
                             color: (selectedCategory?.id == item.id) ? COLORS.white : COLORS.black,
-                            ...FONTS.body5
+                            ...FONT.body5
                         }}
                     >
                         {item.name}
@@ -465,10 +465,92 @@ const MainCategorias = () => {
         )
     }
 
+    function renderRestaurantList() {
+        const renderItem = ({ item }) => {
+            <TouchableOpacity
+                style={{ marginBottom: SIZE.padding * 2 }}
+            //onPress -> navegate to restaurant screen
+
+            >
+                {/*Image*/}
+                <View
+                    style={{
+                        marginBottom:SIZE.padding
+                    }}
+                >
+                    <Image
+                        source={item.photo}
+                        resizeMode="cover"
+                        style={{
+                            width: "100%",
+                            height: 200,
+                            borderRadius: SIZE.radius
+                        }}
+                    />
+                    <View
+                        style={{
+                            position: 'absolute',
+                            bottom: 0,
+                            height: 50,
+                            width: SIZE.width = 0.3,
+                            backgroundColor: COLORS.white,
+                            borderTopRightRadius: SIZE.radius,
+                            borderTopLeftRadius: SIZE.radius,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            ...style.shadow
+                        }}
+                    >
+                        <Text style={{ ...FONT.h4 }}>{item.duration}</Text>
+                    </View>
+                </View>
+                {/*Restaurant info*/}
+                <Text style={{ ...FONT.body2 }}>item.name</Text>
+
+                <View
+                    style={{
+                        marginTop:SIZE.padding,
+                        flexDirection:'row'
+                    }}
+                >
+                    {/*Rating*/}
+                    <Image
+                        source={icons.star}
+                        style={{
+                            height:20,
+                            width:20,
+                            tintColor:COLORS.primary,
+                            marginRight:10
+                        }}
+                    />
+                    <Text style={{ ...FONT.body}}>{item.rating}</Text>
+
+                </View>
+            </TouchableOpacity>
+        }
+
+
+
+        return (
+            <FlatList
+                data={restaurants}
+                keyExtractor={item => `${item.id}`}
+                renderItem={renderItem}
+                contentContainerStyle={{
+                    paddingHorizontal: SIZE.padding * 2,
+                    paddingBottom: 30
+                }}
+            />
+
+        )
+
+    }
+
     return (
         <SafeAreaView style={Styles.container}>
             {renderHeader()}
             {renderMainGategories()}
+            {renderRestaurantList()}
         </SafeAreaView>
     )
 }
