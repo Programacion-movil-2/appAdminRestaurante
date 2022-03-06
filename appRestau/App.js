@@ -1,19 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import FixedHeader from './elements/fixedHeader';
-import Inputs from './elements/inputs';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import SinginScreen from './screens/SinginScreen';
 
 export default class App extends React.Component {
   render(){
     return (
-      <View style={styles.container}>
-    //   <View>
-    //     <FixedHeader/>
-    //   </View>
-    //   <Inputs name="Email" icon="user"/>
-      
-     </View>
+
+      <SafeAreaView style={styles.root}>
+        <SinginScreen />
+      </SafeAreaView>
       
   
     );
@@ -22,10 +17,19 @@ export default class App extends React.Component {
 }
 
 const styles = StyleSheet.create({
+
+  root:{
+
+    alignContent:'center',
+    padding: 50,
+    backgroundColor: '#F9F8FC',
+    
+  },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#F9F8FC',
     alignItems: 'center',
+    padding: 50,
     //justifyContent: 'center',
   },
 });
