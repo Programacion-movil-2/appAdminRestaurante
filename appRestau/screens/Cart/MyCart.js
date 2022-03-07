@@ -1,133 +1,281 @@
 import React from 'react';
-import{View, Text, StyleSheet}from 'react-native';
+import { SafeAreaView, StyleSheet, View, TouchableOpacity, ScrollView, Image, FlatList } from 'react-native';
+import { withTheme, useTheme, ButtonGroup, Text, Card, Button, Icon } from 'react-native-elements';
+import { icons, images, SIZES, SIZE, COLORS, FONT, FONTS } from '../../constants';
 
-import {SwipeListView} from 'react-native-swipe-list-view';
+const users = [
+    {
+      name: 'Hamburguesa doble, con lechuga',
+      avatar: 'burger-restaurant-2.jpg',
+    },
+    {
+      name: 'thot leader',
+      avatar:
+        'https://images.pexels.com/photos/598745/pexels-photo-598745.jpeg?crop=faces&fit=crop&h=200&w=200&auto=compress&cs=tinysrgb',
+    },
+    {
+      name: 'jsa',
+      avatar: 'https://uifaces.co/our-content/donated/bUkmHPKs.jpg',
+    },
+  ];
 
-import{
-    Header,
-    IconButton,
-    CartQuantityButton,
-    StepperInput
-
-}from "../../components";
-import{FONTS, SIZES, COLORS, icons, dummyData} from "../../components";
-
-const MyCart = ({ navigation }) => {
-
-    const [MyCartList, setMyCartList] = React.useState({id: 1, name: "Fast Food", icon: ""})
-
-    //Funcion del header
-    function renderHeader(){
-        return(
-            <Header
-                //Título de la pantalla
-                title = "MY CART - Mis Productos"
-                containerStyle = {{
-                    height: 50,
-                    marginHorizontal: 24,
-                    marginTop:40
-                }}
-                leftComponent = {
-                    <IconButton
-                        icon = {icons.back}
-                        containerStyle = {{
-                            with: 40,
-                            height: 40,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            borderWidth: 1,
-                            borderRadius: 0,
-                            borderColor: "#0B5345"
-                        }}
-                        iconStyle = {{
-                            width: 20,
-                            height: 20,
-                            tintColor: "#808080"
-                        }}
-                        //Con este boton vamos a regresar a los detalles de la comida y categorias
-                        onPress = {() => navigation.goBack()}
-                    />
-                }
-                rightComponent = {
-                    <CartQuantityButton
-                        quantity = {3}
-                    />
-                }
-            />
-        )
-    }
-
-    function renderCartList(){
-        return(
-            <SwipeListView
-                data = {MyCartList}
-                keyExtractor = {item => `${item.id}`}
-                contentContainerStyle = {{
-                    marginTop: 12,
-                    paddingHorizontal: 24,
-                    paddingBottom: 24 * 2
-                }}
-                disableRightSwipe = {true}
-                rightOpenValue = {-75}
-                renderItem = {(data, rowMap) => (
-                    <View
-                        style = {{
-                            height: 100,
-                            backgroundColor: "#F6F6F7",
-                            //Por medio de esta función creamos la división de los cantiner de los productos
-                            ...styles.cartItemContainer
-                        }}
-                    >
-                        {/* Food Image */}
-                        <View
-                            style = {{
-                                width: 90,
-                                height: 100,
-                                marginLeft: -10
-                            }}
-                        >
-                            <Image
-                                source = {data.item.image}
-                                resizeMode = "contain"
-                                style={{
-                                    width: "100%",
-                                    height: "100%",
-                                    position: 'absolute',
-                                    top: 10
-                                }}
-                            />
-                        </View>
-                    </View>
-                )}
-            />
-        )
-    }
-
-    return(
-        <View
-            style = {{
-                flex:1,
-                backgroundColor: "#fff"
-            }}
+const MyCart = () => {
+  function renderHeader() {
+    return (
+      <View style={{ flexDirection: "row", height: 50 }}>
+        <TouchableOpacity
+          style={{
+            width: 50,
+            paddingLeft: SIZES.padding * 2,
+            justifyContent: "center",
+          }}
         >
-            {/* Header */}
-            {renderHeader()}
-
-            {/* Cart List */}
-            {renderCartList()}
-
-            {/* Footer */}
+          <Image
+            source={icons.nearby}
+            resizeSMode="contain"
+            style={{
+              width: 30,
+              height: 30,
+            }}
+          />
+        </TouchableOpacity>
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          <View
+            style={{
+              width: "70%",
+              height: "100%",
+              backgroundColor: COLORS.lightGray3,
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: SIZES.radius,
+            }}
+          >
+            <Text style={{ ...FONT.h3 }}>Location</Text>
+          </View>
         </View>
-    )
+        <TouchableOpacity
+          style={{
+            width: 50,
+            paddingRight: SIZES.padding * 2,
+            justifyContent: "center",
+          }}
+        >
+          <Image
+            source={icons.basket}
+            resizeMode="contain"
+            style={{
+              width: 30,
+              height: 30,
+            }}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  return(
+    <View style={styles.container}>
+    {renderHeader()}
+        <ScrollView>
+            <View>
+                <Card>
+                    <Card.Title>HAMBURGUESA</Card.Title>
+                    {users.map((u, i) => {
+                    return (
+                        <View key={i} style={styles.user}>
+                        <Image
+                            style={styles.image}
+                            resizeMode="cover"
+                            
+                        />
+                        <Text style={styles.name}>{u.name}</Text>
+                        </View>
+                    );
+                    })}
+                </Card>
+                <Card>
+                    <Card.Title>ALISTAS DE POLLO</Card.Title>
+                    {users.map((u, i) => {
+                    return (
+                        <View key={i} style={styles.user}>
+                        <Image
+                            style={styles.image}
+                            resizeMode="cover"
+                            source={{ uri: u.avatar }}
+                        />
+                        <Text style={styles.name}>{u.name}</Text>
+                        </View>
+                    );
+                    })}
+                </Card>
+                <Card>
+                    <Card.Title>CARNE ASADA</Card.Title>
+                    {users.map((u, i) => {
+                    return (
+                        <View key={i} style={styles.user}>
+                        <Image
+                            style={styles.image}
+                            resizeMode="cover"
+                            source={{ uri: u.avatar }}
+                        />
+                        <Text style={styles.name}>{u.name}</Text>
+                        </View>
+                    );
+                    })}
+                </Card>
+                <Card>
+                    <Card.Title>ALISTAS DE POLLO</Card.Title>
+                    {users.map((u, i) => {
+                    return (
+                        <View key={i} style={styles.user}>
+                        <Image
+                            style={styles.image}
+                            resizeMode="cover"
+                            source={{ uri: u.avatar }}
+                        />
+                        <Text style={styles.name}>{u.name}</Text>
+                        </View>
+                    );
+                    })}
+                </Card>
+                <Card>
+                    <Card.Title>ALISTAS DE POLLO</Card.Title>
+                    {users.map((u, i) => {
+                    return (
+                        <View key={i} style={styles.user}>
+                        <Image
+                            style={styles.image}
+                            resizeMode="cover"
+                            source={{ uri: u.avatar }}
+                        />
+                        <Text style={styles.name}>{u.name}</Text>
+                        </View>
+                    );
+                    })}
+                </Card>
+                <Card>
+                    <Card.Title>ALISTAS DE POLLO</Card.Title>
+                    {users.map((u, i) => {
+                    return (
+                        <View key={i} style={styles.user}>
+                        <Image
+                            style={styles.image}
+                            resizeMode="cover"
+                            source={{ uri: u.avatar }}
+                        />
+                        <Text style={styles.name}>{u.name}</Text>
+                        </View>
+                    );
+                    })}
+                </Card>
+                <Card>
+                    <Card.Title>ALISTAS DE POLLO</Card.Title>
+                    {users.map((u, i) => {
+                    return (
+                        <View key={i} style={styles.user}>
+                        <Image
+                            style={styles.image}
+                            resizeMode="cover"
+                            source={{ uri: u.avatar }}
+                        />
+                        <Text style={styles.name}>{u.name}</Text>
+                        </View>
+                    );
+                    })}
+                </Card>
+                <View style={styles.buttonsContainer}>
+                    <Button
+                        title="Procesar mi orden"
+                        loading={false}
+                        loadingProps={{ size: 'small', color: 'white' }}
+                        buttonStyle={{
+                        backgroundColor: 'rgba(57, 146, 146, 1)',
+
+                        borderRadius: 5,
+                        }}
+                        titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
+                        containerStyle={{
+                        marginHorizontal: 50,
+                        height: 50,
+                        width: 200,
+                        marginVertical: 10,
+                        }}
+                        onPress={() => console.log('aye')}
+                    />
+                </View>
+            </View>
+        </ScrollView>
+    </View>
+);
 }
 
 const styles = StyleSheet.create({
-    cartItemContainer:{
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 12,
-        paddingHorizontal: 12,
-        borderRadius: 12
-    }
-})
-export default MyCart;
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.lightGray4,
+  },
+  view: {
+    margin: 10,
+  },
+  text: {
+    textAlign: "center",
+    padding: 5,
+  },
+  more: {
+    marginVertical: 20,
+  },
+  button: {
+    width: 120,
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+  shadow: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 1,
+  },
+  fonts: {
+    marginBottom: 8,
+  },
+  user: {
+    flexDirection: 'row',
+    marginBottom: 6,
+  },
+  image: {
+    width: 30,
+    height: 30,
+    marginRight: 10,
+  },
+  name: {
+    fontSize: 16,
+    marginTop: 5,
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    marginVertical: 20,
+  },
+
+  largeTitle: { fontSize: SIZE.largeTitle, lineHeight: 55 },
+  h1: { fontSize: SIZE.h1, lineHeight: 36 },
+  h2: { fontSize: SIZE.h2, lineHeight: 30 },
+  h3: { fontSize: SIZE.h3, lineHeight: 22 },
+  h4: { fontSize: SIZE.h4, lineHeight: 22 },
+  body1: { fontSize: SIZE.body1, lineHeight: 36 },
+  body2: { fontSize: SIZE.body2, lineHeight: 30 },
+  body3: { fontSize: SIZE.body3, lineHeight: 22 },
+  body4: { fontSize: SIZE.body4, lineHeight: 22 },
+  body5: { fontSize: SIZE.body5, lineHeight: 22 },
+});
+
+export default MyCart
