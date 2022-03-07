@@ -34,11 +34,16 @@ const styles = StyleSheet.create({
         borderRadius: 5,
 
         paddingHorizontal: 10,
-        marginVertical: 5,
+        marginVertical: 10,
 
     },
 
-    input:{},
+    input:{
+
+        height: 52,
+        fontSize: 16,
+
+    },
 
 })
 
