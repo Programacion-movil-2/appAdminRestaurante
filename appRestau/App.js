@@ -1,17 +1,14 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import metodoPago from './screens/Facturacion/metodoPago';
+import DetalleEfectivo from './screens/Facturacion/DetalleEfectivo';
 
 
 export default class App extends React.Component {
   render(){
     return (
-
-      <SafeAreaView style={styles.root}>
-        <metodoPago/>
+      <SafeAreaView style={styles.container}>
+        <DetalleEfectivo/>
       </SafeAreaView>
-      
-  
     );
   }
   
