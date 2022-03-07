@@ -1,18 +1,46 @@
 import React, {useState} from 'react';
-import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView } from 'react-native';
+import { View, Text, TextInput, Image, StyleSheet, useWindowDimensions, ScrollView, Alert } from 'react-native';
 import Logo from '../../assets/logoportalesw-preview.png';
 import CustomImput from '../../elements/login/customImput';
 import CustomButton from '../../elements/login/customButton';
 import CustomButton2 from '../../elements/login/customButton2';
 
 const SignInScreen = () => {
-    const {userName, setUserName} = useState('');
-    const {password, setPassword} = useState('');
+    const [nombreUsuario, setNombreUsuario] = useState(null);
+    const [contrasena, setContrasena] = useState(null);
     const { height } = useWindowDimensions();
 
-    const onSignInPressed = () =>{
+    const onSignInPressed = async () =>{
 
-        console.warn('Sign in');
+        if(!nombreUsuario || !contrasena){
+            console.log("Debe llenar todos los campos obligatorios");
+            Alert.alert("Portales Restaurant", "Ingrese todos los campos");
+        }
+        else{
+            try {
+                const respt = await fetch('http://192.168.0.111:5000/api/autenticacion/iniciosesion', {
+
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        nombreUsuario: nombreUsuario,
+                        contrasena: contrasena
+                    })
+
+                });
+
+                const json = await respt.json();
+                console.log(json);
+                Alert.alert("Portales Restaurant", "Peticion Realizada");
+
+            } catch (error) {
+                console.log(error);
+                Alert.alert("Portales Restaurant", "Error");
+            }
+        }
 
     }
 
@@ -51,16 +79,18 @@ const SignInScreen = () => {
             resizeMode="contain" 
             />        
 
-            <CustomImput 
+            <TextInput 
+                style={styles.input}
                 placeholder="Usuario" 
-                value={userName} 
-                setValue={setUserName} 
+                value={nombreUsuario}
+                onChangeText={setNombreUsuario}
             />
-            <CustomImput 
+            <TextInput 
+                style={styles.input}
                 placeholder="Password" 
-                value={password} 
-                setValue={setPassword}
                 secureTextEntry={true} 
+                value={contrasena}
+                onChangeText={setContrasena}
             />
 
             <CustomButton
@@ -77,7 +107,7 @@ const SignInScreen = () => {
             </Text>
 
             <CustomButton
-                text="Faceboock" 
+                text="Facebook" 
                 onPress={onSignInFaceboock}
                 bgColor="#E7EAF4"
                 fgColor="#4765A9"
@@ -121,6 +151,21 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'gray',
         margin: 8
+    },
+
+    input:{
+
+        backgroundColor: 'white',
+        width: '100%',
+        borderColor: '#e8e8e8',
+        borderWidth: 1,
+        borderRadius: 5,
+
+        paddingHorizontal: 10,
+        marginVertical: 10,
+
+        height: 52,
+        fontSize: 16,
     }
 
 })

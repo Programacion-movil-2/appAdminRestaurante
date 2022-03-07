@@ -1,6 +1,10 @@
 import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaView, StyleSheet, Text, View, ImageBackground } from 'react-native';
+
 import fondo from './assets/fondoLogin.jpg';
+import LNavigation from './navigation/index';
+import CreatePerson from './screens/CreatePerson/CreatePerson';
 import SignInScreen from './screens/SignInScreen/SignInScreen';
 import SignUpScreen from './screens/SignUpScreen/SignUpScreen';
 import ConfirmEmail from './screens/ConfirmEmail/ConfirmEmail';
@@ -11,11 +15,11 @@ export default class App extends React.Component {
   render(){
     return (
 
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
             
-        <SignInScreen />
+        <SignUpScreen />
       
-      </View>
+      </SafeAreaView>
       
   
     );
@@ -36,13 +40,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F9F8FC',
     alignItems: 'center',
-    padding: 50,
+    padding: 20,
     //justifyContent: 'center',
   },
-
-  fondo:{
-
-    resizeMode: 'cover'
-  }
 
 });
