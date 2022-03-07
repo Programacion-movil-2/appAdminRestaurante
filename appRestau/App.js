@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import Restaurant from './screens/Restaurant';
+import MainCategorias from './screens/mainCategorias';
 
 
 export default class App extends React.Component {
@@ -8,7 +8,7 @@ export default class App extends React.Component {
     return (
 
       <SafeAreaView style={styles.container}>
-        <Restaurant />
+        <MainCategorias />
       </SafeAreaView>
     );
   }
