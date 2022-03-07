@@ -1,14 +1,14 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import MainCategorias from './screens/mainCategorias';
+import Restaurant from './screens/Restaurant';
 
 
 export default class App extends React.Component {
   render(){
     return (
 
-      <SafeAreaView style={styles.root}>
-        <MainCategorias />
+      <SafeAreaView style={styles.container}>
+        <Restaurant />
       </SafeAreaView>
       
   
