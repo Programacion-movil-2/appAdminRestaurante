@@ -1,8 +1,5 @@
 import React from 'react';
-import{
-    View,
-    Text
-}from 'react-native';
+import{View, Text, StyleSheet}from 'react-native';
 
 import {SwipeListView} from 'react-native-swipe-list-view';
 
@@ -12,12 +9,12 @@ import{
     CartQuantityButton,
     StepperInput
 
-}from "../../componentes";
-import{FONTS, SIZES, COLORS, icons, dummyData} from "../../componentes";
+}from "../../components";
+import{FONTS, SIZES, COLORS, icons, dummyData} from "../../components";
 
 const MyCart = ({ navigation }) => {
 
-    const [MyCartList, setMyCartList] = React.useState(dummyData.myCart)
+    const [MyCartList, setMyCartList] = React.useState({id: 1, name: "Fast Food", icon: ""})
 
     //Funcion del header
     function renderHeader(){
@@ -27,7 +24,7 @@ const MyCart = ({ navigation }) => {
                 title = "MY CART - Mis Productos"
                 containerStyle = {{
                     height: 50,
-                    marginHorizontal: SIZES.padding,
+                    marginHorizontal: 24,
                     marginTop:40
                 }}
                 leftComponent = {
@@ -39,13 +36,13 @@ const MyCart = ({ navigation }) => {
                             justifyContent: 'center',
                             alignItems: 'center',
                             borderWidth: 1,
-                            borderRadius: SIZES.radius,
-                            borderColor: COLORS.gray2
+                            borderRadius: 0,
+                            borderColor: "#0B5345"
                         }}
                         iconStyle = {{
                             width: 20,
                             height: 20,
-                            tintColor: COLORS.gray2
+                            tintColor: "#808080"
                         }}
                         //Con este boton vamos a regresar a los detalles de la comida y categorias
                         onPress = {() => navigation.goBack()}
@@ -66,9 +63,9 @@ const MyCart = ({ navigation }) => {
                 data = {MyCartList}
                 keyExtractor = {item => `${item.id}`}
                 contentContainerStyle = {{
-                    marginTop: SIZES.radius,
-                    paddingHorizontal: SIZES.padding,
-                    paddingBottom: SIZES.padding * 2
+                    marginTop: 12,
+                    paddingHorizontal: 24,
+                    paddingBottom: 24 * 2
                 }}
                 disableRightSwipe = {true}
                 rightOpenValue = {-75}
@@ -76,7 +73,7 @@ const MyCart = ({ navigation }) => {
                     <View
                         style = {{
                             height: 100,
-                            backgroundColor: COLORS.lightGray2,
+                            backgroundColor: "#F6F6F7",
                             //Por medio de esta función creamos la división de los cantiner de los productos
                             ...styles.cartItemContainer
                         }}
@@ -110,7 +107,7 @@ const MyCart = ({ navigation }) => {
         <View
             style = {{
                 flex:1,
-                backgroundColor: COLORS.white
+                backgroundColor: "#fff"
             }}
         >
             {/* Header */}
@@ -128,9 +125,9 @@ const styles = StyleSheet.create({
     cartItemContainer:{
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: SIZES.radius,
-        paddingHorizontal: SIZES.radius,
-        borderRadius: SIZES.radius
+        marginTop: 12,
+        paddingHorizontal: 12,
+        borderRadius: 12
     }
 })
 export default MyCart;
