@@ -1,24 +1,18 @@
 import React from 'react';
 import {
-    StyleSheet,
-    Text,
-    View,
     SafeAreaView,
+    View,
+    Text,
+    StyleSheet,
     TouchableOpacity,
     Image,
     FlatList
 } from 'react-native';
 
-import { icons, images, SIZE, COLORS, FONT, FONTS } from '../constants'
-const MainCategorias = () => {
+import { icons, images, SIZE, COLORS } from '../constants'
 
-    const initialCurrentLocation = {
-        streetName: "Kuching",
-        gps: {
-            latitude: 1.5496614931250685,
-            longitude: 110.36381866919922
-        }
-    }
+
+const MainCategorias = () => {
 
     const categoryData = [
         {
@@ -88,10 +82,6 @@ const MainCategorias = () => {
             priceRating: affordable,
             photo: images.burger_restaurant_1,
             duration: "30 - 45 min",
-            location: {
-                latitude: 1.5347282806345879,
-                longitude: 110.35632207358996,
-            },
             courier: {
                 avatar: images.avatar_1,
                 name: "Amy"
@@ -131,10 +121,6 @@ const MainCategorias = () => {
             priceRating: expensive,
             photo: images.pizza_restaurant,
             duration: "15 - 20 min",
-            location: {
-                latitude: 1.556306570595712,
-                longitude: 110.35504616746915,
-            },
             courier: {
                 avatar: images.avatar_2,
                 name: "Jackson"
@@ -182,10 +168,6 @@ const MainCategorias = () => {
             priceRating: expensive,
             photo: images.hot_dog_restaurant,
             duration: "20 - 25 min",
-            location: {
-                latitude: 1.5238753474714375,
-                longitude: 110.34261833833622,
-            },
             courier: {
                 avatar: images.avatar_3,
                 name: "James"
@@ -209,10 +191,6 @@ const MainCategorias = () => {
             priceRating: expensive,
             photo: images.japanese_restaurant,
             duration: "10 - 15 min",
-            location: {
-                latitude: 1.5578068150528928,
-                longitude: 110.35482523764315,
-            },
             courier: {
                 avatar: images.avatar_4,
                 name: "Ahmad"
@@ -236,10 +214,6 @@ const MainCategorias = () => {
             priceRating: affordable,
             photo: images.noodle_shop,
             duration: "15 - 20 min",
-            location: {
-                latitude: 1.558050496260768,
-                longitude: 110.34743759630511,
-            },
             courier: {
                 avatar: images.avatar_4,
                 name: "Muthu"
@@ -289,10 +263,6 @@ const MainCategorias = () => {
             priceRating: affordable,
             photo: images.kek_lapis_shop,
             duration: "35 - 40 min",
-            location: {
-                latitude: 1.5573478487252896,
-                longitude: 110.35568783282145,
-            },
             courier: {
                 avatar: images.avatar_1,
                 name: "Jessie"
@@ -329,7 +299,6 @@ const MainCategorias = () => {
     const [categories, setCategories] = React.useState(categoryData)
     const [selectedCategory, setSelectedCategory] = React.useState(null)
     const [restaurants, setRestaurants] = React.useState(restaurantData)
-    const [currentLocation, setCurrentLocation] = React.useState(initialCurrentLocation)
 
     function onSelectCategory(category) {
         //filter restaurant
@@ -338,6 +307,15 @@ const MainCategorias = () => {
         setRestaurants(restaurantList)
 
         setSelectedCategory(category)
+    }
+
+    function getCategoryNameById(id) {
+        let category = categories.filter(a => a.id == id)
+
+        if (category.length > 0)
+            return category[0].name
+
+        return ""
     }
 
 
@@ -364,14 +342,14 @@ const MainCategorias = () => {
                     <View
                         style={{
                             width: '70%',
-                            height: "100",
+                            height: "100%",
                             backgroundColor: COLORS.lightGray3,
                             alignItems: 'center',
                             justifyContent: 'center',
                             borderRadius: SIZE.radius
                         }}
                     >
-                        <Text style={{ ...FONT.h3 }}>Location</Text>
+                        <Text style={{ ...Styles.h3 }}>Restaurante</Text>
                     </View>
                 </View>
                 <TouchableOpacity
@@ -417,9 +395,9 @@ const MainCategorias = () => {
                             borderRadius: 25,
                             alignItems: "center",
                             justifyContent: "center",
-                            backgroundColor: (selectedCategory?.id == item.id) ? 
-                            COLORS.white : COLORS.lightGray
-               
+                            backgroundColor: (selectedCategory?.id == item.id) ?
+                                COLORS.white : COLORS.lightGray
+
                         }}
                     >
                         <Image
@@ -434,9 +412,9 @@ const MainCategorias = () => {
 
                     <Text
                         style={{
-                            marginTop: SIZES.padding,
+                            marginTop: SIZE.padding,
                             color: (selectedCategory?.id == item.id) ? COLORS.white : COLORS.black,
-                            ...FONTS.body5
+                            ...Styles.body5
                         }}
                     >
                         {item.name}
@@ -444,14 +422,10 @@ const MainCategorias = () => {
                 </TouchableOpacity>
             )
         }
-
-
-
-
         return (
             <View style={{ padding: SIZE.padding * 2 }}>
-                <Text style={{ ...FONT.h1 }}>Menú</Text>
-                <Text style={{ ...FONT.h1 }}>Categorias </Text>
+                <Text style={{ ...Styles.h1 }}>Menú</Text>
+                <Text style={{ ...Styles.h1 }}>Categorias </Text>
 
                 <FlatList
                     data={categories}
@@ -465,10 +439,116 @@ const MainCategorias = () => {
         )
     }
 
+    function renderRestaurantList() {
+        const renderItem = ({ item }) => (
+            <TouchableOpacity
+                style={{ marginBottom: SIZE.padding * 2 }}
+                onPress={() => navigation.navigate("Restaurant", {
+                    item,
+                    currentLocation
+                })}
+            >
+                {/* Image */}
+                <View
+                    style={{
+                        marginBottom: SIZE.padding
+                    }}
+                >
+                    <Image
+                        source={item.photo}
+                        resizeMode="cover"
+                        style={{
+                            width: "100%",
+                            height: 200,
+                            borderRadius: SIZE.radius
+                        }}
+                    />
+
+                    <View
+                        style={{
+                            position: 'absolute',
+                            bottom: 0,
+                            height: 50,
+                            width: SIZE.width * 0.3,
+                            backgroundColor: COLORS.white,
+                            borderTopRightRadius: SIZE.radius,
+                            borderBottomLeftRadius: SIZE.radius,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            ...Styles.shadow
+                        }}
+                    >
+                        <Text style={{ ...Styles.h4 }}>{item.duration}</Text>
+                    </View>
+                </View>
+                
+                {/* Restaurant Info */}
+                <Text style={{ ...Styles.body2 }}>{item.name}</Text>
+
+                <View
+                    style={{
+                        marginTop: SIZE.padding,
+                        flexDirection: 'row'
+                    }}
+                >
+
+                    {/* Categories */}
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            marginLeft: 10
+                        }}
+                    >
+                        {
+                            item.categories.map((categoryId) => {
+                                return (
+                                    <View
+                                        style={{ flexDirection: 'row' }}
+                                        key={categoryId}
+                                    >
+                                        <Text style={{ ...Styles.body3 }}>{getCategoryNameById(categoryId)}</Text>
+                                        <Text style={{ ...Styles.h3, color: COLORS.darkgray }}> . </Text>
+                                    </View>
+                                )
+                            })
+                        }
+
+                        {/* Price */}
+                        {
+                            [1, 2, 3].map((priceRating) => (
+                                <Text
+                                    key={priceRating}
+                                    style={{
+                                        ...Styles.body3,
+                                        color: (priceRating <= item.priceRating) ? COLORS.black : COLORS.darkgray
+                                    }}
+                                >$</Text>
+                            ))
+                        }
+                    </View>
+                </View>
+
+
+            </TouchableOpacity>
+        )
+
+        return (
+            <FlatList
+                data={restaurants}
+                keyExtractor={item => `${item.id}`}
+                renderItem={renderItem}
+                contentContainerStyle={{
+                    paddingHorizontal: SIZE.padding * 2,
+                    paddingBottom: 30
+                }}
+            />
+        )
+    }
     return (
         <SafeAreaView style={Styles.container}>
             {renderHeader()}
             {renderMainGategories()}
+            {renderRestaurantList()}
         </SafeAreaView>
     )
 }
@@ -486,8 +566,18 @@ const Styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 3,
         elevation: 1,
+    },
+    largeTitle: { fontSize: SIZE.largeTitle, lineHeight: 55 },
+    h1: { fontSize: SIZE.h1, lineHeight: 36 },
+    h2: { fontSize: SIZE.h2, lineHeight: 30 },
+    h3: { fontSize: SIZE.h3, lineHeight: 22 },
+    h4: { fontSize: SIZE.h4, lineHeight: 22 },
+    body1: { fontSize: SIZE.body1, lineHeight: 36 },
+    body2: { fontSize: SIZE.body2, lineHeight: 30 },
+    body3: { fontSize: SIZE.body3, lineHeight: 22 },
+    body4: { fontSize: SIZE.body4, lineHeight: 22 },
+    body5: { fontSize: SIZE.body5, lineHeight: 22 },
 
-    }
 })
 
 export default MainCategorias;
