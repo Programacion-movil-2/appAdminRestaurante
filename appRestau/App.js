@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import MainCategorias from './screens/mainCategorias';
+import MyCart from './screens/Cart/MyCart';
 
 
 export default class App extends React.Component {
@@ -8,7 +8,7 @@ export default class App extends React.Component {
     return (
 
       <SafeAreaView style={styles.root}>
-        <MainCategorias />
+        < MyCart />
       </SafeAreaView>
       
   
