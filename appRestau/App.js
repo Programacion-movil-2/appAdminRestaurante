@@ -1,13 +1,15 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import Facturacion from './screens/Facturacion/Factura';
-
+import Factura from './screens/Facturacion/Factura';
+import MetodoPago from './screens/Facturacion/MetodoPago';
+import DetalleEfectivo from './screens/Facturacion/DetalleEfectivo';
+import DetalleTarjeta from './screens/Facturacion/DetalleTarjeta';
 
 export default class App extends React.Component {
   render(){
     return (
       <SafeAreaView style={styles.container2}>
-        <Facturacion/>
+        <Factura/>
       </SafeAreaView>
     );
   }
