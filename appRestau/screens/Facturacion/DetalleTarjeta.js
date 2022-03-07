@@ -1,10 +1,9 @@
 import { SafeAreaView, StyleSheet, View, TouchableOpacity, Image, FlatList } from "react-native";
-import React from "react";
-import { Text, useTheme, Button, ButtonGroup, withTheme, Input } from "react-native-elements";
+import React, { useState } from 'react';
+import { Text, useTheme, Button, ButtonGroup, withTheme, Input, CheckBox, Icon } from "react-native-elements";
 import { icons, images, SIZES, SIZE, COLORS, FONT, FONTS } from '../../constants';
 
 const DetalleEfectivo = () => {
-
     function renderHeader() {
         return (
             <View style={{ flexDirection: 'row', height: 50 }}>
@@ -60,10 +59,13 @@ const DetalleEfectivo = () => {
 
     const { theme } = useTheme();
 
+    const [check1, setCheck1] = useState(false);
+    const [check2, setCheck2] = useState(false);
+
     return (
+
         <View style={styles.container}>
             {renderHeader()}
-
             <View style={styles.view}>
                 <Text
                     style={styles.text}
@@ -72,41 +74,57 @@ const DetalleEfectivo = () => {
                 >
                     Detalle de la orden
                 </Text>
-            </View>
 
-            <View>
-                <Text
-                    style={styles.text}
-                    h4
-                    h1Style={{ color: theme?.colors?.black }}
-                >
-                    Dirección de entrega
-                </Text>
-                <Input
-                    placeholder='Ej. Barrio San Juan'
-                />
+                <View>
+                    <View style={styles.view}>
+                        <Text
+                            style={styles.text}
+                            h3
+                            h1Style={{ color: theme?.colors?.black }}
+                        >
+                            Información de la tarjeta
+                        </Text>
+                    </View>
 
-                <Text
-                    style={styles.text}
-                    h4
-                    h1Style={{ color: theme?.colors?.black }}
-                >
-                    Agregar notas
-                </Text>
-                <Input
-                    placeholder='Ej. Tocar el timbre'
-                />
+                    <View style={styles.view}>
 
-                <Text
-                    style={styles.text}
-                    h4
-                    h1Style={{ color: theme?.colors?.black }}
-                >
-                    Necesitas cambio?
-                </Text>
-                <Input
-                    placeholder='Ej. L.100'
-                />
+                        <CheckBox
+                            center
+                            title="Visa"
+                            checked={check1}
+                            onPress={() => setCheck1(!check1)}
+
+                        />
+                        <CheckBox
+                            center
+                            title="Master Card"
+                            checked={check2}
+                            onPress={() => setCheck2(!check2)}
+                        />
+                    </View>
+
+                    <View style={styles.view}>
+                        <Input
+                            placeholder='Número de tarjeta'
+                        />
+
+                        <Text
+                            style={styles.text}
+                            h4
+                            h1Style={{ color: theme?.colors?.black }}
+                        >
+                            Fecha de vencimiento
+                        </Text>
+                        <Input
+                            placeholder='MM/YY'
+                        />
+
+                        <Input
+                            placeholder='CVV'
+                        />
+                    </View>
+
+                </View>
 
                 <View style={styles.buttonsContainer}>
                     <Button
@@ -126,8 +144,6 @@ const DetalleEfectivo = () => {
                     />
                 </View>
             </View>
-
-
         </View>
     );
 }
@@ -159,7 +175,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         marginVertical: 20,
-      },
+    },
     shadow: {
         shadowColor: '#000',
         shadowOffset: {

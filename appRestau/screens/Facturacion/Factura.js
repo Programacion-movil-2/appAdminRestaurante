@@ -3,7 +3,7 @@ import React from "react";
 import { Text, useTheme, Button, ButtonGroup, withTheme, Input } from "react-native-elements";
 import { icons, images, SIZES, SIZE, COLORS, FONT, FONTS } from '../../constants';
 
-const DetalleEfectivo = () => {
+const Factura = () => {
 
     function renderHeader() {
         return (
@@ -70,47 +70,45 @@ const DetalleEfectivo = () => {
                     h2
                     h1Style={{ color: theme?.colors?.black }}
                 >
-                    Detalle de la orden
+                    Factura
                 </Text>
             </View>
 
-            <View>
+            <View style={styles.totales}>
                 <Text
                     style={styles.text}
                     h4
-                    h1Style={{ color: theme?.colors?.black }}
+                    h4Style={{ color: theme?.colors?.primary }}
                 >
-                    Dirección de entrega
+                    Subtotal: 
+                    <Text>
+                        L. 400
+                    </Text>
                 </Text>
-                <Input
-                    placeholder='Ej. Barrio San Juan'
-                />
-
                 <Text
                     style={styles.text}
                     h4
-                    h1Style={{ color: theme?.colors?.black }}
+                    h4Style={{ color: theme?.colors?.primary }}
                 >
-                    Agregar notas
+                    Impuesto:
+                    <Text>
+                        L. 60
+                    </Text>
                 </Text>
-                <Input
-                    placeholder='Ej. Tocar el timbre'
-                />
-
                 <Text
                     style={styles.text}
                     h4
-                    h1Style={{ color: theme?.colors?.black }}
+                    h4Style={{ color: theme?.colors?.primary }}
                 >
-                    Necesitas cambio?
+                    Total:
+                    <Text>
+                        L. 460
+                    </Text>
                 </Text>
-                <Input
-                    placeholder='Ej. L.100'
-                />
-
-                <View style={styles.buttonsContainer}>
+            </View>
+            <View style={styles.buttonsContainer}>
                     <Button
-                        title="Procesar mi orden"
+                        title="Confirmar"
                         buttonStyle={{
                             backgroundColor: 'rgba(57, 146, 146, 1)',
                             borderWidth: 2,
@@ -125,9 +123,6 @@ const DetalleEfectivo = () => {
                         titleStyle={{ fontWeight: 'bold' }}
                     />
                 </View>
-            </View>
-
-
         </View>
     );
 }
@@ -136,6 +131,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: COLORS.lightGray4
+    },
+    totales: {
+        flex: 1,
+        marginTop: 40,
     },
     view: {
         margin: 10,
@@ -183,4 +182,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default DetalleEfectivo
+export default Factura

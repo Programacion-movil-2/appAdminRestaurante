@@ -4,7 +4,7 @@ import { Text, useTheme, Button, ButtonGroup, withTheme } from "react-native-ele
 import { icons, images, SIZES, SIZE, COLORS, FONT, FONTS } from '../../constants';
 
 const MetodoPago = () => {
-  
+
   function renderHeader() {
     return (
       <View style={{ flexDirection: 'row', height: 50 }}>
@@ -142,6 +142,14 @@ const styles = StyleSheet.create({
     width: 120,
     marginLeft: "auto",
     marginRight: "auto",
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    marginVertical: 20,
   },
   shadow: {
     shadowColor: '#000',

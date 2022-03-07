@@ -1,13 +1,13 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import DetalleEfectivo from './screens/Facturacion/DetalleEfectivo';
+import Facturacion from './screens/Facturacion/Factura';
 
 
 export default class App extends React.Component {
   render(){
     return (
-      <SafeAreaView style={styles.container}>
-        <DetalleEfectivo/>
+      <SafeAreaView style={styles.container2}>
+        <Facturacion/>
       </SafeAreaView>
     );
   }
@@ -30,4 +30,10 @@ const styles = StyleSheet.create({
     padding: 50,
     //justifyContent: 'center',
   },
+  container2: {
+    flex: 1,
+    backgroundColor: '#F9F8FC',
+    paddingTop: 30,
+  }
+
 });
