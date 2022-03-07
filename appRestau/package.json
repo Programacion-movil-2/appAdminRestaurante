@@ -10,6 +10,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-navigation/native": "^6.0.8",
     "expo": "~44.0.0",
     "expo-status-bar": "~1.2.0",
     "hammerjs": "^2.0.8",
@@ -19,10 +20,11 @@
     "react-native": "0.64.3",
     "react-native-elements": "^3.4.2",
     "react-native-iphone-x-helper": "^1.3.1",
+    "react-native-safe-area-context": "^4.1.2",
+    "react-native-screens": "~3.10.1",
     "react-native-svg": "^12.3.0",
     "react-native-vector-icons": "^9.1.0",
-    "react-native-web": "0.17.1",
-    "react-native-screens": "~3.10.1"
+    "react-native-web": "0.17.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

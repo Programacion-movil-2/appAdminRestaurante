@@ -16,12 +16,6 @@ const SignUpScreen = () => {
 
     }
 
-    const onForgotPwdPressed = () =>{
-
-        console.warn('Forgot password?')
-
-    }
-
     const onSignInFaceboock = () =>{
 
         console.warn('Login with Facebook')
@@ -34,9 +28,9 @@ const SignUpScreen = () => {
 
     }
 
-    const onSignUpPressed = () =>{
+    const onSignInPressed = () =>{
 
-        console.warn('Create an account')
+        console.warn('Sign In')
 
     }
 
@@ -74,12 +68,14 @@ const SignUpScreen = () => {
 
                 <CustomButton
                     text="Register" 
-                    onPress={onRegisterPressed}
+                    onPress={onRegisterPressed} 
                 />
-                <CustomButton2 
-                    text="Forgot your password?" 
-                    onPress={onForgotPwdPressed} 
-                />
+
+                <Text style={styles.text1}>
+                    By registering, you confirm that you accept our {' '} 
+                    <Text style={styles.link}>Terms of Use</Text> and{' '}
+                    <Text style={styles.link}>Privacy Policy.</Text>
+                </Text>
 
                 <Text style={styles.text}>
                     -- Or Sign with --
@@ -99,8 +95,8 @@ const SignUpScreen = () => {
                 />
 
                 <CustomButton2 
-                    text="Don't have an account? Create One" 
-                    onPress={onSignUpPressed} 
+                    text="Have an account? Sign In" 
+                    onPress={onSignInPressed} 
                 />
 
             </View>
@@ -119,12 +115,6 @@ const styles = StyleSheet.create({
 
     },
 
-    logo:{
-        width: '90%',
-        maxWidth: 400,
-        maxHeight: 300,
-    },
-
     text:{
         fontSize: 15,
         fontWeight: 'bold',
@@ -137,9 +127,26 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         color: '#051C60',
-        margin: 10
+        margin: 10,
+        paddingVertical: 20
 
-    }
+    },
+
+    text1:{
+
+        fontSize: 12,
+        color: 'gray',
+        marginTop: 10,
+        textAlign: 'center',
+        paddingBottom: 23
+
+    },
+
+    link:{
+
+        color: '#FDB075'
+
+    }   
 
 })
 
