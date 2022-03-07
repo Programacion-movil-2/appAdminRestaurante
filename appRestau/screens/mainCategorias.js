@@ -330,7 +330,7 @@ const MainCategorias = () => {
                     }}
                 >
                     <Image
-                        source={icons.nearby}
+                        source={icons.user}
                         resizeMode="contain"
                         style={{
                             width: 30,
