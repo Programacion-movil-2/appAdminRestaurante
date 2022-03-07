@@ -342,7 +342,7 @@ const MainCategorias = () => {
                     <View
                         style={{
                             width: '70%',
-                            height: "100",
+                            height: "100%",
                             backgroundColor: COLORS.lightGray3,
                             alignItems: 'center',
                             justifyContent: 'center',
@@ -458,7 +458,7 @@ const MainCategorias = () => {
                         source={item.photo}
                         resizeMode="cover"
                         style={{
-                            width: "90%",
+                            width: "100%",
                             height: 200,
                             borderRadius: SIZE.radius
                         }}
