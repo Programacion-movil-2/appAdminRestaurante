@@ -1,17 +1,14 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import MyCart from './screens/Cart/MyCart';
+import DetalleEfectivo from './screens/Facturacion/DetalleEfectivo';
 
 
 export default class App extends React.Component {
   render(){
     return (
-
-      <SafeAreaView style={styles.root}>
-        < MyCart />
+      <SafeAreaView style={styles.container}>
+        <DetalleEfectivo/>
       </SafeAreaView>
-      
-  
     );
   }
   
