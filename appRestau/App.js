@@ -7,7 +7,7 @@ export default class App extends React.Component {
   render(){
     return (
 
-      <SafeAreaView>
+      <SafeAreaView style={styles.container}>
         <MainCategorias />
       </SafeAreaView>
     );
@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F9F8FC',
-    alignItems: 'center',
-    padding: 50,
+    // alignItems: 'center',
+    // padding: 50,
     //justifyContent: 'center',
   },
 });

@@ -491,19 +491,7 @@ const MainCategorias = () => {
                         flexDirection: 'row'
                     }}
                 >
-                    {/* Rating */}
-                    <Image
-                        source={icons.star}
-                        style={{
-                            height: 20,
-                            width: 20,
-                            tintColor: COLORS.primary,
-                            marginRight: 10
-                        }}
-                    />
-                    <Text style={{ ...Styles.body3 }}>{item.rating}</Text>
 
-                    {/*--------------------------------*/}
                     {/* Categories */}
                     <View
                         style={{
