@@ -9,7 +9,8 @@ import {
     FlatList
 } from 'react-native';
 
-import { icons, images, SIZE, COLORS, FONT } from '../constants'
+import { icons, images, SIZE, COLORS } from '../constants'
+
 
 const MainCategorias = () => {
 
@@ -381,7 +382,7 @@ const MainCategorias = () => {
                             borderRadius: SIZE.radius
                         }}
                     >
-                        <Text style={{ ...FONT.h3 }}>Restaurante</Text>
+                        <Text style={{ ...Styles.h3 }}>Restaurante</Text>
                     </View>
                 </View>
                 <TouchableOpacity
@@ -446,7 +447,7 @@ const MainCategorias = () => {
                         style={{
                             marginTop: SIZE.padding,
                             color: (selectedCategory?.id == item.id) ? COLORS.white : COLORS.black,
-                            ...FONT.body5
+                            ...Styles.body5
                         }}
                     >
                         {item.name}
@@ -456,8 +457,8 @@ const MainCategorias = () => {
         }
         return (
             <View style={{ padding: SIZE.padding * 2 }}>
-                <Text style={{ ...FONT.h1 }}>Menú</Text>
-                <Text style={{ ...FONT.h1 }}>Categorias </Text>
+                <Text style={{ ...Styles.h1 }}>Menú</Text>
+                <Text style={{ ...Styles.h1 }}>Categorias </Text>
 
                 <FlatList
                     data={categories}
@@ -510,12 +511,12 @@ const MainCategorias = () => {
                             ...Styles.shadow
                         }}
                     >
-                        <Text style={{ ...FONT.h4 }}>{item.duration}</Text>
+                        <Text style={{ ...Styles.h4 }}>{item.duration}</Text>
                     </View>
                 </View>
                 
                 {/* Restaurant Info */}
-                <Text style={{ ...FONT.body2 }}>{item.name}</Text>
+                <Text style={{ ...Styles.body2 }}>{item.name}</Text>
 
                 <View
                     style={{
@@ -533,7 +534,7 @@ const MainCategorias = () => {
                             marginRight: 10
                         }}
                     />
-                    <Text style={{ ...FONT.body3 }}>{item.rating}</Text>
+                    <Text style={{ ...Styles.body3 }}>{item.rating}</Text>
 
                     {/*--------------------------------*/}
                     {/* Categories */}
@@ -550,8 +551,8 @@ const MainCategorias = () => {
                                         style={{ flexDirection: 'row' }}
                                         key={categoryId}
                                     >
-                                        <Text style={{ ...FONT.body3 }}>{getCategoryNameById(categoryId)}</Text>
-                                        <Text style={{ ...FONT.h3, color: COLORS.darkgray }}> . </Text>
+                                        <Text style={{ ...Styles.body3 }}>{getCategoryNameById(categoryId)}</Text>
+                                        <Text style={{ ...Styles.h3, color: COLORS.darkgray }}> . </Text>
                                     </View>
                                 )
                             })
@@ -563,7 +564,7 @@ const MainCategorias = () => {
                                 <Text
                                     key={priceRating}
                                     style={{
-                                        ...FONT.body3,
+                                        ...Styles.body3,
                                         color: (priceRating <= item.priceRating) ? COLORS.black : COLORS.darkgray
                                     }}
                                 >$</Text>
@@ -610,8 +611,18 @@ const Styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 3,
         elevation: 1,
+    },
+    largeTitle: { fontSize: SIZE.largeTitle, lineHeight: 55 },
+    h1: { fontSize: SIZE.h1, lineHeight: 36 },
+    h2: { fontSize: SIZE.h2, lineHeight: 30 },
+    h3: { fontSize: SIZE.h3, lineHeight: 22 },
+    h4: { fontSize: SIZE.h4, lineHeight: 22 },
+    body1: { fontSize: SIZE.body1, lineHeight: 36 },
+    body2: { fontSize: SIZE.body2, lineHeight: 30 },
+    body3: { fontSize: SIZE.body3, lineHeight: 22 },
+    body4: { fontSize: SIZE.body4, lineHeight: 22 },
+    body5: { fontSize: SIZE.body5, lineHeight: 22 },
 
-    }
 })
 
 export default MainCategorias;

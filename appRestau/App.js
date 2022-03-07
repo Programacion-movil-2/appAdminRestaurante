@@ -7,11 +7,9 @@ export default class App extends React.Component {
   render(){
     return (
 
-      <SafeAreaView style={styles.root}>
+      <SafeAreaView style={styles.container}>
         <MainCategorias />
       </SafeAreaView>
-      
-  
     );
   }
   
