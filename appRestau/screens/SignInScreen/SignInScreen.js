@@ -81,7 +81,7 @@ const SignInScreen = () => {
 
             <TextInput 
                 style={styles.input}
-                placeholder="Usuario" 
+                placeholder="Correo" 
                 value={nombreUsuario}
                 onChangeText={setNombreUsuario}
             />

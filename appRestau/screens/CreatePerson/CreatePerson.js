@@ -1,24 +1,25 @@
 import React, {useState} from 'react';
-import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Alert, TextInput } from 'react-native';
 import CustomImput from '../../elements/login/customImput';
 import CustomButton from '../../elements/login/customButton';
 import CustomButton2 from '../../elements/login/customButton2';
 
 const CreatePerson = () => {
-    const {name, setName} = useState('');
-    const {apellido, setApellido} = useState('');
-    const {telefono, setTelefono} = useState('');
-    const {direccion, setDireccion} = useState('');
+    const [nombre, setNombre] = useState(null);
+    const [apellido, setApellido] = useState(null);
+    const [telefono, setTelefono] = useState(null);
+    const [direccion, setDireccion] = useState(null);
+
 
     const onRegisterPressed = async () =>{
 
-        if(!name || !apellido || !telefono || !direccion){
+        if(!nombre || !apellido || !telefono){
             console.log("Debe llenar todos los campos oblicatorios");
             Alert.alert("Restaurante", "Ingrese todos los campos");
         }
         else{
             try {
-                const res = await fetch('http://', {
+                const res = await fetch('http://192.168.0.111:5000/api/personas/guardar', {
 
                     method: 'POST',
                     headers: {
@@ -26,17 +27,22 @@ const CreatePerson = () => {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        nombre: name,
+                        nombre: nombre,
                         apellido: apellido,
+                        telefono: telefono,
+                        direccion: direccion
                     })
 
                 })
+
+                const msj = res.json();
+                Alert.alert("Portales Restaurant", "Exito");
+
             } catch (error) {
-                
+                console.log(error);
+                Alert.alert("Portales Restaurant", "Error");
             }
         }
-
-        console.warn('Register');
 
     }
 
@@ -55,25 +61,29 @@ const CreatePerson = () => {
                 <Text style={styles.title}>Register</Text>
 
 
-                <CustomImput 
+                <TextInput 
+                    style={styles.input}
                     placeholder="Nombre" 
-                    value={name} 
-                    setValue={setName} 
+                    value={nombre} 
+                    onChangeText={setNombre} 
                 />
-                <CustomImput 
+                <TextInput 
+                    style={styles.input}
                     placeholder="Apellido" 
                     value={apellido} 
-                    setValue={setApellido} 
+                    onChangeText={setApellido} 
                 />
-                <CustomImput 
+                <TextInput
+                    style={styles.input} 
                     placeholder="Teléfono" 
                     value={telefono} 
-                    setValue={setTelefono} 
+                    onChangeText={setTelefono} 
                 />
-                <CustomImput 
+                <TextInput
+                    style={styles.input} 
                     placeholder="Dirección" 
                     value={direccion} 
-                    setValue={setDireccion} 
+                    onChangeText={setDireccion} 
                 />
 
                 <CustomButton
@@ -139,7 +149,23 @@ const styles = StyleSheet.create({
 
         color: '#FDB075'
 
-    }   
+    },
+    
+    input: {
+
+        backgroundColor: 'white',
+        width: '100%',
+        borderColor: '#e8e8e8',
+        borderWidth: 1,
+        borderRadius: 5,
+
+        paddingHorizontal: 10,
+        marginVertical: 10,
+
+        height: 52,
+        fontSize: 16,
+
+    }
 
 })
 

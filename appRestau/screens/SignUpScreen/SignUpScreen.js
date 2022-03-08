@@ -9,6 +9,7 @@ const SignUpScreen = () => {
     const [correo, setCorreo] = useState('');
     const [contrasena, setContrasena] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
+    
 
     const onRegisterPressed = async () =>{
 
@@ -16,7 +17,7 @@ const SignUpScreen = () => {
             console.log("Debe llenar todos los campos obligatorios");
             Alert.alert("Portales Restaurant", "Ingrese todos los campos");
         }
-        if (contrasena != passwordConfirm) {
+        else if (contrasena != passwordConfirm) {
             
             console.log("Las contraseñas no coinciden");
             Alert.alert("Portales Restaurant", "Las contraseñas no coinciden");
@@ -34,21 +35,24 @@ const SignUpScreen = () => {
                     body: JSON.stringify({
                         nombreUsuario: nombreUsuario,
                         correo: correo,
-                        contrasena: contrasena
+                        contrasena: contrasena,
                     })
 
-                });
-
-                const json = await res.json();
-                console.log(json);
-                Alert.alert("Portales Restaurant", "Peticion Realizada");
+                })
+                
+                const mensaje = await res.json();
+                console.log(mensaje);
+                if(!res){
+                    Alert.alert("Portales Restaurant", "Usuario Creado");
+                }else{
+                    Alert.alert("Portales Restaurant", JSON.stringify(mensaje));
+                }                
 
             } catch (error) {
                 console.log(error);
                 Alert.alert("Portales Restaurant", "Error");
             }
         }
-
     }
 
     const onSignInFaceboock = () =>{
