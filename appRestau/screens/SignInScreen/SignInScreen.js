@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { View, Text, TextInput, Image, StyleSheet, useWindowDimensions, ScrollView, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Logo from '../../assets/logoportalesw-preview.png';
 import CustomImput from '../../elements/login/customImput';
 import CustomButton from '../../elements/login/customButton';
@@ -33,8 +34,16 @@ const SignInScreen = () => {
                 });
 
                 const json = await respt.json();
+                const data = json.data
                 console.log(json);
-                Alert.alert("Portales Restaurant", "Peticion Realizada");
+                if(!data.token){
+                    console.log(data);
+                }else{
+                    const toten = json.data.token;
+                    await AsyncStorage.setItem('token', toten);
+                }
+                //console.log(token);
+                Alert.alert("Portales Restaurant", json.msj);
 
             } catch (error) {
                 console.log(error);
@@ -81,7 +90,7 @@ const SignInScreen = () => {
 
             <TextInput 
                 style={styles.input}
-                placeholder="Correo" 
+                placeholder="User" 
                 value={nombreUsuario}
                 onChangeText={setNombreUsuario}
             />

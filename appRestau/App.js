@@ -17,7 +17,7 @@ export default class App extends React.Component {
 
       <SafeAreaView style={styles.container}>
             
-        <ForgotPwdScreen />
+        <SignUpScreen />
       
       </SafeAreaView>
       

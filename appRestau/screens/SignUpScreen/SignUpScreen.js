@@ -40,13 +40,14 @@ const SignUpScreen = () => {
 
                 })
                 
-                const mensaje = await res.json();
-                console.log(mensaje);
-                if(!res){
-                    Alert.alert("Portales Restaurant", "Usuario Creado");
-                }else{
-                    Alert.alert("Portales Restaurant", JSON.stringify(mensaje));
-                }                
+                const json = await res.json();
+                console.log(json);
+                Alert.alert("Portales Restaurant", json.msg);
+                // if(!res){
+                //     Alert.alert("Portales Restaurant", "Usuario Creado");
+                // }else{
+                //     Alert.alert("Portales Restaurant", JSON.stringify(mensaje));
+                // }                
 
             } catch (error) {
                 console.log(error);

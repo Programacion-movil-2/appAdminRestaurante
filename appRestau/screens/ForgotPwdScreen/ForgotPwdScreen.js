@@ -32,11 +32,11 @@ const ForgotPwdScreen = () => {
 
                 const json = await respt.json();
                 console.log(json);
-                Alert.alert("Portales Restaurant", json.msj);
+                Alert.alert("Portales Restaurant", json.msg);
 
             } catch (error) {
                 console.log(error);
-                Alert.alert("Portales Restaurant", );
+                Alert.alert("Portales Restaurant", "Error");
             }
 
     }
