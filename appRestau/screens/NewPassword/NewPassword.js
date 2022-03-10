@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, useWindowDimensions } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView, useWindowDimensions, TextInput } from 'react-native';
 import Logo from '../../assets/logoportalesw-preview.png';
 import CustomImput from '../../elements/login/customImput';
 import CustomButton from '../../elements/login/customButton';
