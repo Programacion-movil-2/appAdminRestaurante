@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import { View, Text, StyleSheet, ScrollView, Alert, TextInput } from 'react-native';
-import CustomImput from '../../elements/login/customImput';
 import CustomButton from '../../elements/login/customButton';
 import CustomButton2 from '../../elements/login/customButton2';
 
-const CreatePerson = () => {
+const CreatePerson = ({navigation}) => {
+    const [identidad, setIdentidad] = useState(null);
     const [nombre, setNombre] = useState(null);
     const [apellido, setApellido] = useState(null);
     const [telefono, setTelefono] = useState(null);
@@ -13,7 +13,7 @@ const CreatePerson = () => {
 
     const onRegisterPressed = async () =>{
 
-        if(!nombre || !apellido || !telefono){
+        if(!identidad || !nombre || !apellido || !telefono){
             console.log("Debe llenar todos los campos oblicatorios");
             Alert.alert("Restaurante", "Ingrese todos los campos");
         }
@@ -27,6 +27,7 @@ const CreatePerson = () => {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
+                        identidad: identidad,
                         nombre: nombre,
                         apellido: apellido,
                         telefono: telefono,
@@ -35,8 +36,8 @@ const CreatePerson = () => {
 
                 })
 
-                const msj = res.json();
-                Alert.alert("Portales Restaurant", "Exito");
+                const json = await res.json();
+                Alert.alert("Portales Restaurant", json.msj);
 
             } catch (error) {
                 console.log(error);
@@ -48,7 +49,7 @@ const CreatePerson = () => {
 
     const onCreateAPressed = () =>{
 
-        console.warn('Create Account')
+        navigation.navigate('SignUp')
 
     }
 
@@ -60,7 +61,13 @@ const CreatePerson = () => {
 
                 <Text style={styles.title}>Register</Text>
 
-
+                
+                <TextInput
+                    style={styles.input} 
+                    placeholder="Identidad" 
+                    value={identidad} 
+                    onChangeText={setIdentidad} 
+                />
                 <TextInput 
                     style={styles.input}
                     placeholder="Nombre" 

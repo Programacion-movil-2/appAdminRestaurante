@@ -5,7 +5,7 @@ import CustomImput from '../../elements/login/customImput';
 import CustomButton from '../../elements/login/customButton';
 import CustomButton2 from '../../elements/login/customButton2';
 
-const ForgotPwdScreen = () => {
+const ForgotPwdScreen = ({navigation}) => {
     const [email, setEmail] = useState('');
     const { height } = useWindowDimensions();
 
@@ -43,13 +43,13 @@ const ForgotPwdScreen = () => {
 
     const onSignInPressed = () =>{
 
-        console.warn('Sign In')
+        navigation.navigate('SignIn')
 
     }
 
     const onSignUpPressed = () =>{
 
-        console.warn('Sign Up')
+        navigation.navigate('SignUp')
 
     }
 

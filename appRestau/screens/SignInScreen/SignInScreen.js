@@ -6,7 +6,7 @@ import CustomImput from '../../elements/login/customImput';
 import CustomButton from '../../elements/login/customButton';
 import CustomButton2 from '../../elements/login/customButton2';
 
-const SignInScreen = () => {
+const SignInScreen = ({navigation}) => {
     const [nombreUsuario, setNombreUsuario] = useState(null);
     const [contrasena, setContrasena] = useState(null);
     const { height } = useWindowDimensions();
@@ -55,7 +55,7 @@ const SignInScreen = () => {
 
     const onForgotPwdPressed = () =>{
 
-        console.warn('Forgot password?')
+        navigation.navigate('ForgotPassword')
 
     }
 
@@ -72,9 +72,7 @@ const SignInScreen = () => {
     }
 
     const onSignUpPressed = () =>{
-
-        console.warn('Create an account')
-
+        navigation.navigate('CreatePerson')
     }
 
     return(

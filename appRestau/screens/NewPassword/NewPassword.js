@@ -5,7 +5,7 @@ import CustomImput from '../../elements/login/customImput';
 import CustomButton from '../../elements/login/customButton';
 import CustomButton2 from '../../elements/login/customButton2';
 
-const NewPassword = () => {
+const NewPassword = ({navigation}) => {
     const {code, setCode} = useState('');
     const {password, setPassword} = useState('');
     const { height } = useWindowDimensions();
@@ -18,13 +18,13 @@ const NewPassword = () => {
 
     const onSignInPressed = () =>{
 
-        console.warn('Sign In')
+        navigation.navigate('SignIn')
 
     }
 
     const onSignUpPressed = () =>{
 
-        console.warn('Sign Up')
+        navigation.navigate('SignUp')
 
     }
 

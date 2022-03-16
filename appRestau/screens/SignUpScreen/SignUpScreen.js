@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, Alert, TextInput } from 'react-native';
-import CustomImput from '../../elements/login/customImput';
+import { NavigationContainer } from '@react-navigation/native';
 import CustomButton from '../../elements/login/customButton';
 import CustomButton2 from '../../elements/login/customButton2';
 
-const SignUpScreen = () => {
+const SignUpScreen = ({navigation}) => {
+    const [identidad, setIdentidad] = useState('');
     const [nombreUsuario, setNombreUsuario] = useState('');
     const [correo, setCorreo] = useState('');
     const [contrasena, setContrasena] = useState('');
@@ -13,7 +14,7 @@ const SignUpScreen = () => {
 
     const onRegisterPressed = async () =>{
 
-        if(!nombreUsuario || !correo || !contrasena || !passwordConfirm){
+        if(!identidad || !nombreUsuario || !correo || !contrasena || !passwordConfirm){
             console.log("Debe llenar todos los campos obligatorios");
             Alert.alert("Portales Restaurant", "Ingrese todos los campos");
         }
@@ -33,6 +34,7 @@ const SignUpScreen = () => {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
+                        identidad: identidad,
                         nombreUsuario: nombreUsuario,
                         correo: correo,
                         contrasena: contrasena,
@@ -42,12 +44,7 @@ const SignUpScreen = () => {
                 
                 const json = await res.json();
                 console.log(json);
-                Alert.alert("Portales Restaurant", json.msg);
-                // if(!res){
-                //     Alert.alert("Portales Restaurant", "Usuario Creado");
-                // }else{
-                //     Alert.alert("Portales Restaurant", JSON.stringify(mensaje));
-                // }                
+                Alert.alert("Portales Restaurant", json.msj);               
 
             } catch (error) {
                 console.log(error);
@@ -70,7 +67,7 @@ const SignUpScreen = () => {
 
     const onSignInPressed = () =>{
 
-        console.warn('Sign In')
+        navigation.navigate('SignIn')
 
     }
 
@@ -83,6 +80,12 @@ const SignUpScreen = () => {
                 <Text style={styles.title}>Create an Account</Text>
 
 
+                <TextInput 
+                    style={styles.input}
+                    placeholder="Identidad" 
+                    value={identidad} 
+                    onChangeText={setIdentidad} 
+                />
                 <TextInput 
                     style={styles.input}
                     placeholder="Usuario" 
