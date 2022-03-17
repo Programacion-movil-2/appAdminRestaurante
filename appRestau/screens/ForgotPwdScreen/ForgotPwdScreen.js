@@ -32,7 +32,8 @@ const ForgotPwdScreen = ({navigation}) => {
 
                 const json = await respt.json();
                 console.log(json);
-                Alert.alert("Portales Restaurant", json.msg);
+                Alert.alert("Portales Restaurant", json.msj);
+                navigation.navigate('NewPassword');
 
             } catch (error) {
                 console.log(error);

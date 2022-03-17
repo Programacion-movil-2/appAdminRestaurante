@@ -38,7 +38,7 @@ const CreatePerson = ({navigation}) => {
 
                 const json = await res.json();
                 Alert.alert("Portales Restaurant", json.msj);
-
+                onCreateAPressed();
             } catch (error) {
                 console.log(error);
                 Alert.alert("Portales Restaurant", "Error");

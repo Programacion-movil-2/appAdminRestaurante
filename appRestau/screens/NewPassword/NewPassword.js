@@ -1,18 +1,49 @@
 import React, {useState} from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, useWindowDimensions, TextInput } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView, useWindowDimensions, TextInput, Alert } from 'react-native';
 import Logo from '../../assets/logoportalesw-preview.png';
 import CustomImput from '../../elements/login/customImput';
 import CustomButton from '../../elements/login/customButton';
 import CustomButton2 from '../../elements/login/customButton2';
 
 const NewPassword = ({navigation}) => {
-    const {code, setCode} = useState('');
-    const {password, setPassword} = useState('');
+    const [code, setCode] = useState('');
+    const [password, setPassword] = useState('');
     const { height } = useWindowDimensions();
 
-    const onSubmitPressed = () =>{
+    const onSubmitPressed = async () =>{
 
-        console.warn('Password Changed');
+        if(!code || !password){
+            console.log("Ingrese todos los datos obligatorios");
+            Alert.alert("Portales Restaurant", "Ingrese todos los datos obligatorios");
+        }
+        else{
+            
+            try {
+                const respt = await fetch('http://192.168.0.111:5000/api/usuarios/modificarContrasena', {
+
+                    method: 'PUT',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        pin: code,
+                        contrasena: password
+                    })
+
+                });
+
+                const json = await respt.json();
+                console.log(json);
+                Alert.alert("Portales Restaurant", json.msj);
+                navigation.navigate('SignIn');
+
+            } catch (error) {
+                console.log(error);
+                Alert.alert("Portales Restaurant", "Error");
+            }
+
+        }
 
     }
 
@@ -41,16 +72,18 @@ const NewPassword = ({navigation}) => {
                     resizeMode="contain" 
                 /> 
 
-                <CustomImput 
+                <TextInput 
+                    style={styles.input}
                     placeholder="Code" 
                     value={code} 
-                    setValue={setCode} 
+                    onChangeText={setCode} 
                 />
 
-                <CustomImput 
+                <TextInput 
+                    style={styles.input}
                     placeholder="New Password" 
                     value={password} 
-                    setValue={setPassword} 
+                    onChangeText={setPassword} 
                     secureTextEntry={true}
                 />
 
@@ -120,6 +153,21 @@ const styles = StyleSheet.create({
 
     text1:{
         color: '#F9F8FC'
+    },
+
+    input:{
+
+        backgroundColor: 'white',
+        width: '100%',
+        borderColor: '#e8e8e8',
+        borderWidth: 1,
+        borderRadius: 5,
+
+        paddingHorizontal: 10,
+        marginVertical: 10,
+
+        height: 52,
+        fontSize: 16,
     }
 
 })

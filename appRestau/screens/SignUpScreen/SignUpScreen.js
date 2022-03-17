@@ -44,7 +44,8 @@ const SignUpScreen = ({navigation}) => {
                 
                 const json = await res.json();
                 console.log(json);
-                Alert.alert("Portales Restaurant", json.msj);               
+                Alert.alert("Portales Restaurant", json.msj);
+                onSignInPressed();               
 
             } catch (error) {
                 console.log(error);
