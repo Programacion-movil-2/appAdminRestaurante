@@ -30,13 +30,9 @@
     "react-native-screens": "~3.10.1",
     "react-native-svg": "^12.3.0",
     "react-native-vector-icons": "^9.1.0",
-<<<<<<< HEAD
     "react-native-web": "0.17.1",
-    "react-native-screens": "~3.10.1",
+    
     "expo-font": "~10.0.4"
-=======
-    "react-native-web": "0.17.1"
->>>>>>> ceff7ee53dd44b3e78e677c37352067cf376f63e
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
