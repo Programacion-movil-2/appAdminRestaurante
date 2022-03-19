@@ -2,20 +2,12 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, View, TouchableOpacity, ScrollView, Image, FlatList } from 'react-native';
 import { withTheme, useTheme, ButtonGroup, Text, Card, Button, Icon } from 'react-native-elements';
 import { icons, images, SIZES, SIZE, COLORS, FONT, FONTS } from '../../constants';
+//Const para las imágenes
 
 const users = [
     {
       name: 'Hamburguesa doble, con lechuga',
       avatar: 'burger-restaurant-2.jpg', 
-    },
-    {
-      name: 'thot leader',
-      avatar:
-        'https://images.pexels.com/photos/598745/pexels-photo-598745.jpeg?crop=faces&fit=crop&h=200&w=200&auto=compress&cs=tinysrgb',
-    },
-    {
-      name: 'jsa',
-      avatar: 'https://uifaces.co/our-content/donated/bUkmHPKs.jpg',
     },
   ];
 
@@ -52,7 +44,7 @@ const MyCart = () => {
               borderRadius: SIZES.radius,
             }}
           >
-            <Text style={{ ...FONT.h3 }}>Location</Text>
+            <Text style={{ ...FONT.h3 }}>Carrito de Compras</Text>
           </View>
         </View>
         <TouchableOpacity
@@ -75,6 +67,7 @@ const MyCart = () => {
     );
   }
 
+  /********************************************************************************************************* */
   return(
     <View style={styles.container}>
     {renderHeader()}
@@ -95,20 +88,12 @@ const MyCart = () => {
                     );
                     })}
                 </Card>
+
                 <Card>
-                    <Card.Title>ALISTAS DE POLLO</Card.Title>
-                    {users.map((u, i) => {
-                    return (
-                        <View key={i} style={styles.user}>
-                        <Image
-                            style={styles.image}
-                            resizeMode="cover"
-                            source={{ uri: u.avatar }}
-                        />
-                        <Text style={styles.name}>{u.name}</Text>
-                        </View>
-                    );
-                    })}
+                    <Card.Title>SUSHI</Card.Title>
+                    <Image>
+                      
+                    </Image>
                 </Card>
                 <Card>
                     <Card.Title>CARNE ASADA</Card.Title>
@@ -156,7 +141,7 @@ const MyCart = () => {
                     })}
                 </Card>
                 <Card>
-                    <Card.Title>ALISTAS DE POLLO</Card.Title>
+                    <Card.Title>ALITAS DE POLLO</Card.Title>
                     {users.map((u, i) => {
                     return (
                         <View key={i} style={styles.user}>
@@ -249,8 +234,8 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   image: {
-    width: 30,
-    height: 30,
+    width: 60,
+    height: 50,
     marginRight: 10,
   },
   name: {
