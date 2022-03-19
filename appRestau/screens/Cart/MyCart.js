@@ -6,7 +6,7 @@ import { icons, images, SIZES, SIZE, COLORS, FONT, FONTS } from '../../constants
 const users = [
     {
       name: 'Hamburguesa doble, con lechuga',
-      avatar: 'burger-restaurant-2.jpg',
+      avatar: 'burger-restaurant-2.jpg', 
     },
     {
       name: 'thot leader',
