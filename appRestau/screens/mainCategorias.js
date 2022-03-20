@@ -20,7 +20,7 @@ const MainCategorias = () => {
         obtenerTipo();
     }, [])
 
-   
+
     async function obtenerCategorias() {
         try {
             const respt = await fetch('http://192.168.100.8:5000/api/tipoProductos/listarTipoProducto');
@@ -43,7 +43,7 @@ const MainCategorias = () => {
             const json = await respt.json();
             if (!json) {
                 Alert.alert("Portales Restaurant", json.msj);
-            }else{
+            } else {
                 setRestaurants(json);
                 console.log(json);
             }
@@ -59,7 +59,7 @@ const MainCategorias = () => {
             const json = await tipo.json();
             if (!json) {
                 Alert.alert("Portales Restaurant", json.msj);
-            }else{
+            } else {
                 setTipo(json);
                 console.log(json);
             }
@@ -67,23 +67,43 @@ const MainCategorias = () => {
             console.log(error);
 
         }
-        
+
+    }
+    async function obtenerTipoPrincipal(idTipoProducto) {
+        try {
+            const tipoPrincipal = await fetch('http://192.168.100.8:5000/api/productos/listarProductosDeCategorias?idTipoProducto=' + idTipoProducto);
+
+            const json = await tipoPrincipal.json();
+            if (!json) {
+                Alert.alert("Portales Restaurant", json.msj);
+            } else {
+                setRestaurants(json);
+                console.log(json);
+            }
+        } catch (error) {
+            console.log(error);
+
+        }
+
     }
 
     const [categories, setCategories] = React.useState([])
     const [tipo, setTipo] = React.useState([])
+    const [tipoPrincipal, setTipoPrincipal] = React.useState([])
     const [selectedCategory, setSelectedCategory] = React.useState(null)
     const [restaurants, setRestaurants] = React.useState([])
 
     function onSelectCategory(category) {
-        //listar productos de la categoria
-        obtenerProductos(category.idTipoProducto);
-        obtenerTipo(category.idTipoProducto);
+        if (category.idTipoProducto == 1 || category.idTipoProducto == 2) {
+            obtenerTipoPrincipal(category.idTipoProducto);
+            obtenerTipo(category.idTipoProducto);
+        } else {
+            obtenerProductos(category.idTipoProducto);
+            obtenerTipo(category.idTipoProducto);
+        }
         setSelectedCategory(category)
 
     }
-
-    
 
 
     function renderHeader() {
@@ -263,11 +283,9 @@ const MainCategorias = () => {
                             style={{ flexDirection: 'row' }}
 
                         >
-                            <Text style={{ ...Styles.body3 }}>{tipo.nombre}</Text>
-                            <Text style={{ ...Styles.h3, color: COLORS.darkgray }}>.</Text>
+                            <Text style={{ ...Styles.body3 }}>{tipo.nombre}{tipoPrincipal.nombre}</Text>
+                            <Text style={{ ...Styles.h3, color: COLORS.darkgray }}>...</Text>
                         </View>
-
-
 
                         <Text
                             style={{ ...Styles.body3 }}
