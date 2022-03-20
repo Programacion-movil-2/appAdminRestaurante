@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     SafeAreaView,
     View,
@@ -6,317 +6,84 @@ import {
     StyleSheet,
     TouchableOpacity,
     Image,
-    FlatList
+    FlatList,
+    Alert
 } from 'react-native';
 
 import { icons, images, SIZE, COLORS } from '../constants'
 
 
 const MainCategorias = () => {
+    useEffect(() => {
+        obtenerCategorias();
+        obtenerProductos();
+        obtenerTipo();
+    }, [])
 
-    const categoryData = [
-        {
-            id: 1,
-            name: "Rice",
-            icon: icons.rice_bowl,
-        },
-        {
-            id: 2,
-            name: "Noodles",
-            icon: icons.noodle,
-        },
-        {
-            id: 3,
-            name: "Hot Dogs",
-            icon: icons.hotdog,
-        },
-        {
-            id: 4,
-            name: "Salads",
-            icon: icons.salad,
-        },
-        {
-            id: 5,
-            name: "Burgers",
-            icon: icons.hamburger,
-        },
-        {
-            id: 6,
-            name: "Pizza",
-            icon: icons.pizza,
-        },
-        {
-            id: 7,
-            name: "Snacks",
-            icon: icons.fries,
-        },
-        {
-            id: 8,
-            name: "Sushi",
-            icon: icons.sushi,
-        },
-        {
-            id: 9,
-            name: "Desserts",
-            icon: icons.donut,
-        },
-        {
-            id: 10,
-            name: "Drinks",
-            icon: icons.drink,
-        },
+   
+    async function obtenerCategorias() {
+        try {
+            const respt = await fetch('http://192.168.100.8:5000/api/tipoProductos/listarTipoProducto');
 
-    ]
+            const json = await respt.json();
+            setCategories(json);
+            console.log(json);
 
-    // price rating
-    const affordable = 1
-    const fairPrice = 2
-    const expensive = 3
 
-    const restaurantData = [
-        {
-            id: 1,
-            name: "ByProgrammers Burger",
-            rating: 4.8,
-            categories: [5, 7],
-            priceRating: affordable,
-            photo: images.burger_restaurant_1,
-            duration: "30 - 45 min",
-            courier: {
-                avatar: images.avatar_1,
-                name: "Amy"
-            },
-            menu: [
-                {
-                    menuId: 1,
-                    name: "Crispy Chicken Burger",
-                    photo: images.crispy_chicken_burger,
-                    description: "Burger with crispy chicken, cheese and lettuce",
-                    calories: 200,
-                    price: 10
-                },
-                {
-                    menuId: 2,
-                    name: "Crispy Chicken Burger with Honey Mustard",
-                    photo: images.honey_mustard_chicken_burger,
-                    description: "Crispy Chicken Burger with Honey Mustard Coleslaw",
-                    calories: 250,
-                    price: 15
-                },
-                {
-                    menuId: 3,
-                    name: "Crispy Baked French Fries",
-                    photo: images.baked_fries,
-                    description: "Crispy Baked French Fries",
-                    calories: 194,
-                    price: 8
-                }
-            ]
-        },
-        {
-            id: 2,
-            name: "ByProgrammers Pizza",
-            rating: 4.8,
-            categories: [2, 4, 6],
-            priceRating: expensive,
-            photo: images.pizza_restaurant,
-            duration: "15 - 20 min",
-            courier: {
-                avatar: images.avatar_2,
-                name: "Jackson"
-            },
-            menu: [
-                {
-                    menuId: 4,
-                    name: "Hawaiian Pizza",
-                    photo: images.hawaiian_pizza,
-                    description: "Canadian bacon, homemade pizza crust, pizza sauce",
-                    calories: 250,
-                    price: 15
-                },
-                {
-                    menuId: 5,
-                    name: "Tomato & Basil Pizza",
-                    photo: images.pizza,
-                    description: "Fresh tomatoes, aromatic basil pesto and melted bocconcini",
-                    calories: 250,
-                    price: 20
-                },
-                {
-                    menuId: 6,
-                    name: "Tomato Pasta",
-                    photo: images.tomato_pasta,
-                    description: "Pasta with fresh tomatoes",
-                    calories: 100,
-                    price: 10
-                },
-                {
-                    menuId: 7,
-                    name: "Mediterranean Chopped Salad ",
-                    photo: images.salad,
-                    description: "Finely chopped lettuce, tomatoes, cucumbers",
-                    calories: 100,
-                    price: 10
-                }
-            ]
-        },
-        {
-            id: 3,
-            name: "ByProgrammers Hotdogs",
-            rating: 4.8,
-            categories: [3],
-            priceRating: expensive,
-            photo: images.hot_dog_restaurant,
-            duration: "20 - 25 min",
-            courier: {
-                avatar: images.avatar_3,
-                name: "James"
-            },
-            menu: [
-                {
-                    menuId: 8,
-                    name: "Chicago Style Hot Dog",
-                    photo: images.chicago_hot_dog,
-                    description: "Fresh tomatoes, all beef hot dogs",
-                    calories: 100,
-                    price: 20
-                }
-            ]
-        },
-        {
-            id: 4,
-            name: "ByProgrammers Sushi",
-            rating: 4.8,
-            categories: [8],
-            priceRating: expensive,
-            photo: images.japanese_restaurant,
-            duration: "10 - 15 min",
-            courier: {
-                avatar: images.avatar_4,
-                name: "Ahmad"
-            },
-            menu: [
-                {
-                    menuId: 9,
-                    name: "Sushi sets",
-                    photo: images.sushi,
-                    description: "Fresh salmon, sushi rice, fresh juicy avocado",
-                    calories: 100,
-                    price: 50
-                }
-            ]
-        },
-        {
-            id: 5,
-            name: "ByProgrammers Cuisine",
-            rating: 4.8,
-            categories: [1, 2],
-            priceRating: affordable,
-            photo: images.noodle_shop,
-            duration: "15 - 20 min",
-            courier: {
-                avatar: images.avatar_4,
-                name: "Muthu"
-            },
-            menu: [
-                {
-                    menuId: 10,
-                    name: "Kolo Mee",
-                    photo: images.kolo_mee,
-                    description: "Noodles with char siu",
-                    calories: 200,
-                    price: 5
-                },
-                {
-                    menuId: 11,
-                    name: "Sarawak Laksa",
-                    photo: images.sarawak_laksa,
-                    description: "Vermicelli noodles, cooked prawns",
-                    calories: 300,
-                    price: 8
-                },
-                {
-                    menuId: 12,
-                    name: "Nasi Lemak",
-                    photo: images.nasi_lemak,
-                    description: "A traditional Malay rice dish",
-                    calories: 300,
-                    price: 8
-                },
-                {
-                    menuId: 13,
-                    name: "Nasi Briyani with Mutton",
-                    photo: images.nasi_briyani_mutton,
-                    description: "A traditional Indian rice dish with mutton",
-                    calories: 300,
-                    price: 8
-                },
 
-            ]
-        },
-        {
+        } catch (error) {
+            console.log(error);
 
-            id: 6,
-            name: "ByProgrammers Dessets",
-            rating: 4.9,
-            categories: [9, 10],
-            priceRating: affordable,
-            photo: images.kek_lapis_shop,
-            duration: "35 - 40 min",
-            courier: {
-                avatar: images.avatar_1,
-                name: "Jessie"
-            },
-            menu: [
-                {
-                    menuId: 12,
-                    name: "Teh C Peng",
-                    photo: images.teh_c_peng,
-                    description: "Three Layer Teh C Peng",
-                    calories: 100,
-                    price: 2
-                },
-                {
-                    menuId: 13,
-                    name: "ABC Ice Kacang",
-                    photo: images.ice_kacang,
-                    description: "Shaved Ice with red beans",
-                    calories: 100,
-                    price: 3
-                },
-                {
-                    menuId: 14,
-                    name: "Kek Lapis",
-                    photo: images.kek_lapis,
-                    description: "Layer cakes",
-                    calories: 300,
-                    price: 20
-                }
-            ]
         }
-    ]
+    }
+    async function obtenerProductos(idTipoProducto = 4) {
+        try {
+            const respt = await fetch('http://192.168.100.8:5000/api/productos/listarProductosTipo?idTipoProducto=' + idTipoProducto);
 
-    const [categories, setCategories] = React.useState(categoryData)
+            const json = await respt.json();
+            if (!json) {
+                Alert.alert("Portales Restaurant", json.msj);
+            }else{
+                setRestaurants(json);
+                console.log(json);
+            }
+        } catch (error) {
+            console.log(error);
+
+        }
+    }
+    async function obtenerTipo(idTipoProducto = 4) {
+        try {
+            const tipo = await fetch('http://192.168.100.8:5000/api/tipoProductos/listarTipo?idTipoProducto=' + idTipoProducto);
+
+            const json = await tipo.json();
+            if (!json) {
+                Alert.alert("Portales Restaurant", json.msj);
+            }else{
+                setTipo(json);
+                console.log(json);
+            }
+        } catch (error) {
+            console.log(error);
+
+        }
+        
+    }
+
+    const [categories, setCategories] = React.useState([])
+    const [tipo, setTipo] = React.useState([])
     const [selectedCategory, setSelectedCategory] = React.useState(null)
-    const [restaurants, setRestaurants] = React.useState(restaurantData)
+    const [restaurants, setRestaurants] = React.useState([])
 
     function onSelectCategory(category) {
-        //filter restaurant
-        let restaurantList = restaurantData.filter(a => a.categories.includes(category.id))
-
-        setRestaurants(restaurantList)
-
+        //listar productos de la categoria
+        obtenerProductos(category.idTipoProducto);
+        obtenerTipo(category.idTipoProducto);
         setSelectedCategory(category)
+
     }
 
-    function getCategoryNameById(id) {
-        let category = categories.filter(a => a.id == id)
-
-        if (category.length > 0)
-            return category[0].name
-
-        return ""
-    }
+    
 
 
     function renderHeader() {
@@ -379,7 +146,7 @@ const MainCategorias = () => {
                     style={{
                         padding: SIZE.padding,
                         paddingBottom: SIZE.padding * 2,
-                        backgroundColor: (selectedCategory?.id == item.id) ? COLORS.primary : COLORS.white,
+                        backgroundColor: (selectedCategory?.id == item.idTipoProducto) ? COLORS.primary : COLORS.white,
                         borderRadius: SIZE.radius,
                         alignItems: "center",
                         justifyContent: "center",
@@ -395,29 +162,21 @@ const MainCategorias = () => {
                             borderRadius: 25,
                             alignItems: "center",
                             justifyContent: "center",
-                            backgroundColor: (selectedCategory?.id == item.id) ?
+                            backgroundColor: (selectedCategory?.id == item.idTipoProducto) ?
                                 COLORS.white : COLORS.lightGray
 
                         }}
                     >
-                        <Image
-                            source={item.icon}
-                            resizeMode="contain"
-                            style={{
-                                width: 30,
-                                height: 30
-                            }}
-                        />
                     </View>
 
                     <Text
                         style={{
                             marginTop: SIZE.padding,
-                            color: (selectedCategory?.id == item.id) ? COLORS.white : COLORS.black,
+                            color: (selectedCategory?.id == item.idTipoProducto) ? COLORS.white : COLORS.black,
                             ...Styles.body5
                         }}
                     >
-                        {item.name}
+                        {item.nombre}
                     </Text>
                 </TouchableOpacity>
             )
@@ -431,22 +190,21 @@ const MainCategorias = () => {
                     data={categories}
                     horizontal
                     showsHorizontalscrollIndicator={false}
-                    keyExtractor={item => `${item.id}`}
+                    keyExtractor={item => `${item.idTipoProducto}`}
                     renderItem={renderItem}
                     contentContainerStyle={{ paddingVertical: SIZE.padding * 2 }}
                 />
             </View>
         )
     }
-
     function renderRestaurantList() {
         const renderItem = ({ item }) => (
             <TouchableOpacity
                 style={{ marginBottom: SIZE.padding * 2 }}
-                onPress={() => navigation.navigate("Restaurant", {
-                    item,
-                    currentLocation
-                })}
+            /*onPress={() => navigation.navigate("Restaurant", {
+                item,
+                currentLocation
+            })}*/
             >
                 {/* Image */}
                 <View
@@ -455,7 +213,7 @@ const MainCategorias = () => {
                     }}
                 >
                     <Image
-                        source={item.photo}
+                        source={{ uri: item.imagen }}
                         resizeMode="cover"
                         style={{
                             width: "100%",
@@ -478,12 +236,12 @@ const MainCategorias = () => {
                             ...Styles.shadow
                         }}
                     >
-                        <Text style={{ ...Styles.h4 }}>{item.duration}</Text>
+                        <Text style={{ ...Styles.h4 }}>15-20 min</Text>
                     </View>
                 </View>
-                
+
                 {/* Restaurant Info */}
-                <Text style={{ ...Styles.body2 }}>{item.name}</Text>
+                <Text style={{ ...Styles.body2 }}>{item.nombre}</Text>
 
                 <View
                     style={{
@@ -499,43 +257,30 @@ const MainCategorias = () => {
                             marginLeft: 10
                         }}
                     >
-                        {
-                            item.categories.map((categoryId) => {
-                                return (
-                                    <View
-                                        style={{ flexDirection: 'row' }}
-                                        key={categoryId}
-                                    >
-                                        <Text style={{ ...Styles.body3 }}>{getCategoryNameById(categoryId)}</Text>
-                                        <Text style={{ ...Styles.h3, color: COLORS.darkgray }}> . </Text>
-                                    </View>
-                                )
-                            })
-                        }
 
-                        {/* Price */}
-                        {
-                            [1, 2, 3].map((priceRating) => (
-                                <Text
-                                    key={priceRating}
-                                    style={{
-                                        ...Styles.body3,
-                                        color: (priceRating <= item.priceRating) ? COLORS.black : COLORS.darkgray
-                                    }}
-                                >$</Text>
-                            ))
-                        }
+
+                        <View
+                            style={{ flexDirection: 'row' }}
+
+                        >
+                            <Text style={{ ...Styles.body3 }}>{tipo.nombre}</Text>
+                            <Text style={{ ...Styles.h3, color: COLORS.darkgray }}>.</Text>
+                        </View>
+
+
+
+                        <Text
+                            style={{ ...Styles.body3 }}
+                        >L{item.precio}</Text>
+
                     </View>
                 </View>
-
-
             </TouchableOpacity>
         )
-
         return (
             <FlatList
                 data={restaurants}
-                keyExtractor={item => `${item.id}`}
+                keyExtractor={item => `${item.idProducto}`}
                 renderItem={renderItem}
                 contentContainerStyle={{
                     paddingHorizontal: SIZE.padding * 2,
@@ -544,11 +289,14 @@ const MainCategorias = () => {
             />
         )
     }
+
+
     return (
         <SafeAreaView style={Styles.container}>
             {renderHeader()}
             {renderMainGategories()}
             {renderRestaurantList()}
+
         </SafeAreaView>
     )
 }
