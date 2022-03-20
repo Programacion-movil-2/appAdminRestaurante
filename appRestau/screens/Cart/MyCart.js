@@ -1,14 +1,11 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, View, TouchableOpacity, ScrollView, Image, FlatList } from 'react-native';
 import { withTheme, useTheme, ButtonGroup, Text, Card, Button, Icon } from 'react-native-elements';
-import { icons, images, SIZES, SIZE, COLORS, FONT, FONTS } from '../../constants';
-//Const para las imágenes
+import { icons, SIZES, SIZE, COLORS, FONT, FONTS, images } from '../../constants';
+
 
 const users = [
-    {
-      name: 'Hamburguesa doble, con lechuga',
-      avatar: 'burger-restaurant-2.jpg', 
-    },
+    
   ];
 
 const MyCart = () => {
@@ -73,103 +70,127 @@ const MyCart = () => {
     {renderHeader()}
         <ScrollView>
             <View>
-                <Card>
-                    <Card.Title>HAMBURGUESA</Card.Title>
-                    {users.map((u, i) => {
-                    return (
-                        <View key={i} style={styles.user}>
-                        <Image
-                            style={styles.image}
-                            resizeMode="cover"
-                            
-                        />
-                        <Text style={styles.name}>{u.name}</Text>
-                        </View>
-                    );
-                    })}
-                </Card>
-
-                <Card>
-                    <Card.Title>SUSHI</Card.Title>
-                    <Image>
+                <View>
+                    <Card>
+                      <Card.Title style={{margin: 6, textAlign:'center'}}>
+                        HAMBURGUESA ANGUS</Card.Title>
                       
-                    </Image>
-                </Card>
-                <Card>
-                    <Card.Title>CARNE ASADA</Card.Title>
-                    {users.map((u, i) => {
-                    return (
-                        <View key={i} style={styles.user}>
-                        <Image
-                            style={styles.image}
-                            resizeMode="cover"
-                            source={{ uri: u.avatar }}
-                        />
-                        <Text style={styles.name}>{u.name}</Text>
-                        </View>
-                    );
-                    })}
-                </Card>
-                <Card>
-                    <Card.Title>ALISTAS DE POLLO</Card.Title>
-                    {users.map((u, i) => {
-                    return (
-                        <View key={i} style={styles.user}>
-                        <Image
-                            style={styles.image}
-                            resizeMode="cover"
-                            source={{ uri: u.avatar }}
-                        />
-                        <Text style={styles.name}>{u.name}</Text>
-                        </View>
-                    );
-                    })}
-                </Card>
-                <Card>
-                    <Card.Title>ALISTAS DE POLLO</Card.Title>
-                    {users.map((u, i) => {
-                    return (
-                        <View key={i} style={styles.user}>
-                        <Image
-                            style={styles.image}
-                            resizeMode="cover"
-                            source={{ uri: u.avatar }}
-                        />
-                        <Text style={styles.name}>{u.name}</Text>
-                        </View>
-                    );
-                    })}
-                </Card>
-                <Card>
-                    <Card.Title>ALITAS DE POLLO</Card.Title>
-                    {users.map((u, i) => {
-                    return (
-                        <View key={i} style={styles.user}>
-                        <Image
-                            style={styles.image}
-                            resizeMode="cover"
-                            source={{ uri: u.avatar }}
-                        />
-                        <Text style={styles.name}>{u.name}</Text>
-                        </View>
-                    );
-                    })}
-                </Card>
-                <Card>
-                    <Card.Title>ALISTAS DE POLLO</Card.Title>
-                    {users.map((u, i) => {
-                    return (
-                        <View key={i} style={styles.user}>
-                        <Image
-                            style={styles.image}
-                            resizeMode="cover"
-                            source={{ uri: u.avatar }}
-                        />
-                        <Text style={styles.name}>{u.name}</Text>
-                        </View>
-                    );
-                    })}
-                </Card>
+                      <Card.Image
+                        style={{ padding: 0 }}
+                        source={{
+                          uri:
+                            'http://bostonschihuahua.com.mx/wp-content/uploads/2015/09/sandyhamb-bbqbluecheese-2x.jpg',
+                        }}
+                          />
+                          <Text style={{ marginBottom: 10, margin: 14, textAlign:'center' }}>
+                          Jugosa hamburguesa cubierta con crujientes tiras de cebolla y blue cheese, 
+                          bañados con salsa BBQ, acompañada de ensalada de col tipo Baja.
+                          </Text>
+
+                          <Button
+                              loading={false}
+                              loadingProps={{ size: 'small', color: 'white' }}
+                              buttonStyle={{
+                                backgroundColor: 'rgb(21, 19, 19 )',
+                                borderRadius: 5,
+                                marginLeft: 50,
+                                marginRight: 0,
+                                marginBottom: 0,
+                              }}
+                              titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
+                              containerStyle={{
+                              marginHorizontal: 50,
+                              height: 50,
+                              width: 200,
+                              marginVertical: 10,
+                              }}
+                              onPress={() => console.log('aye')}
+                              title="-   1   +"
+                          />
+                  </Card>
+                </View>
+
+                <View>
+                    <Card>
+                      <Card.Title style={{margin: 6, textAlign:'center'}}>
+                        LASAÑA ITALIANA</Card.Title>
+                      
+                      <Card.Image
+                        style={{ padding: 0 }}
+                        source={{
+                          uri:
+                            'https://pm1.narvii.com/6719/d40f6350d1db983e352b5c865938f2880b51f2ff_hq.jpg',
+                        }}
+                          />
+                          <Text style={{ marginBottom: 10, margin: 14, textAlign:'center' }}>
+                          Deliciosa pasta italiana cortada en forma de anchas cintas que pueden poseer 
+                          una forma lisa u ondulada, incluso distintos colores dependiendo de la verdura 
+                          con la que se deseen entintar.
+                          </Text>
+
+                          <Button
+                              loading={false}
+                              loadingProps={{ size: 'small', color: 'white' }}
+                              buttonStyle={{
+                                backgroundColor: 'rgb(21, 19, 19 )',
+                                borderRadius: 5,
+                                marginLeft: 50,
+                                marginRight: 0,
+                                marginBottom: 0,
+                              }}
+                              titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
+                              containerStyle={{
+                              marginHorizontal: 50,
+                              height: 50,
+                              width: 200,
+                              marginVertical: 10,
+                              }}
+                              onPress={() => console.log('aye')}
+                              title="-   1   +"
+                          />
+                  </Card>
+                </View>
+
+                <View>
+                    <Card>
+                      <Card.Title style={{margin: 6, textAlign:'center'}}
+                      >SUSHI</Card.Title>
+                      
+                      <Card.Image
+                        style={{ padding: 0 }}
+                        source={{
+                          uri:
+                            'https://www.lavanguardia.com/files/og_thumbnail/uploads/2019/10/15/5e9977d4903ac.jpeg',
+                        }}
+                          />
+                          <Text style={{ marginBottom: 10, margin: 14, textAlign:'center' }}>
+                          Seleccionar frutas y verduras frescas para hacer platos de alta calidad 
+                          (como aguacate, mango y zanahorias), disfruta en familia de este plato esquisito.
+                          </Text>
+
+                          <Button
+                              loading={false}
+                              loadingProps={{ size: 'small', color: 'white' }}
+                              buttonStyle={{
+                                backgroundColor: 'rgb(21, 19, 19 )',
+                                borderRadius: 5,
+                                marginLeft: 50,
+                                marginRight: 0,
+                                marginBottom: 0,
+                              }}
+                              titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
+                              containerStyle={{
+                              marginHorizontal: 50,
+                              height: 50,
+                              width: 200,
+                              marginVertical: 10,
+                              }}
+                              onPress={() => console.log('aye')}
+                              title="-   1   +"
+                          />
+                  </Card>
+                </View>
+
                 <View style={styles.buttonsContainer}>
                     <Button
                         title="Procesar mi orden"
