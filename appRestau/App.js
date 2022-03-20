@@ -1,16 +1,15 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import Factura from './screens/Facturacion/Factura';
-import MetodoPago from './screens/Facturacion/MetodoPago';
-import DetalleEfectivo from './screens/Facturacion/DetalleEfectivo';
-import DetalleTarjeta from './screens/Facturacion/DetalleTarjeta';
+import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaView, StyleSheet, Text, View, ImageBackground } from 'react-native';
+
+import LNavigation from './navigation/menu';
 
 export default class App extends React.Component {
   render(){
     return (
-      <SafeAreaView style={styles.container2}>
-        <Factura/>
-      </SafeAreaView>
+            
+        <LNavigation />
+  
     );
   }
   
@@ -29,13 +28,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F9F8FC',
     alignItems: 'center',
-    padding: 50,
+    padding: 20,
     //justifyContent: 'center',
   },
-  container2: {
-    flex: 1,
-    backgroundColor: '#F9F8FC',
-    paddingTop: 30,
-  }
 
 });
