@@ -86,10 +86,15 @@ const MainCategorias = () => {
         }
 
     }
-
+    function prueba(id) {
+        if (id == 1) {
+            return "comida"
+        } else {
+            return "Bebida"
+        }
+    }
     const [categories, setCategories] = React.useState([])
     const [tipo, setTipo] = React.useState([])
-    const [tipoPrincipal, setTipoPrincipal] = React.useState([])
     const [selectedCategory, setSelectedCategory] = React.useState(null)
     const [restaurants, setRestaurants] = React.useState([])
 
@@ -175,6 +180,8 @@ const MainCategorias = () => {
                     }}
                     onPress={() => onSelectCategory(item)}
                 >
+                    
+                    
                     <View
                         style={{
                             width: 50,
@@ -187,7 +194,16 @@ const MainCategorias = () => {
 
                         }}
                     >
+                         <Image
+                            source={icons.donut}
+                            resizeMode="contain"
+                            style={{
+                                width: 30,
+                                height: 30
+                            }}
+                        />
                     </View>
+
 
                     <Text
                         style={{
@@ -283,8 +299,10 @@ const MainCategorias = () => {
                             style={{ flexDirection: 'row' }}
 
                         >
-                            <Text style={{ ...Styles.body3 }}>{tipo.nombre}{tipoPrincipal.nombre}</Text>
-                            <Text style={{ ...Styles.h3, color: COLORS.darkgray }}>...</Text>
+
+                            <Text style={{ ...Styles.body3 }}>{tipo.nombre}---</Text>
+                            <Text style={{ ...Styles.body3 }}>{prueba(tipo.idTipoPrincipal)}</Text>
+                            <Text style={{ ...Styles.h3, color: COLORS.darkgray }}>---</Text>
                         </View>
 
                         <Text
