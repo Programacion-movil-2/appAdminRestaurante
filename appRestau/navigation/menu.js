@@ -8,6 +8,11 @@ import SignUpScreen from '../screens/SignUpScreen/SignUpScreen';
 import ConfirmEmail from '../screens/ConfirmEmail/ConfirmEmail';
 import ForgotPwdScreen from '../screens/ForgotPwdScreen/ForgotPwdScreen';
 import NewPassword from '../screens/NewPassword/NewPassword';
+import MainCategories from '../screens/mainCategorias';
+import ProductsDetails from '../screens/Restaurant';
+import Cart from '../screens/Cart/MyCart';
+import CashDetails from '../screens/Facturacion/DetalleEfectivo';
+import PaymentMethod from '../screens/Facturacion/metodoPago';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +36,11 @@ export default function LNavigation(){
                 <Stack.Screen name="ForgotPassword" component={ForgotPwdScreen} />
                 <Stack.Screen name="NewPassword" component={NewPassword} />
                 <Stack.Screen name="ConfirmEmail" component={ConfirmEmail} />
+                <Stack.Screen name="MainCategories" component={MainCategories} />
+                <Stack.Screen name="ProductsDetails" component={ProductsDetails} />
+                <Stack.Screen name="Cart" component={Cart} />
+                <Stack.Screen name="CashDetails" component={CashDetails} />
+                <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
 
             </Stack.Navigator>
 

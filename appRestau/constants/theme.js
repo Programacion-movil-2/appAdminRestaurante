@@ -117,6 +117,6 @@ export const FONTS = {
 };
 
 
-const appTheme = { COLORS, SIZES, FONTS, SIZE, FONT };
+const appTheme = { COLORS, SIZES, FONTS, FONT, SIZE };
 
 export default appTheme;
