@@ -3,50 +3,60 @@ import React from "react";
 import { Text, useTheme, Button, ButtonGroup, withTheme, Input } from "react-native-elements";
 import { icons, images, SIZES, SIZE, COLORS, FONT, FONTS } from '../../constants';
 
-const DetalleEfectivo = () => {
+const DetalleEfectivo = ({ navigation }) => {
 
     function renderHeader() {
         return (
-            <View style={{ flexDirection: 'row', height: 50 }}>
+            <View style={{ flexDirection: 'row' }}>
                 <TouchableOpacity
                     style={{
                         width: 50,
-                        paddingLeft: SIZES.padding * 2,
+                        paddingLeft: SIZE.padding * 2,
                         justifyContent: 'center'
                     }}
+                    onPress={() => navigation.goBack()}
                 >
                     <Image
-                        source={icons.nearby}
-                        resizeSMode="contain"
+                        source={icons.back}
+                        resizeMode="contain"
                         style={{
                             width: 30,
                             height: 30
                         }}
                     />
                 </TouchableOpacity>
-                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    
+                {/* Restaurant Name Section */}
+                <View
+                    style={{
+                        flex: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}
+                >
                     <View
                         style={{
-                            width: '70%',
-                            height: "100%",
-                            backgroundColor: COLORS.lightGray3,
+                            height: 50,
                             alignItems: 'center',
                             justifyContent: 'center',
-                            borderRadius: SIZES.radius
+                            paddingHorizontal: SIZE.padding * 3,
+                            borderRadius: SIZE.radius,
+                            backgroundColor: COLORS.lightGray3
                         }}
                     >
-                        <Text style={{ ...FONT.h3 }}>Location</Text>
+                        <Text style ={styles.h5} >Carrito de Compras</Text>
                     </View>
                 </View>
+    
                 <TouchableOpacity
                     style={{
                         width: 50,
-                        paddingRight: SIZES.padding * 2,
+                        paddingRight: SIZE.padding * 2,
                         justifyContent: 'center'
                     }}
                 >
                     <Image
-                        source={icons.basket}
+                        //source={icons.basket}
                         resizeMode="contain"
                         style={{
                             width: 30,
@@ -123,6 +133,7 @@ const DetalleEfectivo = () => {
                             marginVertical: 10,
                         }}
                         titleStyle={{ fontWeight: 'bold' }}
+                        onPress={() => navigation.navigate('Billing')}
                     />
                 </View>
             </View>

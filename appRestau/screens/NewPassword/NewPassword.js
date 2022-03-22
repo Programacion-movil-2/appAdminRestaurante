@@ -24,7 +24,7 @@ const NewPassword = ({navigation}) => {
         else{
             
             try {
-                const respt = await fetch('http://192.168.0.111:5000/api/usuarios/modificarContrasena', {
+                const respt = await fetch('http://192.168.0.3:5000/api/usuarios/modificarContrasena', {
 
                     method: 'PUT',
                     headers: {

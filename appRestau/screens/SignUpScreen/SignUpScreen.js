@@ -25,7 +25,7 @@ const SignUpScreen = ({navigation}) => {
         }
         else{
             try {
-                const res = await fetch('http://192.168.0.111:5000/api/usuarios/guardar', {
+                const res = await fetch('http://192.168.0.3:5000/api/usuarios/guardar', {
 
                     method: 'POST',
                     headers: {

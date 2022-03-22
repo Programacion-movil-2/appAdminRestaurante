@@ -18,7 +18,7 @@ const ForgotPwdScreen = ({navigation}) => {
         }
         else 
             try {
-                const respt = await fetch('http://192.168.0.111:5000/api/autenticacion/recuperarCorreo', {
+                const respt = await fetch('http://192.168.0.3:5000/api/autenticacion/recuperarCorreo', {
 
                     method: 'POST',
                     headers: {
