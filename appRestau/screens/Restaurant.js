@@ -127,7 +127,7 @@ const Restaurant = ({ route, navigation }) => {
                     }}
                 >
                     <Image
-                        source={icons.list}
+                        source={icons.basket}
                         resizeMode="contain"
                         style={{
                             width: 30,
@@ -315,10 +315,11 @@ const Restaurant = ({ route, navigation }) => {
                                 alignItems: 'center',
                                 borderRadius: SIZE.radius
                             }}
-                            onPress={() => navigation.navigate("OrderDelivery", {
-                                restaurant: restaurant,
+                            // onPress={() => navigation.navigate("OrderDelivery", {
+                            //     restaurant: restaurant,
                             
-                            })}
+                            // })}
+                            onPress={() => navigation.navigate('MainCategories')}
                         >
                             <Text style={{ color: COLORS.white, ...styles.h2 }}>Ordenar</Text>
                         </TouchableOpacity>

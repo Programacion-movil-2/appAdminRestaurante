@@ -40,9 +40,10 @@ const SignInScreen = ({navigation}) => {
                 }else{
                     const toten = json.data.token;
                     await AsyncStorage.setItem('token', toten);
+                    navigation.navigate('MainCategories');
                 }
                 //console.log(token);
-                Alert.alert("Portales Restaurant", json.msj);
+                Alert.alert("Portales Restaurant", json.msj);                
 
             } catch (error) {
                 console.log(error);

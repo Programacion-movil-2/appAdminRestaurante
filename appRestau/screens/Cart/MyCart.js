@@ -8,61 +8,69 @@ const users = [
     
   ];
 
-const MyCart = () => {
+const MyCart = ({navigation}) => {
   function renderHeader() {
     return (
-      <View style={{ flexDirection: "row", height: 50 }}>
-        <TouchableOpacity
-          style={{
-            width: 50,
-            paddingLeft: SIZES.padding * 2,
-            justifyContent: "center",
-          }}
-        >
-          <Image
-            source={icons.nearby}
-            resizeSMode="contain"
-            style={{
-              width: 30,
-              height: 30,
-            }}
-          />
-        </TouchableOpacity>
-        <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        >
-          <View
-            style={{
-              width: "70%",
-              height: "100%",
-              backgroundColor: COLORS.lightGray3,
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: SIZES.radius,
-            }}
-          >
-            <Text style={{ ...FONT.h3 }}>Carrito de Compras</Text>
-          </View>
+        <View style={{ flexDirection: 'row' }}>
+            <TouchableOpacity
+                style={{
+                    width: 50,
+                    paddingLeft: SIZE.padding * 2,
+                    justifyContent: 'center'
+                }}
+                onPress={() => navigation.goBack()}
+            >
+                <Image
+                    source={icons.back}
+                    resizeMode="contain"
+                    style={{
+                        width: 30,
+                        height: 30
+                    }}
+                />
+            </TouchableOpacity>
+
+            {/* Restaurant Name Section */}
+            <View
+                style={{
+                    flex: 1,
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}
+            >
+                <View
+                    style={{
+                        height: 50,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        paddingHorizontal: SIZE.padding * 3,
+                        borderRadius: SIZE.radius,
+                        backgroundColor: COLORS.lightGray3
+                    }}
+                >
+                    <Text style ={styles.h5} >Carrito de Compras</Text>
+                </View>
+            </View>
+
+            <TouchableOpacity
+                style={{
+                    width: 50,
+                    paddingRight: SIZE.padding * 2,
+                    justifyContent: 'center'
+                }}
+            >
+                <Image
+                    //source={icons.basket}
+                    resizeMode="contain"
+                    style={{
+                        width: 30,
+                        height: 30
+                    }}
+                />
+            </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={{
-            width: 50,
-            paddingRight: SIZES.padding * 2,
-            justifyContent: "center",
-          }}
-        >
-          <Image
-            source={icons.basket}
-            resizeMode="contain"
-            style={{
-              width: 30,
-              height: 30,
-            }}
-          />
-        </TouchableOpacity>
-      </View>
-    );
-  }
+    )
+}
 
   /********************************************************************************************************* */
   return(
@@ -208,7 +216,7 @@ const MyCart = () => {
                         width: 200,
                         marginVertical: 10,
                         }}
-                        onPress={() => console.log('aye')}
+                        onPress={() => navigation.navigate('PaymentMethod')}
                     />
                 </View>
             </View>

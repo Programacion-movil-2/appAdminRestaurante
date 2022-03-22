@@ -13,7 +13,7 @@ import {
 import { icons, images, SIZE, COLORS } from '../constants'
 
 
-const MainCategorias = () => {
+const MainCategorias = ({navigation}) => {
     useEffect(() => {
         obtenerCategorias();
         obtenerProductos();
@@ -23,7 +23,7 @@ const MainCategorias = () => {
 
     async function obtenerCategorias() {
         try {
-            const respt = await fetch('http://192.168.100.8:5000/api/tipoProductos/listarTipoProducto');
+            const respt = await fetch('http://192.168.0.111:5000/api/tipoProductos/listarTipoProducto');
 
             const json = await respt.json();
             setCategories(json);
@@ -38,7 +38,7 @@ const MainCategorias = () => {
     }
     async function obtenerProductos(idTipoProducto = 4) {
         try {
-            const respt = await fetch('http://192.168.100.8:5000/api/productos/listarProductosTipo?idTipoProducto=' + idTipoProducto);
+            const respt = await fetch('http://192.168.0.111:5000/api/productos/listarProductosTipo?idTipoProducto=' + idTipoProducto);
 
             const json = await respt.json();
             if (!json) {
@@ -54,7 +54,7 @@ const MainCategorias = () => {
     }
     async function obtenerTipo(idTipoProducto = 4) {
         try {
-            const tipo = await fetch('http://192.168.100.8:5000/api/tipoProductos/listarTipo?idTipoProducto=' + idTipoProducto);
+            const tipo = await fetch('http://192.168.0.111:5000/api/tipoProductos/listarTipo?idTipoProducto=' + idTipoProducto);
 
             const json = await tipo.json();
             if (!json) {
@@ -71,7 +71,7 @@ const MainCategorias = () => {
     }
     async function obtenerTipoPrincipal(idTipoProducto) {
         try {
-            const tipoPrincipal = await fetch('http://192.168.100.8:5000/api/productos/listarProductosDeCategorias?idTipoProducto=' + idTipoProducto);
+            const tipoPrincipal = await fetch('http://192.168.0.111:5000/api/productos/listarProductosDeCategorias?idTipoProducto=' + idTipoProducto);
 
             const json = await tipoPrincipal.json();
             if (!json) {
@@ -150,6 +150,7 @@ const MainCategorias = () => {
                         paddingRight: SIZE.padding * 2,
                         justifyContent: 'center'
                     }}
+                    onPress={() => navigation.navigate('Cart')}
                 >
                     <Image
                         source={icons.basket}
@@ -195,7 +196,7 @@ const MainCategorias = () => {
                         }}
                     >
                          <Image
-                            source={icons.donut}
+                            source={icons.menu}
                             resizeMode="contain"
                             style={{
                                 width: 30,
@@ -237,10 +238,9 @@ const MainCategorias = () => {
         const renderItem = ({ item }) => (
             <TouchableOpacity
                 style={{ marginBottom: SIZE.padding * 2 }}
-            /*onPress={() => navigation.navigate("Restaurant", {
-                item,
-                currentLocation
-            })}*/
+            onPress={() => navigation.navigate("ProductsDetails", {
+                item
+            })}
             >
                 {/* Image */}
                 <View
