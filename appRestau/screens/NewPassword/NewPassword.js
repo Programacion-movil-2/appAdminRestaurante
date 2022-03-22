@@ -1,16 +1,21 @@
 import React, {useState} from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, useWindowDimensions, TextInput, Alert } from 'react-native';
 import Logo from '../../assets/logoportalesw-preview.png';
-import CustomImput from '../../elements/login/customImput';
 import CustomButton from '../../elements/login/customButton';
 import CustomButton2 from '../../elements/login/customButton2';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const NewPassword = ({navigation}) => {
+    var correo = AsyncStorage.getItem('correo')
+    console.log(correo);
     const [code, setCode] = useState('');
     const [password, setPassword] = useState('');
     const { height } = useWindowDimensions();
 
+    
+
     const onSubmitPressed = async () =>{
+        console.log(correo);
 
         if(!code || !password){
             console.log("Ingrese todos los datos obligatorios");
@@ -27,6 +32,7 @@ const NewPassword = ({navigation}) => {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
+                        correo: correo,
                         pin: code,
                         contrasena: password
                     })
@@ -35,6 +41,7 @@ const NewPassword = ({navigation}) => {
 
                 const json = await respt.json();
                 console.log(json);
+                console.log(correo);
                 Alert.alert("Portales Restaurant", json.msj);
                 navigation.navigate('SignIn');
 

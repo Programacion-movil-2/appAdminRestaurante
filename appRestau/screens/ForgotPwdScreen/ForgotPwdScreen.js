@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, useWindowDimensions, TextInput, Alert } from 'react-native';
 import Logo from '../../assets/logoportalesw-preview.png';
-import CustomImput from '../../elements/login/customImput';
 import CustomButton from '../../elements/login/customButton';
 import CustomButton2 from '../../elements/login/customButton2';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ForgotPwdScreen = ({navigation}) => {
     const [email, setEmail] = useState('');
@@ -11,6 +11,7 @@ const ForgotPwdScreen = ({navigation}) => {
 
     const onConfirmPressed = async () =>{
 
+        console.log(email);
         if(!email){
             console.log("Ingrese su correo electronico");
             Alert.alert("Portales Restaurant", "Ingrese su correo electronico");
@@ -32,6 +33,8 @@ const ForgotPwdScreen = ({navigation}) => {
 
                 const json = await respt.json();
                 console.log(json);
+                //var correo = email;
+                await AsyncStorage.setItem('correo', email);
                 Alert.alert("Portales Restaurant", json.msj);
                 navigation.navigate('NewPassword');
 
