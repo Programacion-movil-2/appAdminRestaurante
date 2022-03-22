@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, Alert, TextInput } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
 import CustomButton from '../../elements/login/customButton';
 import CustomButton2 from '../../elements/login/customButton2';
 
