@@ -1,15 +1,15 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import Restaurant from './screens/Restaurant';
-import MainCategorias from './screens/mainCategorias';
+import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaView, StyleSheet, Text, View, ImageBackground } from 'react-native';
+
+import LNavigation from './navigation/menu';
 
 export default class App extends React.Component {
   render(){
     return (
-
-      <SafeAreaView style={styles.container2}>
-        <MainCategorias />
-      </SafeAreaView>
+            
+        <LNavigation />
+  
     );
   }
   
@@ -27,13 +27,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F9F8FC',
-    // alignItems: 'center',
-    //padding: 50,
+    alignItems: 'center',
+    padding: 20,
     //justifyContent: 'center',
   },
-  container2: {
-    flex: 1,
-    backgroundColor: '#F9F8FC',
-    paddingTop: 30,
-  }
+
 });
