@@ -1,14 +1,20 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, View, TouchableOpacity, ScrollView, Image, FlatList } from 'react-native';
-import { withTheme, useTheme, ButtonGroup, Text, Card, Button, Icon } from 'react-native-elements';
+import { SafeAreaView, StyleSheet, View, TouchableOpacity, ScrollView, Image, FlatList, Text, Animated } from 'react-native';
+import { withTheme, useTheme, ButtonGroup, Card, Button, Icon } from 'react-native-elements';
 import { icons, SIZES, SIZE, COLORS, FONT, FONTS, images } from '../../constants';
-
+import { useState } from 'react';
 
 const users = [
-    
-  ];
+];
+
+const Contador = () => {
+  const[contador, setContador] = useState(0);
+  const sumar = () => setContador(contador + 1);
+  const restar = () => setContador(contador - 1);
+}
 
 const MyCart = ({navigation}) => {
+
   function renderHeader() {
     return (
         <View style={{ flexDirection: 'row' }}>
@@ -72,7 +78,7 @@ const MyCart = ({navigation}) => {
     )
 }
 
-  /********************************************************************************************************* */
+/********************************************************************************************************* */
   return(
     <View style={styles.container}>
     {renderHeader()}
@@ -95,26 +101,61 @@ const MyCart = ({navigation}) => {
                           bañados con salsa BBQ, acompañada de ensalada de col tipo Baja.
                           </Text>
 
-                          <Button
-                              loading={false}
-                              loadingProps={{ size: 'small', color: 'white' }}
-                              buttonStyle={{
-                                backgroundColor: 'rgb(21, 19, 19 )',
-                                borderRadius: 5,
-                                marginLeft: 50,
-                                marginRight: 0,
-                                marginBottom: 0,
-                              }}
-                              titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
-                              containerStyle={{
-                              marginHorizontal: 50,
-                              height: 50,
-                              width: 200,
-                              marginVertical: 10,
-                              }}
-                              onPress={() => console.log('aye')}
-                              title="-   1   +"
-                          />
+                      <View style={styles.buttonsContainer}>
+                        <Button
+                          title="     -"
+                          icon={{
+                            name: "",
+                            type: "font-awesome",
+                            size: 15,
+                            color: "white",
+                          }}
+                          iconRight
+                          iconContainerStyle={{ marginLeft: 10 }}
+                          titleStyle={{ fontWeight: "700" }}
+                          buttonStyle={{
+                            backgroundColor: "rgb(21, 19, 19)",
+                            borderColor: "transparent",
+                            borderWidth: 0,
+                            borderRadius: 0,
+                          }}
+                          containerStyle={{
+                            width: 50,
+                            marginHorizontal: 10,
+                            marginVertical: 10,
+                          }}
+                          onPress={() => Contador.restar}
+                        />
+                        <Text 
+                          style={{ fontWeight: 'bold', fontSize: 23 , color:"white", 
+                          borderColor: "transparent", backgroundColor: "rgb(21, 19, 19)",
+                          width: 50}}
+                        >Contador</Text>
+                        <Button
+                          title="     +"
+                          icon={{
+                            name: "",
+                            type: "font-awesome",
+                            size: 15,
+                            color: "white",
+                          }}
+                          iconRight
+                          iconContainerStyle={{ marginLeft: 10 }}
+                          titleStyle={{ fontWeight: "700" }}
+                          buttonStyle={{
+                            backgroundColor: "rgb(21, 19, 19)",
+                            borderColor: "transparent",
+                            borderWidth: 0,
+                            borderRadius: 0,
+                          }}
+                          containerStyle={{
+                            width: 50,
+                            marginHorizontal: 10,
+                            marginVertical: 10,
+                          }}
+                          onPress={Contador.sumar}
+                        />
+                    </View>
                   </Card>
                 </View>
 
@@ -136,26 +177,61 @@ const MyCart = ({navigation}) => {
                           con la que se deseen entintar.
                           </Text>
 
-                          <Button
-                              loading={false}
-                              loadingProps={{ size: 'small', color: 'white' }}
-                              buttonStyle={{
-                                backgroundColor: 'rgb(21, 19, 19 )',
-                                borderRadius: 5,
-                                marginLeft: 50,
-                                marginRight: 0,
-                                marginBottom: 0,
-                              }}
-                              titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
-                              containerStyle={{
-                              marginHorizontal: 50,
-                              height: 50,
-                              width: 200,
-                              marginVertical: 10,
-                              }}
-                              onPress={() => console.log('aye')}
-                              title="-   1   +"
-                          />
+                          <View style={styles.buttonsContainer}>
+                        <Button
+                          title="     -"
+                          icon={{
+                            name: "",
+                            type: "font-awesome",
+                            size: 15,
+                            color: "white",
+                          }}
+                          iconRight
+                          iconContainerStyle={{ marginLeft: 10 }}
+                          titleStyle={{ fontWeight: "700" }}
+                          buttonStyle={{
+                            backgroundColor: "rgb(21, 19, 19)",
+                            borderColor: "transparent",
+                            borderWidth: 0,
+                            borderRadius: 0,
+                          }}
+                          containerStyle={{
+                            width: 50,
+                            marginHorizontal: 10,
+                            marginVertical: 10,
+                          }}
+                          onPress={() => navigation.navigate("CashDetails")}
+                        />
+                        <Text 
+                          style={{ fontWeight: 'bold', fontSize: 23 , color:"white", 
+                          borderColor: "transparent", backgroundColor: "rgb(21, 19, 19)",
+                          width: 50}}
+                        >    5</Text>
+                        <Button
+                          title="     +"
+                          icon={{
+                            name: "",
+                            type: "font-awesome",
+                            size: 15,
+                            color: "white",
+                          }}
+                          iconRight
+                          iconContainerStyle={{ marginLeft: 10 }}
+                          titleStyle={{ fontWeight: "700" }}
+                          buttonStyle={{
+                            backgroundColor: "rgb(21, 19, 19)",
+                            borderColor: "transparent",
+                            borderWidth: 0,
+                            borderRadius: 0,
+                          }}
+                          containerStyle={{
+                            width: 50,
+                            marginHorizontal: 10,
+                            marginVertical: 10,
+                          }}
+                          onPress={() => navigation.navigate("CardDetails")}
+                        />
+                      </View>
                   </Card>
                 </View>
 
@@ -175,27 +251,62 @@ const MyCart = ({navigation}) => {
                           Seleccionar frutas y verduras frescas para hacer platos de alta calidad 
                           (como aguacate, mango y zanahorias), disfruta en familia de este plato esquisito.
                           </Text>
-
-                          <Button
-                              loading={false}
-                              loadingProps={{ size: 'small', color: 'white' }}
-                              buttonStyle={{
-                                backgroundColor: 'rgb(21, 19, 19 )',
-                                borderRadius: 5,
-                                marginLeft: 50,
-                                marginRight: 0,
-                                marginBottom: 0,
-                              }}
-                              titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
-                              containerStyle={{
-                              marginHorizontal: 50,
-                              height: 50,
-                              width: 200,
-                              marginVertical: 10,
-                              }}
-                              onPress={() => console.log('aye')}
-                              title="-   1   +"
-                          />
+                
+                <View style={styles.buttonsContainer}>
+                        <Button
+                          title="     -"
+                          icon={{
+                            name: "",
+                            type: "font-awesome",
+                            size: 15,
+                            color: "white",
+                          }}
+                          iconRight
+                          iconContainerStyle={{ marginLeft: 10 }}
+                          titleStyle={{ fontWeight: "700" }}
+                          buttonStyle={{
+                            backgroundColor: "rgb(21, 19, 19)",
+                            borderColor: "transparent",
+                            borderWidth: 0,
+                            borderRadius: 0,
+                          }}
+                          containerStyle={{
+                            width: 50,
+                            marginHorizontal: 10,
+                            marginVertical: 10,
+                          }}
+                          onPress={() => navigation.navigate("CashDetails")}
+                        />
+                        <Text 
+                          style={{ fontWeight: 'bold', fontSize: 23 , color:"white", 
+                          borderColor: "transparent", backgroundColor: "rgb(21, 19, 19)",
+                          width: 50}}
+                        >    5</Text>
+                        <Button
+                          title="     +"
+                          icon={{
+                            name: "",
+                            type: "font-awesome",
+                            size: 15,
+                            color: "white",
+                          }}
+                          iconRight
+                          iconContainerStyle={{ marginLeft: 10 }}
+                          titleStyle={{ fontWeight: "700" }}
+                          buttonStyle={{
+                            backgroundColor: "rgb(21, 19, 19)",
+                            borderColor: "transparent",
+                            borderWidth: 0,
+                            borderRadius: 0,
+                          }}
+                          containerStyle={{
+                            width: 50,
+                            marginHorizontal: 10,
+                            marginVertical: 10,
+                          }}
+                          onPress={() => navigation.navigate("CardDetails")}
+                        />
+                      </View>
                   </Card>
                 </View>
 
