@@ -239,7 +239,11 @@ const MainCategorias = ({navigation}) => {
             <TouchableOpacity
                 style={{ marginBottom: SIZE.padding * 2 }}
             onPress={() => navigation.navigate("ProductsDetails", {
-                item
+                idProducto:item.idProducto,
+                nombre:item.nombre,
+                descripcion:item.descripcion,
+                precio:item.precio,
+                foto:item.imagen,
             })}
             >
                 {/* Image */}

@@ -13,11 +13,11 @@ const burger_restaurant_2 = require("../assets/images/burger-restaurant-2.jpg");
 import { icons, COLORS, SIZE } from '../constants'
 
 const Restaurant = ({ route, navigation }) => {
+    const {idProducto,nombre,descripcion,precio,foto}=route.params;
 
 
     const scrollX = new Animated.Value(0);
     const [orderItems, setOrderItems] = React.useState([]);
-
 
 
     function editOrder(action, menuId, price) {
@@ -162,7 +162,7 @@ const Restaurant = ({ route, navigation }) => {
                         <View style={{ height: SIZE.height * 0.35 }}>
                             {/* Food Image */}
                             <Image
-                                source={burger_restaurant_2}
+                                source={{uri:foto}}
                                 resizeMode='contain'
                                 style={{
                                     width: SIZE.width,
@@ -190,7 +190,7 @@ const Restaurant = ({ route, navigation }) => {
                                         borderTopLeftRadius: 25,
                                         borderBottomLeftRadius: 25
                                     }}
-                                    onPress={() => editOrder("-", 2, 4.99)}
+                                    onPress={() => editOrder("-", 2, precio)}
                                 >
                                     <Text style={{ ...styles.body1 }}>-</Text>
                                 </TouchableOpacity>
@@ -215,7 +215,7 @@ const Restaurant = ({ route, navigation }) => {
                                         borderTopRightRadius: 25,
                                         borderBottomRightRadius: 25
                                     }}
-                                    onPress={() => editOrder("+", 2, 4.99)}
+                                    onPress={() => editOrder("+", 2,precio)}
                                 >
                                     <Text style={{ ...styles.body1 }}>+</Text>
                                 </TouchableOpacity>
@@ -231,30 +231,10 @@ const Restaurant = ({ route, navigation }) => {
                                 paddingHorizontal: SIZE.padding * 2
                             }}
                         >
-                            <Text style={{ marginVertical: 10, textAlign: 'center', ...styles.h2 }}>{"item.name"} - {(5).toFixed(2)}</Text>
-                            <Text style={{ ...styles.body3 }}>{"item.description"}</Text>
+                            <Text style={{ marginVertical: 10, textAlign: 'center', ...styles.h2 }}>{nombre} Lps. { precio}</Text>
+                            <Text style={{ ...styles.body3 }}>{descripcion}</Text>
                         </View>
 
-                        {/* Calories */}
-                        <View
-                            style={{
-                                flexDirection: 'row',
-                                marginTop: 10
-                            }}
-                        >
-                            <Image
-                                source={icons.fire}
-                                style={{
-                                    width: 20,
-                                    height: 20,
-                                    marginRight: 10
-                                }}
-                            />
-
-                            <Text style={{
-                                ...styles.body3, color: COLORS.darygray
-                            }}>{(289).toFixed(2)} cal</Text>
-                        </View>
                     </View>
 
                 }
@@ -284,8 +264,8 @@ const Restaurant = ({ route, navigation }) => {
                             borderBottomWidth: 1
                         }}
                     >
-                        <Text style={{ ...styles.h3 }}>{getBasketItemCount()} items in Cart</Text>
-                        <Text style={{ ...styles.h3 }}>${sumOrder()}</Text>
+                        <Text style={{ ...styles.h3 }}>{getBasketItemCount()} Productos en carrito</Text>
+                        <Text style={{ ...styles.h3 }}>L{sumOrder()}</Text>
                     </View>
 
                     <View
