@@ -295,11 +295,14 @@ const Restaurant = ({ route, navigation }) => {
                                 alignItems: 'center',
                                 borderRadius: SIZE.radius
                             }}
-                            // onPress={() => navigation.navigate("OrderDelivery", {
-                            //     restaurant: restaurant,
-                            
-                            // })}
-                            onPress={() => navigation.navigate('MainCategories')}
+                            onPress={() => navigation.navigate('Cart',{
+                                idProducto:idProducto,
+                                nombreProducto:nombre,
+                                descripcionProducto:descripcion,
+                                precioProducto:precio,
+                                imagenProducto:foto,
+                                cantidadProducto:orderItems.qty,
+                            })}
                         >
                             <Text style={{ color: COLORS.white, ...styles.h2 }}>Ordenar</Text>
                         </TouchableOpacity>
