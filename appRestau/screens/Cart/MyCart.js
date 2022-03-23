@@ -13,7 +13,8 @@ const Contador = () => {
   const restar = () => setContador(contador - 1);
 }
 
-const MyCart = ({navigation}) => {
+const MyCart = ({route, navigation}) => {
+  const {nombreProducto,descripcionProducto,precioProducto,imagenProducto, cantidadProducto}=route.params;
 
   function renderHeader() {
     return (
@@ -87,18 +88,15 @@ const MyCart = ({navigation}) => {
                 <View>
                     <Card>
                       <Card.Title style={{margin: 6, textAlign:'center'}}>
-                        HAMBURGUESA ANGUS</Card.Title>
+                       {nombreProducto}</Card.Title>
                       
                       <Card.Image
                         style={{ padding: 0 }}
-                        source={{
-                          uri:
-                            'http://bostonschihuahua.com.mx/wp-content/uploads/2015/09/sandyhamb-bbqbluecheese-2x.jpg',
-                        }}
+                        source={{uri:imagenProducto}}
                           />
                           <Text style={{ marginBottom: 10, margin: 14, textAlign:'center' }}>
-                          Jugosa hamburguesa cubierta con crujientes tiras de cebolla y blue cheese, 
-                          bañados con salsa BBQ, acompañada de ensalada de col tipo Baja.
+                            {descripcionProducto}
+                            {precioProducto}
                           </Text>
 
                       <View style={styles.buttonsContainer}>
@@ -130,7 +128,7 @@ const MyCart = ({navigation}) => {
                           style={{ fontWeight: 'bold', fontSize: 23 , color:"white", 
                           borderColor: "transparent", backgroundColor: "rgb(21, 19, 19)",
                           width: 50}}
-                        >Contador</Text>
+                        >{cantidadProducto}</Text>
                         <Button
                           title="     +"
                           icon={{
