@@ -11,6 +11,8 @@ import {
 import { isIphoneX } from 'react-native-iphone-x-helper'
 const burger_restaurant_2 = require("../assets/images/burger-restaurant-2.jpg");
 import { icons, COLORS, SIZE } from '../constants'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const Restaurant = ({ route, navigation }) => {
     const {idProducto,nombre,descripcion,precio,foto}=route.params;
@@ -295,14 +297,43 @@ const Restaurant = ({ route, navigation }) => {
                                 alignItems: 'center',
                                 borderRadius: SIZE.radius
                             }}
-                            onPress={() => navigation.navigate('Cart',{
+                            onPress={async() => 
+                                /*navigation.navigate('Cart',{
                                 idProducto:idProducto,
                                 nombreProducto:nombre,
                                 descripcionProducto:descripcion,
                                 precioProducto:precio,
                                 imagenProducto:foto,
                                 cantidadProducto:getOrderQty(idProducto),
-                            })}
+                            })*/
+                            {
+                                try {
+                                    const jsonValue = await AsyncStorage.getItem('@storage_Cart')
+                                    if (jsonValue !== null) {
+                                        /*Comprobar si contiene los datos */
+                                        const Cart = JSON.parse(jsonValue)
+                                        let item = Cart.filter(a => a.idProducto == idProducto)
+                                    } else {
+                                        /** */
+                                        const cart = [
+                                            {
+                                                idProducto:idProducto,
+                                                nombreProducto:nombre,
+                                                descripcionProducto:descripcion,
+                                                precioProducto:precio,
+                                                imagenProducto:foto,
+                                                cantidadProducto:getOrderQty(idProducto),
+                                            }
+                                        ]
+                                        await AsyncStorage.setItem('@storage_Cart', JSON.stringify(cart))
+                                        const prueba = await AsyncStorage.getItem('@storage_Cart')
+                                        console.log(JSON.parse(prueba))
+                                    }
+                                } catch (error) {
+                                    
+                                }
+                            }
+                        }
                         >
                             <Text style={{ color: COLORS.white, ...styles.h2 }}>Ordenar</Text>
                         </TouchableOpacity>
