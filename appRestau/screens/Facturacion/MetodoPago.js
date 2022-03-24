@@ -157,6 +157,7 @@ const styles = StyleSheet.create({
   },
   view: {
     margin: 10,
+    marginTop: 150,
   },
   text: {
     textAlign: "center",
@@ -177,6 +178,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     marginVertical: 20,
+    marginTop: 70,
   },
   shadow: {
     shadowColor: "#000",

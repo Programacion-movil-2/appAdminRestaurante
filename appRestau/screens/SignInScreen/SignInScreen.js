@@ -18,7 +18,7 @@ const SignInScreen = ({navigation}) => {
         }
         else{
             try {
-                const respt = await fetch('http://192.168.1.39:5000/api/autenticacion/iniciosesion', {
+                const respt = await fetch('http://192.168.0.3:5000/api/autenticacion/iniciosesion', {
 
                     method: 'POST',
                     headers: {

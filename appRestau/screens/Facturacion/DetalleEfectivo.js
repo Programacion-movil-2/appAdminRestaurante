@@ -84,7 +84,7 @@ const DetalleEfectivo = ({ navigation }) => {
                 </Text>
             </View>
 
-            <View>
+            <View style={styles.view1}>
                 <Text
                     style={styles.text}
                     h4
@@ -151,6 +151,9 @@ const styles = StyleSheet.create({
     view: {
         margin: 10,
     },
+    view1:{
+        marginTop: 80,
+    },
     text: {
         textAlign: "center",
         padding: 5,
@@ -170,6 +173,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         marginVertical: 20,
+        marginTop: 100,
       },
     shadow: {
         shadowColor: '#000',

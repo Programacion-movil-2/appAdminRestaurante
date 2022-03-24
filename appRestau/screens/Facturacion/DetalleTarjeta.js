@@ -93,8 +93,17 @@ const DetalleEfectivo = ({ navigation }) => {
 
   const { theme } = useTheme();
 
-  const [check1, setCheck1] = useState(false);
-  const [check2, setCheck2] = useState(false);
+  const [visa, setvisa] = useState(false);
+  const [mastercard, setmastercard] = useState(false);
+
+  const click = () => {
+    if(visa === true){
+      
+    }
+    if(mastercard === true){
+      
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -103,7 +112,18 @@ const DetalleEfectivo = ({ navigation }) => {
         <Text style={styles.text} h2 h1Style={{ color: theme?.colors?.black }}>
           Detalle de la orden
         </Text>
-
+        <View style={styles.view1}>
+                <Text
+                    style={styles.text}
+                    h4
+                    h1Style={{ color: theme?.colors?.black }}
+                >
+                    Dirección de entrega
+                </Text>
+                <Input
+                    placeholder='Ej. Barrio San Juan'
+                />
+        </View>
         <View>
           <View style={styles.view}>
             <Text
@@ -116,20 +136,38 @@ const DetalleEfectivo = ({ navigation }) => {
           </View>
 
           <View style={styles.view}>
+            <View style={styles.viewChk}>
+              <CheckBox
+                center
+                checked={visa}
+                onPress={() => setvisa(!visa)}
+              />
+              <Image
+              source={icons.love}
+              resizeMode="contain"
+              style={{
+                width: 60,
+                height: 60,
+              }}
+              />
+            </View>
+            
+            <View style={styles.viewChk}>
             <CheckBox
               center
-              title="Visa"
-              checked={check1}
-              onPress={() => setCheck1(!check1)}
+              checked={mastercard}
+              onPress={() => setmastercard(!mastercard)}
             />
-            <CheckBox
-              center
-              title="Master Card"
-              checked={check2}
-              onPress={() => setCheck2(!check2)}
-            />
+            <Image
+              source={icons.master_card}
+              resizeMode="contain"
+              style={{
+                width: 60,
+                height: 60,
+              }}
+              />
+            </View>
           </View>
-
           <View style={styles.view}>
             <Input placeholder="Número de tarjeta" />
 
@@ -176,6 +214,17 @@ const styles = StyleSheet.create({
   },
   view: {
     margin: 10,
+  },
+  view1:{
+    marginTop: 40,
+  },
+  viewChk:{
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    marginVertical: 10,
   },
   text: {
     textAlign: "center",
