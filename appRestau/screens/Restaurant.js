@@ -190,7 +190,7 @@ const Restaurant = ({ route, navigation }) => {
                                         borderTopLeftRadius: 25,
                                         borderBottomLeftRadius: 25
                                     }}
-                                    onPress={() => editOrder("-", 2, precio)}
+                                    onPress={() => editOrder("-", idProducto, precio)}
                                 >
                                     <Text style={{ ...styles.body1 }}>-</Text>
                                 </TouchableOpacity>
@@ -203,7 +203,7 @@ const Restaurant = ({ route, navigation }) => {
                                         justifyContent: 'center'
                                     }}
                                 >
-                                    <Text style={{ ...styles.h2 }}>{getOrderQty(2)}</Text>
+                                    <Text style={{ ...styles.h2 }}>{getOrderQty(idProducto)}</Text>
                                 </View>
 
                                 <TouchableOpacity
@@ -215,7 +215,7 @@ const Restaurant = ({ route, navigation }) => {
                                         borderTopRightRadius: 25,
                                         borderBottomRightRadius: 25
                                     }}
-                                    onPress={() => editOrder("+", 2,precio)}
+                                    onPress={() => editOrder("+", idProducto,precio)}
                                 >
                                     <Text style={{ ...styles.body1 }}>+</Text>
                                 </TouchableOpacity>
@@ -301,7 +301,7 @@ const Restaurant = ({ route, navigation }) => {
                                 descripcionProducto:descripcion,
                                 precioProducto:precio,
                                 imagenProducto:foto,
-                                cantidadProducto:orderItems.qty,
+                                cantidadProducto:getOrderQty(idProducto),
                             })}
                         >
                             <Text style={{ color: COLORS.white, ...styles.h2 }}>Ordenar</Text>
