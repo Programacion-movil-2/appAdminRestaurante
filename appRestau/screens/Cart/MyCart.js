@@ -94,7 +94,7 @@ const MyCart = ({route, navigation}) => {
                         style={{ padding: 0 }}
                         source={{uri:imagenProducto}}
                           />
-                          <Text style={{ marginBottom: 10, margin: 14, textAlign:'center' }}>
+                          <Text style={{ marginBottom: 10, margin: 14, textAlign:'center'}}>
                             {descripcionProducto}
                             {precioProducto}
                           </Text>
