@@ -4,7 +4,7 @@ import {
   View,
   TouchableOpacity,
   Image,
-  FlatList,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import {
@@ -28,6 +28,47 @@ import {
 } from "../../constants";
 
 const DetalleEfectivo = ({ navigation }) => {
+  const [direccionEntrega, setDireccion] = useState(null);
+  let estado = "listo";
+
+  const insertarPedido = async () => {
+
+    if (!direccionEntrega) {
+      console.log("Debe llenar todos los campos oblicatorios");
+      Alert.alert("Restaurante", "Ingrese todos los campos");
+    }
+    else {
+      try {
+        const res = await fetch('http://192.168.0.3:5000/api/pedidos/modificarDireccionEstado?idUsuario=4', {
+
+          method: 'PUT',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            direccionEntrega: direccionEntrega,
+            estado: estado
+          })
+
+        })
+
+        const json = await res.json();
+        Alert.alert("Portales Restaurant", json.msj);
+        navegarFactura();
+      } catch (error) {
+        console.log(error);
+        Alert.alert("Portales Restaurant", "Error");
+      }
+    }
+
+  }
+
+  const navegarFactura = () => {
+    navigation.navigate('Billing')
+
+  }
+
   function renderHeader() {
     return (
       <View style={{ flexDirection: "row" }}>
@@ -97,11 +138,11 @@ const DetalleEfectivo = ({ navigation }) => {
   const [mastercard, setmastercard] = useState(false);
 
   const click = () => {
-    if(visa === true){
-      
+    if (visa === true) {
+
     }
-    if(mastercard === true){
-      
+    if (mastercard === true) {
+
     }
   };
 
@@ -113,16 +154,19 @@ const DetalleEfectivo = ({ navigation }) => {
           Detalle de la orden
         </Text>
         <View style={styles.view1}>
-                <Text
-                    style={styles.text}
-                    h4
-                    h1Style={{ color: theme?.colors?.black }}
-                >
-                    Dirección de entrega
-                </Text>
-                <Input
-                    placeholder='Ej. Barrio San Juan'
-                />
+          <Text
+            style={styles.text}
+            h4
+            h1Style={{ color: theme?.colors?.black }}
+          >
+            Dirección de entrega
+          </Text>
+          <Input
+            style={styles.input}
+            placeholder='Ej. Barrio San Juan'
+            value={direccionEntrega}
+            onChangeText={setDireccion}
+          />
         </View>
         <View>
           <View style={styles.view}>
@@ -143,28 +187,28 @@ const DetalleEfectivo = ({ navigation }) => {
                 onPress={() => setvisa(!visa)}
               />
               <Image
-              source={icons.love}
-              resizeMode="contain"
-              style={{
-                width: 60,
-                height: 60,
-              }}
+                source={icons.love}
+                resizeMode="contain"
+                style={{
+                  width: 60,
+                  height: 60,
+                }}
               />
             </View>
-            
+
             <View style={styles.viewChk}>
-            <CheckBox
-              center
-              checked={mastercard}
-              onPress={() => setmastercard(!mastercard)}
-            />
-            <Image
-              source={icons.master_card}
-              resizeMode="contain"
-              style={{
-                width: 60,
-                height: 60,
-              }}
+              <CheckBox
+                center
+                checked={mastercard}
+                onPress={() => setmastercard(!mastercard)}
+              />
+              <Image
+                source={icons.master_card}
+                resizeMode="contain"
+                style={{
+                  width: 60,
+                  height: 60,
+                }}
               />
             </View>
           </View>
@@ -199,7 +243,7 @@ const DetalleEfectivo = ({ navigation }) => {
               marginVertical: 10,
             }}
             titleStyle={{ fontWeight: "bold" }}
-            onPress={() => navigation.navigate("Billing")}
+            onPress={insertarPedido}
           />
         </View>
       </View>
@@ -215,10 +259,10 @@ const styles = StyleSheet.create({
   view: {
     margin: 10,
   },
-  view1:{
+  view1: {
     marginTop: 40,
   },
-  viewChk:{
+  viewChk: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',

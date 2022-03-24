@@ -1,58 +1,161 @@
-import { SafeAreaView, StyleSheet, View, TouchableOpacity, Image, FlatList } from "react-native";
+import {
+    SafeAreaView,
+    StyleSheet,
+    View,
+    TouchableOpacity,
+    Image,
+    Alert,
+} from "react-native";
 import React from "react";
-import { Text, useTheme, Button, ButtonGroup, withTheme, Input } from "react-native-elements";
-import { icons, images, SIZES, SIZE, COLORS, FONT, FONTS } from '../../constants';
+import {
+    Text,
+    useTheme,
+    Button,
+    ButtonGroup,
+    withTheme,
+    Input,
+} from "react-native-elements";
+import {
+    icons,
+    images,
+    SIZES,
+    SIZE,
+    COLORS,
+    FONT,
+    FONTS,
+} from "../../constants";
 
 const Factura = ({ navigation }) => {
+    let idPedido = 4;
+
+    var SubTotal = 400;
+    var ISV = SubTotal * 0.15;
+    var total = SubTotal + ISV;
+
+    var date = new Date().getDate();
+    var month = new Date().getMonth() + 1;
+    var year = new Date().getFullYear();
+    var fecha = year + '-' + month + '-' + date;
+
+    const insertarFactura = async () => {
+        let estado = "facturado";
+        if (!idPedido) {
+            console.log("Debe llenar todos los campos oblicatorios");
+            Alert.alert("Restaurante", "Ingrese todos los campos");
+        }
+        else {
+            console.log(idPedido + total + fecha);
+            try {
+                const res = await fetch('http://192.168.0.3:5000/api/facturas/guardar', {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        total: total,
+                        fecha: fecha,
+                        idPedido: idPedido
+                    })
+
+                })
+
+                const json = await res.json();
+                Alert.alert("Portales Restaurant", json.msj);
+                //navegarFactura();
+            } catch (error) {
+                console.log(error);
+                Alert.alert("Portales Restaurant", "Error");
+            }
+            actualizarEstado(estado);
+        }
+
+    }
+
+    const actualizarEstado = async (estado) => {
+        try {
+            const res = await fetch('http://192.168.0.3:5000/api/pedidos/modificarEstado?idUsuario=4', {
+
+                method: 'PUT',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    estado: estado,
+                })
+
+            })
+
+            const json = await res.json();
+            Alert.alert("Portales Restaurant", json.msj);
+            // navegarFactura();
+        } catch (error) {
+            console.log(error);
+            Alert.alert("Portales Restaurant", "Error");
+        }
+
+    }
+
+    const cancelarFactura = async () => {
+        let estado = "cancelado";
+
+        actualizarEstado(estado);
+    }
+
+    const navegarFactura = () => {
+        navigation.navigate('MainCategories')
+
+    }
 
     function renderHeader() {
         return (
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{ flexDirection: "row" }}>
                 <TouchableOpacity
                     style={{
                         width: 50,
                         paddingLeft: SIZE.padding * 2,
-                        justifyContent: 'center'
+                        justifyContent: "center",
                     }}
                     onPress={() => navigation.goBack()}
                 >
                     <Image
-                        source={icons.back}
+                        // source={icons.back}
                         resizeMode="contain"
                         style={{
                             width: 30,
-                            height: 30
+                            height: 30,
                         }}
                     />
                 </TouchableOpacity>
-    
+
                 {/* Restaurant Name Section */}
                 <View
                     style={{
                         flex: 1,
-                        alignItems: 'center',
-                        justifyContent: 'center'
+                        alignItems: "center",
+                        justifyContent: "center",
                     }}
                 >
                     <View
                         style={{
                             height: 50,
-                            alignItems: 'center',
-                            justifyContent: 'center',
+                            alignItems: "center",
+                            justifyContent: "center",
                             paddingHorizontal: SIZE.padding * 3,
                             borderRadius: SIZE.radius,
-                            backgroundColor: COLORS.lightGray3
+                            backgroundColor: COLORS.lightGray3,
                         }}
                     >
-                        <Text style ={styles.h5} >Carrito de Compras</Text>
+                        <Text style={styles.h5}>Carrito de Compras</Text>
                     </View>
                 </View>
-    
+
                 <TouchableOpacity
                     style={{
                         width: 50,
                         paddingRight: SIZE.padding * 2,
-                        justifyContent: 'center'
+                        justifyContent: "center",
                     }}
                 >
                     <Image
@@ -60,12 +163,12 @@ const Factura = ({ navigation }) => {
                         resizeMode="contain"
                         style={{
                             width: 30,
-                            height: 30
+                            height: 30,
                         }}
                     />
                 </TouchableOpacity>
             </View>
-        )
+        );
     }
 
     const { theme } = useTheme();
@@ -75,79 +178,106 @@ const Factura = ({ navigation }) => {
             {renderHeader()}
 
             <View style={styles.view}>
-                <Text
-                    style={styles.text}
-                    h2
-                    h1Style={{ color: theme?.colors?.black }}
-                >
+                <Text style={styles.text} h2 h1Style={{ color: theme?.colors?.black }}>
                     Factura
                 </Text>
             </View>
 
             <View style={styles.totales}>
-                <Text
-                    style={styles.text}
-                    h4
-                    h4Style={{ color: theme?.colors?.primary }}
-                >
-                    Subtotal: 
-                    <Text>
-                        L. 400
+                <View style={styles.duo}>
+                    <Text
+                        style={styles.text}
+                        h4
+                        h4Style={{ color: theme?.colors?.primary }}>
+                        SubTotal:
                     </Text>
-                </Text>
-                <Text
-                    style={styles.text}
-                    h4
-                    h4Style={{ color: theme?.colors?.primary }}
-                >
-                    Impuesto:
-                    <Text>
-                        L. 60
+                    <Text h3 style={styles.text}>L.
+                        <Text h3 style={styles.text}>
+                            400
+                        </Text>
                     </Text>
-                </Text>
-                <Text
-                    style={styles.text}
-                    h4
-                    h4Style={{ color: theme?.colors?.primary }}
-                >
-                    Total:
-                    <Text>
-                        L. 460
+                </View>
+
+                <View style={styles.duo}>
+                    <Text
+                        style={styles.text}
+                        h4
+                        h4Style={{ color: theme?.colors?.primary }}>
+                        Impuesto:
                     </Text>
-                </Text>
+                    <Text h3 style={styles.text}>L.
+                        <Text h3 style={styles.text}>
+                            60
+                        </Text>
+                    </Text>
+                </View>
+
+                <View style={styles.duo}>
+                    <Text
+                        style={styles.text}
+                        h4
+                        h4Style={{ color: theme?.colors?.primary }}>
+                        Total:
+                    </Text>
+                    <Text h3 style={styles.text}>L.
+                        <Text h3 style={styles.text}>
+                            460
+                        </Text>
+                    </Text>
+                </View>
             </View>
             <View style={styles.buttonsContainer}>
-                    <Button
-                        title="Confirmar"
-                        buttonStyle={{
-                            backgroundColor: 'rgba(57, 146, 146, 1)',
-                            borderWidth: 2,
-                            borderColor: 'white',
-                            borderRadius: 30,
-                        }}
-                        containerStyle={{
-                            width: 200,
-                            marginHorizontal: 50,
-                            marginVertical: 10,
-                        }}
-                        titleStyle={{ fontWeight: 'bold' }}
-                    />
-                </View>
+                <Button
+                    title="Confirmar"
+                    buttonStyle={{
+                        height: 55,
+                        backgroundColor: "rgba(57, 146, 146, 1)",
+                        borderWidth: 2,
+                        borderColor: "white",
+                        borderRadius: 30,
+                    }}
+                    containerStyle={{
+                        width: 220,
+                        marginHorizontal: 50,
+                        marginVertical: 10,
+                    }}
+                    titleStyle={{ fontWeight: "bold" }}
+                    onPress={insertarFactura}
+                />
+                <Button
+                    title="Cancelar pedido"
+                    buttonStyle={{
+                        height: 40,
+                        backgroundColor: 'rgba(214, 61, 57, 1)',
+                        borderRadius: 30,
+                    }}
+                    containerStyle={{
+                        width: 250,
+                        marginHorizontal: 50,
+                        marginVertical: 10,
+                    }}
+                    titleStyle={{ color: 'white', marginHorizontal: 20 }}
+                    onPress={cancelarFactura}
+                />
+            </View>
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.lightGray4
+        backgroundColor: COLORS.lightGray4,
     },
     totales: {
         flex: 1,
-        marginTop: 40,
+        marginTop: 50,
     },
     view: {
         margin: 10,
+    },
+    duo: {
+        margin: 20,
     },
     text: {
         textAlign: "center",
@@ -162,18 +292,18 @@ const styles = StyleSheet.create({
         marginRight: "auto",
     },
     buttonsContainer: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        marginVertical: 20,
-      },
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        marginVertical: 100,
+    },
     shadow: {
-        shadowColor: '#000',
+        shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 3
+            height: 3,
         },
         shadowOpacity: 0.1,
         shadowRadius: 3,
@@ -189,7 +319,6 @@ const styles = StyleSheet.create({
     body3: { fontSize: SIZE.body3, lineHeight: 22 },
     body4: { fontSize: SIZE.body4, lineHeight: 22 },
     body5: { fontSize: SIZE.body5, lineHeight: 22 },
-
 });
 
-export default Factura
+export default Factura;

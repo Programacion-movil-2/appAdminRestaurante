@@ -1,9 +1,49 @@
-import { SafeAreaView, StyleSheet, View, TouchableOpacity, Image, FlatList } from "react-native";
-import React from "react";
+import { SafeAreaView, StyleSheet, View, TouchableOpacity, Image, Alert } from "react-native";
+import React, {useState} from 'react';
 import { Text, useTheme, Button, ButtonGroup, withTheme, Input } from "react-native-elements";
 import { icons, images, SIZES, SIZE, COLORS, FONT, FONTS } from '../../constants';
 
 const DetalleEfectivo = ({ navigation }) => {
+    const [direccionEntrega, setDireccion] = useState(null);
+    let estado = "listo";
+
+    const insertarPedido = async () =>{
+
+        if(!direccionEntrega){
+            console.log("Debe llenar todos los campos oblicatorios");
+            Alert.alert("Restaurante", "Ingrese todos los campos");
+        }
+        else{
+            try {
+                const res = await fetch('http://192.168.0.3:5000/api/pedidos/modificarDireccionEstado?idUsuario=4', {
+
+                    method: 'PUT',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        direccionEntrega: direccionEntrega,
+                        estado: estado
+                    })
+
+                })
+
+                const json = await res.json();
+                Alert.alert("Portales Restaurant", json.msj);
+                navegarFactura();
+            } catch (error) {
+                console.log(error);
+                Alert.alert("Portales Restaurant", "Error");
+            }
+        }
+
+    }
+
+    const navegarFactura = () =>{
+        navigation.navigate('Billing')
+
+    }
 
     function renderHeader() {
         return (
@@ -93,9 +133,11 @@ const DetalleEfectivo = ({ navigation }) => {
                     Dirección de entrega
                 </Text>
                 <Input
+                    style={styles.input} 
                     placeholder='Ej. Barrio San Juan'
+                    value={direccionEntrega} 
+                    onChangeText={setDireccion}
                 />
-
                 <Text
                     style={styles.text}
                     h4
@@ -133,8 +175,9 @@ const DetalleEfectivo = ({ navigation }) => {
                             marginVertical: 10,
                         }}
                         titleStyle={{ fontWeight: 'bold' }}
-                        onPress={() => navigation.navigate('Billing')}
+                        onPress={insertarPedido}
                     />
+                    
                 </View>
             </View>
 
