@@ -26,7 +26,7 @@ import {
 } from "../../constants";
 
 const Factura = ({ navigation }) => {
-    let idPedido = 4;
+    //let idPedido = 4;
 
     var SubTotal = 400;
     var ISV = SubTotal * 0.15;
@@ -39,68 +39,71 @@ const Factura = ({ navigation }) => {
 
     const insertarFactura = async () => {
         let estado = "facturado";
-        if (!idPedido) {
+        if (!SubTotal) {
             console.log("Debe llenar todos los campos oblicatorios");
-            Alert.alert("Restaurante", "Ingrese todos los campos");
+            Alert.alert("Restaurante", "Error al procesar factura");
         }
         else {
-            console.log(idPedido + total + fecha);
-            try {
-                const res = await fetch('http://192.168.0.3:5000/api/facturas/guardar', {
-                    method: 'POST',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        total: total,
-                        fecha: fecha,
-                        idPedido: idPedido
-                    })
+            console.log(total + fecha);
+            Alert.alert("Restaurante", "Factura procesada exitosamente.");
+            navegarFactura();
+            // try {
+            //     const res = await fetch('http://192.168.0.3:5000/api/facturas/guardar', {
+            //         method: 'POST',
+            //         headers: {
+            //             Accept: 'application/json',
+            //             'Content-Type': 'application/json'
+            //         },
+            //         body: JSON.stringify({
+            //             total: total,
+            //             fecha: fecha,
+            //             idPedido: idPedido
+            //         })
 
-                })
+            //     })
 
-                const json = await res.json();
-                Alert.alert("Portales Restaurant", json.msj);
-                //navegarFactura();
-            } catch (error) {
-                console.log(error);
-                Alert.alert("Portales Restaurant", "Error");
-            }
-            actualizarEstado(estado);
+            //     const json = await res.json();
+            //     Alert.alert("Portales Restaurant", json.msj);
+            //     navegarFactura();
+            // } catch (error) {
+            //     console.log(error);
+            //     Alert.alert("Portales Restaurant", "Error");
+            // }
+            //actualizarEstado(estado);
         }
 
     }
 
-    const actualizarEstado = async (estado) => {
-        try {
-            const res = await fetch('http://192.168.0.3:5000/api/pedidos/modificarEstado?idUsuario=4', {
+    // const actualizarEstado = async (estado) => {
+    //     try {
+    //         const res = await fetch('http://192.168.0.3:5000/api/pedidos/modificarEstado?idUsuario=4', {
 
-                method: 'PUT',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    estado: estado,
-                })
+    //             method: 'PUT',
+    //             headers: {
+    //                 Accept: 'application/json',
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify({
+    //                 estado: estado,
+    //             })
 
-            })
+    //         })
 
-            const json = await res.json();
-            Alert.alert("Portales Restaurant", json.msj);
-            // navegarFactura();
-        } catch (error) {
-            console.log(error);
-            Alert.alert("Portales Restaurant", "Error");
-        }
+    //         const json = await res.json();
+    //         Alert.alert("Portales Restaurant", json.msj);
+    //         navegarFactura();
+    //     } catch (error) {
+    //         console.log(error);
+    //         Alert.alert("Portales Restaurant", "Error");
+    //     }
 
-    }
+    // }
 
     const cancelarFactura = async () => {
-        let estado = "cancelado";
-
-        actualizarEstado(estado);
+        // let estado = "cancelado";
+        Alert.alert("Restaurante", "Factura cancelada");
+        navegarFactura();
+        // actualizarEstado(estado);
     }
 
     const navegarFactura = () => {
