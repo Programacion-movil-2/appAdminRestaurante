@@ -13,9 +13,8 @@ import ProductsDetails from '../screens/Restaurant';
 import Cart from '../screens/Cart/MyCart';
 import CashDetails from '../screens/Facturacion/DetalleEfectivo';
 import CardDetails from '../screens/Facturacion/DetalleTarjeta';
-import PaymentMethod from '../screens/Facturacion/MetodoPago';
 import Billing from '../screens/Facturacion/Factura';
-import PaymentMethod from '../screens/Facturacion/metodoPago';
+import PaymentMethod from '../screens/Facturacion/MetodoPago';
 import UserProfile from '../screens/UserProfile/UserProfile';
 
 const Stack = createNativeStackNavigator();

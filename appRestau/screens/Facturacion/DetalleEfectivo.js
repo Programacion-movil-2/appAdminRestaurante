@@ -14,28 +14,29 @@ const DetalleEfectivo = ({ navigation }) => {
             Alert.alert("Restaurante", "Ingrese todos los campos");
         }
         else{
-            try {
-                const res = await fetch('http://192.168.0.3:5000/api/pedidos/modificarDireccionEstado?idUsuario=4', {
+            navegarFactura();
+            // try {
+            //     const res = await fetch('http://192.168.0.3:5000/api/pedidos/modificarDireccionEstado?idUsuario=4', {
 
-                    method: 'PUT',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        direccionEntrega: direccionEntrega,
-                        estado: estado
-                    })
+            //         method: 'PUT',
+            //         headers: {
+            //             Accept: 'application/json',
+            //             'Content-Type': 'application/json'
+            //         },
+            //         body: JSON.stringify({
+            //             direccionEntrega: direccionEntrega,
+            //             estado: estado
+            //         })
 
-                })
+            //     })
 
-                const json = await res.json();
-                Alert.alert("Portales Restaurant", json.msj);
-                navegarFactura();
-            } catch (error) {
-                console.log(error);
-                Alert.alert("Portales Restaurant", "Error");
-            }
+            //     const json = await res.json();
+            //     Alert.alert("Portales Restaurant", json.msj);
+
+            // } catch (error) {
+            //     console.log(error);
+            //     Alert.alert("Portales Restaurant", "Error");
+            // }
         }
 
     }
