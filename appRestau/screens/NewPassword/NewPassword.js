@@ -5,9 +5,8 @@ import CustomButton from '../../elements/login/customButton';
 import CustomButton2 from '../../elements/login/customButton2';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const NewPassword = ({navigation}) => {
-    var correo = AsyncStorage.getItem('correo')
-    console.log(correo);
+const NewPassword = ({route, navigation}) => {
+    const {correo} = route.params;
     const [code, setCode] = useState('');
     const [password, setPassword] = useState('');
     const { height } = useWindowDimensions();

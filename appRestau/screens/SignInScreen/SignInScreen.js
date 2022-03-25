@@ -38,11 +38,14 @@ const SignInScreen = ({navigation}) => {
                 if(!data.token){
                     console.log(data);
                 }else{
-                    const toten = json.data.token;
-                    await AsyncStorage.setItem('token', toten);
+                    const token = json.data.token;
+                    await AsyncStorage.setItem('token', token);
+                    const usuario = json.data.usuario;
+                    await AsyncStorage.setItem('UserName', usuario);
                     navigation.navigate('MainCategories');
+                    console.log(usuario);
                 }
-                //console.log(token);
+                
                 Alert.alert("Portales Restaurant", json.msj);                
 
             } catch (error) {

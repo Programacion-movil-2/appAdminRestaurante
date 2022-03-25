@@ -13,6 +13,7 @@ import ProductsDetails from '../screens/Restaurant';
 import Cart from '../screens/Cart/MyCart';
 import CashDetails from '../screens/Facturacion/DetalleEfectivo';
 import PaymentMethod from '../screens/Facturacion/metodoPago';
+import UserProfile from '../screens/UserProfile/UserProfile';
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +42,7 @@ export default function LNavigation(){
                 <Stack.Screen name="Cart" component={Cart} />
                 <Stack.Screen name="CashDetails" component={CashDetails} />
                 <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
+                <Stack.Screen name="UserProfile" component={UserProfile} />
 
             </Stack.Navigator>
 
