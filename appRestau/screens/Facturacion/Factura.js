@@ -121,7 +121,9 @@ const Factura = ({ navigation }) => {
         // actualizarEstado(estado);
     }
 
-    const navegarFactura = () => {
+    const navegarFactura = async () => {
+        await AsyncStorage.removeItem("cart")
+        console.log("Reiniciando el AsyncStorage");
         navigation.navigate('MainCategories')
 
     }
@@ -222,7 +224,7 @@ const Factura = ({ navigation }) => {
                     </Text>
                     <Text h3 style={styles.text}>L.
                         <Text h3 style={styles.text}>
-                            {carItems.total}
+                            {carItems.total.toFixed(2)}
                         </Text>
                     </Text>
                 </View>
@@ -236,7 +238,7 @@ const Factura = ({ navigation }) => {
                     </Text>
                     <Text h3 style={styles.text}>L.
                         <Text h3 style={styles.text}>
-                            {ISV}
+                            {ISV.toFixed(2)}
                         </Text>
                     </Text>
                 </View>
@@ -248,9 +250,9 @@ const Factura = ({ navigation }) => {
                         h4Style={{ color: theme?.colors?.primary }}>
                         Total de la compra:
                     </Text>
-                    <Text h3 style={styles.text}>L.
+                    <Text h3 style={styles.text}>L
                         <Text h3 style={styles.text}>
-                            {total2}
+                            {total2.toFixed(2)}
                         </Text>
                     </Text>
                 </View>
