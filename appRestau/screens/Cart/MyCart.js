@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, View, TouchableOpacity, ScrollView, Image, FlatList, Text, Animated } from 'react-native';
 import { withTheme, useTheme, ButtonGroup, Card, Button, Icon } from 'react-native-elements';
 import { icons, SIZES, SIZE, COLORS, FONT, FONTS, images } from '../../constants';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const users = [
 ];
@@ -14,7 +14,69 @@ const Contador = () => {
 }
 
 const MyCart = ({route, navigation}) => {
-  const {nombreProducto,descripcionProducto,precioProducto,imagenProducto, cantidadProducto}=route.params;
+      useEffect(() => {
+        editOrder("+", idProducto, precioProducto, 0);
+        getOrderQty(idProducto);
+    }, [])
+
+    const {idProducto,nombreProducto,descripcionProducto,precioProducto,imagenProducto, cantidadProducto}=route.params;
+    const [orderItems, setOrderItems] = React.useState([]);
+
+    function editOrder(action, menuId, price, estado) {
+      let orderList = orderItems.slice()
+      let cantidad = cantidadProducto
+      let item = orderList.filter(a => a.menuId == menuId)
+      
+      if (estado == 0) {
+        const newItem = {
+          menuId: menuId,
+          qty: cantidadProducto,
+          price: price,
+          total: price
+        }
+          orderList.push(newItem)
+        setOrderItems(orderList)
+      }
+      else{
+          if (action == "+") {
+            if (item.length > 0) {
+                let newQty = item[0].qty + 1
+                item[0].qty = newQty
+                item[0].total = item[0].qty * price
+            } else {
+                const newItem = {
+                    menuId: menuId,
+                    qty: 1,
+                    price: price,
+                    total: price
+                }
+                orderList.push(newItem)
+            }
+      
+            setOrderItems(orderList)
+        } else {
+            if (item.length > 0) {
+                if (item[0]?.qty > 0) {
+                    let newQty = item[0].qty - 1
+                    item[0].qty = newQty
+                    item[0].total = newQty * price
+                }
+            }
+      
+            setOrderItems(orderList)
+        }
+      }
+    }
+    
+    function getOrderQty(menuId) {
+      let orderItem = orderItems.filter(a => a.menuId == menuId)
+    
+      if (orderItem.length > 0) {
+          return orderItem[0].qty
+      }
+    
+      return 0
+    }
 
   function renderHeader() {
     return (
@@ -122,13 +184,15 @@ const MyCart = ({route, navigation}) => {
                             marginHorizontal: 10,
                             marginVertical: 10,
                           }}
-                          onPress={() => Contador.restar}
+                          onPress={() => editOrder("-", idProducto, precioProducto, 1)}
                         />
+
                         <Text 
                           style={{ fontWeight: 'bold', fontSize: 23 , color:"white", 
                           borderColor: "transparent", backgroundColor: "rgb(21, 19, 19)",
                           width: 50}}
-                        >{cantidadProducto}</Text>
+                        >{getOrderQty(idProducto)}</Text>
+
                         <Button
                           title="     +"
                           icon={{
@@ -151,7 +215,7 @@ const MyCart = ({route, navigation}) => {
                             marginHorizontal: 10,
                             marginVertical: 10,
                           }}
-                          onPress={Contador.sumar}
+                          onPress={() => editOrder("+", idProducto, precioProducto, 1)}
                         />
                     </View>
                   </Card>

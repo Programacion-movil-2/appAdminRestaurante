@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     StyleSheet,
     SafeAreaView,
@@ -11,68 +11,32 @@ import {
 import { isIphoneX } from 'react-native-iphone-x-helper'
 const burger_restaurant_2 = require("../assets/images/burger-restaurant-2.jpg");
 import { icons, COLORS, SIZE } from '../constants'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const Restaurant = ({ route, navigation }) => {
     const {idProducto,nombre,descripcion,precio,foto}=route.params;
+    const scrollX = new Animated.Value(1);
+    const [orderItems, setOrderItems] = useState([]);
+    const [quantity, setQuantity] = useState(1);
+    const [carItems, setCartItems] = useState({
+        amount: 0,
+        total: 0
+    });
 
+    useEffect(()=>{
+        setQuantity(0);
+        existItems();
+    },[]);
 
-    const scrollX = new Animated.Value(0);
-    const [orderItems, setOrderItems] = React.useState([]);
+    const existItems = async () => {
+        let cartItemsExist = await AsyncStorage.getItem("cart");
 
-
-    function editOrder(action, menuId, price) {
-        let orderList = orderItems.slice()
-        let item = orderList.filter(a => a.menuId == menuId)
-
-        if (action == "+") {
-            if (item.length > 0) {
-                let newQty = item[0].qty + 1
-                item[0].qty = newQty
-                item[0].total = item[0].qty * price
-            } else {
-                const newItem = {
-                    menuId: menuId,
-                    qty: 1,
-                    price: price,
-                    total: price
-                }
-                orderList.push(newItem)
-            }
-
-            setOrderItems(orderList)
-        } else {
-            if (item.length > 0) {
-                if (item[0]?.qty > 0) {
-                    let newQty = item[0].qty - 1
-                    item[0].qty = newQty
-                    item[0].total = newQty * price
-                }
-            }
-
-            setOrderItems(orderList)
+        if (cartItemsExist) {
+            let amount = (JSON.parse(cartItemsExist)).length;
+            let total = (JSON.parse(cartItemsExist)).map((i) => i.total).reduce((a, b) => a + b);
+            setCartItems({amount: amount, total: total});
         }
-    }
-
-    function getOrderQty(menuId) {
-        let orderItem = orderItems.filter(a => a.menuId == menuId)
-
-        if (orderItem.length > 0) {
-            return orderItem[0].qty
-        }
-
-        return 0
-    }
-
-    function getBasketItemCount() {
-        let itemCount = orderItems.reduce((a, b) => a + (b.qty || 0), 0)
-
-        return itemCount
-    }
-
-    function sumOrder() {
-        let total = orderItems.reduce((a, b) => a + (b.total || 0), 0)
-
-        return total.toFixed(2)
     }
 
     // Menu Encabezado
@@ -190,7 +154,7 @@ const Restaurant = ({ route, navigation }) => {
                                         borderTopLeftRadius: 25,
                                         borderBottomLeftRadius: 25
                                     }}
-                                    onPress={() => editOrder("-", idProducto, precio)}
+                                    onPress={() => {setQuantity(quantity - 1);}}
                                 >
                                     <Text style={{ ...styles.body1 }}>-</Text>
                                 </TouchableOpacity>
@@ -203,7 +167,7 @@ const Restaurant = ({ route, navigation }) => {
                                         justifyContent: 'center'
                                     }}
                                 >
-                                    <Text style={{ ...styles.h2 }}>{getOrderQty(idProducto)}</Text>
+                                    <Text style={{ ...styles.h2 }}>{quantity}</Text>
                                 </View>
 
                                 <TouchableOpacity
@@ -215,7 +179,7 @@ const Restaurant = ({ route, navigation }) => {
                                         borderTopRightRadius: 25,
                                         borderBottomRightRadius: 25
                                     }}
-                                    onPress={() => editOrder("+", idProducto,precio)}
+                                    onPress={() => {setQuantity(quantity + 1);}}
                                 >
                                     <Text style={{ ...styles.body1 }}>+</Text>
                                 </TouchableOpacity>
@@ -264,8 +228,9 @@ const Restaurant = ({ route, navigation }) => {
                             borderBottomWidth: 1
                         }}
                     >
-                        <Text style={{ ...styles.h3 }}>{getBasketItemCount()} Productos en carrito</Text>
-                        <Text style={{ ...styles.h3 }}>L{sumOrder()}</Text>
+                        
+                        <Text style={{ ...styles.h3 }}>Productos en el carrito: {carItems.amount}</Text>
+                        <Text style={{ ...styles.h3 }}>L. {carItems.total}</Text>
                     </View>
 
                     <View
@@ -295,16 +260,55 @@ const Restaurant = ({ route, navigation }) => {
                                 alignItems: 'center',
                                 borderRadius: SIZE.radius
                             }}
-                            onPress={() => navigation.navigate('Cart',{
-                                idProducto:idProducto,
-                                nombreProducto:nombre,
-                                descripcionProducto:descripcion,
-                                precioProducto:precio,
-                                imagenProducto:foto,
-                                cantidadProducto:getOrderQty(idProducto),
-                            })}
+                            onPress={ async() => {
+                                if(quantity === 0){
+                                    await AsyncStorage.removeItem("cart")
+                                    console.log("Reiniciando el AsyncStorage");
+                                }
+
+                                if(quantity > 0){
+                                    const item = {
+                                        idProducto,
+                                        nombre,
+                                        precio,
+                                        quantity,
+                                        total: (precio * quantity)
+                                    };
+
+                                     /**Si existe el objeto en el carrito */
+                                    const cartItems = await AsyncStorage.getItem("cart");
+                                    if (cartItems) {
+                                        let items = (JSON.parse(cartItems));//objeto
+                                        let updateItems = [...items, item];
+                                        await AsyncStorage.setItem("cart", JSON.stringify(updateItems));
+                                        let cartUpdate = await AsyncStorage.getItem("cart");
+                                        
+                                        //let totalA = (JSON.parse(cartUpdate)).map((i) => i.total).reduce((a, b) => a + b);
+                                        let total = (JSON.parse(cartUpdate)).reduce(function (total, currentValue) {
+                                            return total + currentValue.total;
+                                           }, 0);
+                      
+                                        console.log(total);
+                                        setCartItems({
+                                            amount: (JSON.parse(cartUpdate)).length,
+                                            total: total
+                                            
+                                        });
+                                    }
+                                    if (!cartItems) {await AsyncStorage.setItem("cart",JSON.stringify([item]))//Guardamos el objeto
+                                        /** */
+                                        let cartUpdate = await AsyncStorage.getItem("cart");
+
+                                        setCartItems({
+                                            amount: (JSON.parse(cartUpdate)).length,
+                                            total: item.total
+                                        });
+                                    };
+                                }
+
+                            }}
                         >
-                            <Text style={{ color: COLORS.white, ...styles.h2 }}>Ordenar</Text>
+                            <Text style={{ color: COLORS.white, ...styles.h2 }}>Agregar al Carrito</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
