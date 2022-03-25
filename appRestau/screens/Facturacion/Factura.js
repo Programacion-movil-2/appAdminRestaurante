@@ -6,7 +6,7 @@ import {
     Image,
     Alert,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import {
     Text,
     useTheme,
@@ -24,18 +24,34 @@ import {
     FONT,
     FONTS,
 } from "../../constants";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Factura = ({ navigation }) => {
     //let idPedido = 4;
+    const [carItems, setCartItems] = useState({
+        total: 0
+    });
 
-    var SubTotal = 400;
+    useEffect(()=>{
+        existItems();
+    },[]);
+
+    const existItems = async () => {
+        let cartItemsExist = await AsyncStorage.getItem("cart");
+
+        if (cartItemsExist) {
+            let total = (JSON.parse(cartItemsExist)).map((i) => i.total).reduce((a, b) => a + b);
+            setCartItems({total: total});
+        }
+    }
+    var SubTotal = carItems.total;
     var ISV = SubTotal * 0.15;
-    var total = SubTotal + ISV;
+    var total2 = SubTotal + ISV;
 
     var date = new Date().getDate();
     var month = new Date().getMonth() + 1;
     var year = new Date().getFullYear();
-    var fecha = year + '-' + month + '-' + date;
+    var fecha = date + '/' + month + '/' + year;
 
     const insertarFactura = async () => {
         let estado = "facturado";
@@ -44,7 +60,6 @@ const Factura = ({ navigation }) => {
             Alert.alert("Restaurante", "Error al procesar factura");
         }
         else {
-            console.log(total + fecha);
             Alert.alert("Restaurante", "Factura procesada exitosamente.");
             navegarFactura();
             // try {
@@ -187,6 +202,17 @@ const Factura = ({ navigation }) => {
             </View>
 
             <View style={styles.totales}>
+            <View style={styles.duo}>
+                    <Text
+                        style={styles.text}
+                        h4
+                        h4Style={{ color: theme?.colors?.primary }}>
+                        Fecha de factura:
+                    </Text>
+                        <Text h3 style={styles.text}>
+                            {fecha}
+                        </Text>
+                </View>
                 <View style={styles.duo}>
                     <Text
                         style={styles.text}
@@ -196,7 +222,7 @@ const Factura = ({ navigation }) => {
                     </Text>
                     <Text h3 style={styles.text}>L.
                         <Text h3 style={styles.text}>
-                            400
+                            {carItems.total}
                         </Text>
                     </Text>
                 </View>
@@ -210,7 +236,7 @@ const Factura = ({ navigation }) => {
                     </Text>
                     <Text h3 style={styles.text}>L.
                         <Text h3 style={styles.text}>
-                            60
+                            {ISV}
                         </Text>
                     </Text>
                 </View>
@@ -220,11 +246,11 @@ const Factura = ({ navigation }) => {
                         style={styles.text}
                         h4
                         h4Style={{ color: theme?.colors?.primary }}>
-                        Total:
+                        Total de la compra:
                     </Text>
                     <Text h3 style={styles.text}>L.
                         <Text h3 style={styles.text}>
-                            460
+                            {total2}
                         </Text>
                     </Text>
                 </View>
@@ -274,7 +300,7 @@ const styles = StyleSheet.create({
     },
     totales: {
         flex: 1,
-        marginTop: 50,
+        marginTop: 10,
     },
     view: {
         margin: 10,
@@ -300,7 +326,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         width: "100%",
-        marginVertical: 100,
+        marginVertical: 50,
     },
     shadow: {
         shadowColor: "#000",

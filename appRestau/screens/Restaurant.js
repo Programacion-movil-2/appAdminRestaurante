@@ -89,6 +89,7 @@ const Restaurant = ({ route, navigation }) => {
                         paddingRight: SIZE.padding * 2,
                         justifyContent: 'center'
                     }}
+                    onPress={() => navigation.navigate('Cart')}
                 >
                     <Image
                         source={icons.basket}
@@ -302,6 +303,7 @@ const Restaurant = ({ route, navigation }) => {
                                         setCartItems({
                                             amount: (JSON.parse(cartUpdate)).length,
                                             total: item.total
+                                            
                                         });
                                     };
                                 }
