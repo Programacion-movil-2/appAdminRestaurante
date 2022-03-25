@@ -11,7 +11,7 @@ const ForgotPwdScreen = ({navigation}) => {
 
     const onConfirmPressed = async () =>{
 
-        console.log(email);
+        //console.log(email);
         if(!email){
             console.log("Ingrese su correo electronico");
             Alert.alert("Portales Restaurant", "Ingrese su correo electronico");
@@ -33,10 +33,10 @@ const ForgotPwdScreen = ({navigation}) => {
 
                 const json = await respt.json();
                 console.log(json);
-                //var correo = email;
-                await AsyncStorage.setItem('correo', email);
                 Alert.alert("Portales Restaurant", json.msj);
-                navigation.navigate('NewPassword');
+                navigation.navigate('NewPassword',{
+                    correo: email
+                });
 
             } catch (error) {
                 console.log(error);

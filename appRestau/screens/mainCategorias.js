@@ -120,6 +120,7 @@ const MainCategorias = ({navigation}) => {
                         paddingLeft: SIZE.padding * 2,
                         justifyContent: 'center'
                     }}
+                    onPress={() => navigation.navigate('UserProfile')}
                 >
                     <Image
                         source={icons.user}

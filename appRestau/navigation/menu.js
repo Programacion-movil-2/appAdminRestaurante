@@ -15,6 +15,8 @@ import CashDetails from '../screens/Facturacion/DetalleEfectivo';
 import CardDetails from '../screens/Facturacion/DetalleTarjeta';
 import PaymentMethod from '../screens/Facturacion/MetodoPago';
 import Billing from '../screens/Facturacion/Factura';
+import PaymentMethod from '../screens/Facturacion/metodoPago';
+import UserProfile from '../screens/UserProfile/UserProfile';
 
 const Stack = createNativeStackNavigator();
 
@@ -45,6 +47,7 @@ export default function LNavigation(){
                 <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
                 <Stack.Screen name="CardDetails" component={CardDetails} />
                 <Stack.Screen name="Billing" component={Billing} />
+                <Stack.Screen name="UserProfile" component={UserProfile} />
 
             </Stack.Navigator>
 
