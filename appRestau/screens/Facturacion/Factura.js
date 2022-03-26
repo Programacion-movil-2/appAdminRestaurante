@@ -5,6 +5,7 @@ import {
     TouchableOpacity,
     Image,
     Alert,
+    ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from 'react';
 import {
@@ -194,7 +195,7 @@ const Factura = ({ navigation }) => {
     const { theme } = useTheme();
 
     return (
-        <View style={styles.container}>
+        <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
             {renderHeader()}
 
             <View style={styles.view}>
@@ -261,14 +262,13 @@ const Factura = ({ navigation }) => {
                 <Button
                     title="Confirmar"
                     buttonStyle={{
-                        height: 55,
+                        height: 50,
                         backgroundColor: "rgba(57, 146, 146, 1)",
-                        borderWidth: 2,
                         borderColor: "white",
                         borderRadius: 30,
                     }}
                     containerStyle={{
-                        width: 220,
+                        width: 250,
                         marginHorizontal: 50,
                         marginVertical: 10,
                     }}
@@ -278,7 +278,7 @@ const Factura = ({ navigation }) => {
                 <Button
                     title="Cancelar pedido"
                     buttonStyle={{
-                        height: 40,
+                        height: 50,
                         backgroundColor: 'rgba(214, 61, 57, 1)',
                         borderRadius: 30,
                     }}
@@ -291,7 +291,7 @@ const Factura = ({ navigation }) => {
                     onPress={cancelarFactura}
                 />
             </View>
-        </View>
+        </ScrollView>
     );
 };
 
