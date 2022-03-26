@@ -18,14 +18,13 @@ const Restaurant = ({ route, navigation }) => {
     const {idProducto,nombre,descripcion,precio,foto}=route.params;
     const scrollX = new Animated.Value(1);
     const [orderItems, setOrderItems] = useState([]);
-    const [quantity, setQuantity] = useState(1);
+    const [quantity, setQuantity] = useState(0);
     const [carItems, setCartItems] = useState({
         amount: 0,
         total: 0
     });
 
     useEffect(()=>{
-        setQuantity(0);
         existItems();
     },[]);
     
@@ -37,12 +36,18 @@ const Restaurant = ({ route, navigation }) => {
             let amount = (JSON.parse(cartItemsExist)).length;
             let total = (JSON.parse(cartItemsExist)).map((i) => i.total).reduce((a, b) => a + b);
             setCartItems({amount: amount, total: total});
+
+            if(isItemAlreadyInCart(JSON.parse(cartItemsExist))){
+                let cart = JSON.parse(cartItemsExist);
+                let objIndex = cart.findIndex((obj => obj.idProducto === idProducto));
+                setQuantity(cart[objIndex].quantity)
+            }
         }
     }
 
     function isItemAlreadyInCart(arr) {
         return arr.some(function(item) {
-          return item.id === idProducto;
+          return item.idProducto === idProducto;
         }); 
     };
 
@@ -161,7 +166,7 @@ const Restaurant = ({ route, navigation }) => {
                                         borderTopLeftRadius: 25,
                                         borderBottomLeftRadius: 25
                                     }}
-                                    onPress={() => {setQuantity(quantity - 1);}}
+                                    onPress={() => {(quantity!=0) && setQuantity(quantity - 1);}}
                                 >
                                     <Text style={{ ...styles.body1 }}>-</Text>
                                 </TouchableOpacity>
@@ -288,6 +293,7 @@ const Restaurant = ({ route, navigation }) => {
                                     if (cartItems) {
                                         /* */
                                         if (!isItemAlreadyInCart(JSON.parse(cartItems))) {
+                                            console.log("Primera vez en el carrito")
                                             let items = (JSON.parse(cartItems));//objeto
                                             const updatedCart = [...items, item];
                                             await AsyncStorage.setItem("cart", JSON.stringify(updatedCart));
@@ -305,13 +311,14 @@ const Restaurant = ({ route, navigation }) => {
                                             });
                                         };
 
+
                                         /** */
                                         if (isItemAlreadyInCart(JSON.parse(cartItems))) { 
                                             let cart = JSON.parse(cartItems);
                                             // Actualizar la cantidad y recalcular el total del item 
-                                            let objIndex = cart.findIndex((obj => obj.id === item.id));
-                                            cart[objIndex].amount = (item.amount);
-                                            cart[objIndex].price = (item.amount * item.price);
+                                            let objIndex = cart.findIndex((obj => obj.idProducto === item.idProducto));
+                                            cart[objIndex].quantity = (item.quantity);
+                                            cart[objIndex].total = (item.quantity * item.precio);
                                             
                                             /* */
                                             await AsyncStorage.setItem("cart", JSON.stringify(cart));

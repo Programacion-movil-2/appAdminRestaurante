@@ -23,7 +23,7 @@ const MainCategorias = ({navigation}) => {
 
     async function obtenerCategorias() {
         try {
-            const respt = await fetch('http://172.20.10.4:5000/api/tipoProductos/listarTipoProducto');
+            const respt = await fetch('http://192.168.1.39:5000/api/tipoProductos/listarTipoProducto');
 
             const json = await respt.json();
             setCategories(json);
@@ -38,7 +38,7 @@ const MainCategorias = ({navigation}) => {
     }
     async function obtenerProductos(idTipoProducto = 4) {
         try {
-            const respt = await fetch('http://172.20.10.4:5000/api/productos/listarProductosTipo?idTipoProducto=' + idTipoProducto);
+            const respt = await fetch('http://192.168.1.39:5000/api/productos/listarProductosTipo?idTipoProducto=' + idTipoProducto);
 
             const json = await respt.json();
             if (!json) {
@@ -54,7 +54,7 @@ const MainCategorias = ({navigation}) => {
     }
     async function obtenerTipo(idTipoProducto = 4) {
         try {
-            const tipo = await fetch('http://172.20.10.4:5000/api/tipoProductos/listarTipo?idTipoProducto=' + idTipoProducto);
+            const tipo = await fetch('http://192.168.1.39:5000/api/tipoProductos/listarTipo?idTipoProducto=' + idTipoProducto);
 
             const json = await tipo.json();
             if (!json) {
@@ -71,7 +71,7 @@ const MainCategorias = ({navigation}) => {
     }
     async function obtenerTipoPrincipal(idTipoProducto) {
         try {
-            const tipoPrincipal = await fetch('http://172.20.10.4:5000/api/productos/listarProductosDeCategorias?idTipoProducto=' + idTipoProducto);
+            const tipoPrincipal = await fetch('http://192.168.1.39:5000/api/productos/listarProductosDeCategorias?idTipoProducto=' + idTipoProducto);
 
             const json = await tipoPrincipal.json();
             if (!json) {
