@@ -18,16 +18,16 @@ const Restaurant = ({ route, navigation }) => {
     const {idProducto,nombre,descripcion,precio,foto}=route.params;
     const scrollX = new Animated.Value(1);
     const [orderItems, setOrderItems] = useState([]);
-    const [quantity, setQuantity] = useState(1);
+    const [quantity, setQuantity] = useState(0);
     const [carItems, setCartItems] = useState({
         amount: 0,
         total: 0
     });
 
     useEffect(()=>{
-        setQuantity(0);
         existItems();
     },[]);
+    
 
     const existItems = async () => {
         let cartItemsExist = await AsyncStorage.getItem("cart");
@@ -36,8 +36,20 @@ const Restaurant = ({ route, navigation }) => {
             let amount = (JSON.parse(cartItemsExist)).length;
             let total = (JSON.parse(cartItemsExist)).map((i) => i.total).reduce((a, b) => a + b);
             setCartItems({amount: amount, total: total});
+
+            if(isItemAlreadyInCart(JSON.parse(cartItemsExist))){
+                let cart = JSON.parse(cartItemsExist);
+                let objIndex = cart.findIndex((obj => obj.idProducto === idProducto));
+                setQuantity(cart[objIndex].quantity)
+            }
         }
     }
+
+    function isItemAlreadyInCart(arr) {
+        return arr.some(function(item) {
+          return item.idProducto === idProducto;
+        }); 
+    };
 
     // Menu Encabezado
     function renderHeader() {
@@ -155,7 +167,7 @@ const Restaurant = ({ route, navigation }) => {
                                         borderTopLeftRadius: 25,
                                         borderBottomLeftRadius: 25
                                     }}
-                                    onPress={() => {setQuantity(quantity - 1);}}
+                                    onPress={() => {(quantity!=0) && setQuantity(quantity - 1);}}
                                 >
                                     <Text style={{ ...styles.body1 }}>-</Text>
                                 </TouchableOpacity>
@@ -267,6 +279,7 @@ const Restaurant = ({ route, navigation }) => {
                                     console.log("Reiniciando el AsyncStorage");
                                 }
 
+                                /* */
                                 if(quantity > 0){
                                     const item = {
                                         idProducto,
@@ -279,24 +292,51 @@ const Restaurant = ({ route, navigation }) => {
                                      /**Si existe el objeto en el carrito */
                                     const cartItems = await AsyncStorage.getItem("cart");
                                     if (cartItems) {
-                                        let items = (JSON.parse(cartItems));//objeto
-                                        let updateItems = [...items, item];
-                                        await AsyncStorage.setItem("cart", JSON.stringify(updateItems));
-                                        let cartUpdate = await AsyncStorage.getItem("cart");
+                                        /* */
+                                        if (!isItemAlreadyInCart(JSON.parse(cartItems))) {
+                                            console.log("Primera vez en el carrito")
+                                            let items = (JSON.parse(cartItems));//objeto
+                                            const updatedCart = [...items, item];
+                                            await AsyncStorage.setItem("cart", JSON.stringify(updatedCart));
+
+                                            let cartUpdate = await AsyncStorage.getItem("cart");
                                         
-                                        //let totalA = (JSON.parse(cartUpdate)).map((i) => i.total).reduce((a, b) => a + b);
-                                        let total = (JSON.parse(cartUpdate)).reduce(function (total, currentValue) {
-                                            return total + currentValue.total;
-                                           }, 0);
-                      
-                                        console.log(total);
-                                        setCartItems({
-                                            amount: (JSON.parse(cartUpdate)).length,
-                                            total: total
+                                            //let totalA = (JSON.parse(cartUpdate)).map((i) => i.total).reduce((a, b) => a + b);
+                                            let total = (JSON.parse(cartUpdate)).reduce(function (total, currentValue) {
+                                                return total + currentValue.total;
+                                            }, 0);
+                    
+                                            setCartItems({
+                                                amount: (JSON.parse(cartUpdate)).length,
+                                                total: total
+                                            });
+                                        };
+
+
+                                        /** */
+                                        if (isItemAlreadyInCart(JSON.parse(cartItems))) { 
+                                            let cart = JSON.parse(cartItems);
+                                            // Actualizar la cantidad y recalcular el total del item 
+                                            let objIndex = cart.findIndex((obj => obj.idProducto === item.idProducto));
+                                            cart[objIndex].quantity = (item.quantity);
+                                            cart[objIndex].total = (item.quantity * item.precio);
                                             
-                                        });
+                                            /* */
+                                            await AsyncStorage.setItem("cart", JSON.stringify(cart));
+                                            let cartUpdate = await AsyncStorage.getItem("cart");
+                                        
+                                            let total = (JSON.parse(cartUpdate)).reduce(function (total, currentValue) {
+                                                return total + currentValue.total;
+                                            }, 0);
+                    
+                                            setCartItems({
+                                                amount: (JSON.parse(cartUpdate)).length,
+                                                total: total
+                                            });
+                                        };
                                     }
-                                    if (!cartItems) {await AsyncStorage.setItem("cart",JSON.stringify([item]))//Guardamos el objeto
+                                    if (!cartItems) { 
+                                        await AsyncStorage.setItem("cart",JSON.stringify([item]))//Guardamos el objeto
                                         /** */
                                         let cartUpdate = await AsyncStorage.getItem("cart");
 
