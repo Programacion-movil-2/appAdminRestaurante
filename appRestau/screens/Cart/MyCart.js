@@ -29,10 +29,10 @@ const MyCart = ({ route, navigation }) => {
             paddingLeft: SIZE.padding * 2,
             justifyContent: 'center'
           }}
-          onPress={() => navigation.goBack()}
+          onPress={() => navigation.navigate('MainCategories')}
         >
           <Image
-            source={icons.back}
+            source={icons.home}
             resizeMode="contain"
             style={{
               width: 30,
