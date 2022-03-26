@@ -28,6 +28,7 @@ const Restaurant = ({ route, navigation }) => {
         setQuantity(0);
         existItems();
     },[]);
+    
 
     const existItems = async () => {
         let cartItemsExist = await AsyncStorage.getItem("cart");
@@ -38,6 +39,12 @@ const Restaurant = ({ route, navigation }) => {
             setCartItems({amount: amount, total: total});
         }
     }
+
+    function isItemAlreadyInCart(arr) {
+        return arr.some(function(item) {
+          return item.id === idProducto;
+        }); 
+    };
 
     // Menu Encabezado
     function renderHeader() {
@@ -266,6 +273,7 @@ const Restaurant = ({ route, navigation }) => {
                                     console.log("Reiniciando el AsyncStorage");
                                 }
 
+                                /* */
                                 if(quantity > 0){
                                     const item = {
                                         idProducto,
@@ -278,24 +286,49 @@ const Restaurant = ({ route, navigation }) => {
                                      /**Si existe el objeto en el carrito */
                                     const cartItems = await AsyncStorage.getItem("cart");
                                     if (cartItems) {
-                                        let items = (JSON.parse(cartItems));//objeto
-                                        let updateItems = [...items, item];
-                                        await AsyncStorage.setItem("cart", JSON.stringify(updateItems));
-                                        let cartUpdate = await AsyncStorage.getItem("cart");
+                                        /* */
+                                        if (!isItemAlreadyInCart(JSON.parse(cartItems))) {
+                                            let items = (JSON.parse(cartItems));//objeto
+                                            const updatedCart = [...items, item];
+                                            await AsyncStorage.setItem("cart", JSON.stringify(updatedCart));
+
+                                            let cartUpdate = await AsyncStorage.getItem("cart");
                                         
-                                        //let totalA = (JSON.parse(cartUpdate)).map((i) => i.total).reduce((a, b) => a + b);
-                                        let total = (JSON.parse(cartUpdate)).reduce(function (total, currentValue) {
-                                            return total + currentValue.total;
-                                           }, 0);
-                      
-                                        console.log(total);
-                                        setCartItems({
-                                            amount: (JSON.parse(cartUpdate)).length,
-                                            total: total
+                                            //let totalA = (JSON.parse(cartUpdate)).map((i) => i.total).reduce((a, b) => a + b);
+                                            let total = (JSON.parse(cartUpdate)).reduce(function (total, currentValue) {
+                                                return total + currentValue.total;
+                                            }, 0);
+                    
+                                            setCartItems({
+                                                amount: (JSON.parse(cartUpdate)).length,
+                                                total: total
+                                            });
+                                        };
+
+                                        /** */
+                                        if (isItemAlreadyInCart(JSON.parse(cartItems))) { 
+                                            let cart = JSON.parse(cartItems);
+                                            // Actualizar la cantidad y recalcular el total del item 
+                                            let objIndex = cart.findIndex((obj => obj.id === item.id));
+                                            cart[objIndex].amount = (item.amount);
+                                            cart[objIndex].price = (item.amount * item.price);
                                             
-                                        });
+                                            /* */
+                                            await AsyncStorage.setItem("cart", JSON.stringify(cart));
+                                            let cartUpdate = await AsyncStorage.getItem("cart");
+                                        
+                                            let total = (JSON.parse(cartUpdate)).reduce(function (total, currentValue) {
+                                                return total + currentValue.total;
+                                            }, 0);
+                    
+                                            setCartItems({
+                                                amount: (JSON.parse(cartUpdate)).length,
+                                                total: total
+                                            });
+                                        };
                                     }
-                                    if (!cartItems) {await AsyncStorage.setItem("cart",JSON.stringify([item]))//Guardamos el objeto
+                                    if (!cartItems) { 
+                                        await AsyncStorage.setItem("cart",JSON.stringify([item]))//Guardamos el objeto
                                         /** */
                                         let cartUpdate = await AsyncStorage.getItem("cart");
 
