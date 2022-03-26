@@ -1,78 +1,23 @@
-import React from 'react';
 import { SafeAreaView, StyleSheet, View, TouchableOpacity, ScrollView, Image, FlatList, Text, Animated } from 'react-native';
 import { withTheme, useTheme, ButtonGroup, Card, Button, Icon } from 'react-native-elements';
 import { icons, SIZES, SIZE, COLORS, FONT, FONTS, images } from '../../constants';
-import { useState, useEffect } from 'react';
-
-const users = [
-];
-
-const Contador = () => {
-  const [contador, setContador] = useState(0);
-  const sumar = () => setContador(contador + 1);
-  const restar = () => setContador(contador - 1);
-}
+import React, { useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MyCart = ({ route, navigation }) => {
-  //useEffect(() => { editOrder("+", idProducto, precioProducto, 0); getOrderQty(idProducto); }, [])
+  const [orderItems, setOrderItems] = React.useState(null);
 
-  //const { idProducto, nombreProducto, descripcionProducto, precioProducto, imagenProducto, cantidadProducto } = route.params;
-  const [orderItems, setOrderItems] = React.useState([]);
+  useEffect(() => {
+    existItems();
+  },[]);
 
-  function editOrder(action, menuId, price, estado) {
-    let orderList = orderItems.slice()
-    let cantidad = cantidadProducto
-    let item = orderList.filter(a => a.menuId == menuId)
+  const existItems = async () => {
+    let cartItemsExist = await AsyncStorage.getItem("cart");
 
-    if (estado == 0) {
-      const newItem = {
-        menuId: menuId,
-        qty: cantidadProducto,
-        price: price,
-        total: price
-      }
-      orderList.push(newItem)
-      setOrderItems(orderList)
+    if (cartItemsExist) {
+      let items = JSON.parse(cartItemsExist);
+      setOrderItems(items)
     }
-    else {
-      if (action == "+") {
-        if (item.length > 0) {
-          let newQty = item[0].qty + 1
-          item[0].qty = newQty
-          item[0].total = item[0].qty * price
-        } else {
-          const newItem = {
-            menuId: menuId,
-            qty: 1,
-            price: price,
-            total: price
-          }
-          orderList.push(newItem)
-        }
-
-        setOrderItems(orderList)
-      } else {
-        if (item.length > 0) {
-          if (item[0]?.qty > 0) {
-            let newQty = item[0].qty - 1
-            item[0].qty = newQty
-            item[0].total = newQty * price
-          }
-        }
-
-        setOrderItems(orderList)
-      }
-    }
-  }
-
-  function getOrderQty(menuId) {
-    let orderItem = orderItems.filter(a => a.menuId == menuId)
-
-    if (orderItem.length > 0) {
-      return orderItem[0].qty
-    }
-
-    return 0
   }
 
   function renderHeader() {
@@ -144,234 +89,59 @@ const MyCart = ({ route, navigation }) => {
       {renderHeader()}
       <ScrollView>
         <View>
-          <View>
-            {/* <Card>
-                      <Card.Title style={{margin: 6, textAlign:'center'}}>
-                        {nombreProducto}</Card.Title>
-                      
-                      <Card.Image
-                        style={{ padding: 0 }}
-                        source={{uri:imagenProducto}}
-                          />
-                          <Text style={{ marginBottom: 10, margin: 14, textAlign:'center'}}>
-                            {descripcionProducto}
-                            {precioProducto}
-                          </Text>
+          <View style={styles.buttonsContainer}>
+            <Button
+                title="Vaciar Carrito"
+                loading={false}
+                loadingProps={{ size: 'small', color: 'white' }}
+                buttonStyle={{
+                  backgroundColor: 'rgba(57, 146, 146, 1)',
 
-                      <View style={styles.buttonsContainer}>
-                        <Button
-                          title="     -"
-                          icon={{
-                            name: "",
-                            type: "font-awesome",
-                            size: 15,
-                            color: "white",
-                          }}
-                          iconRight
-                          iconContainerStyle={{ marginLeft: 10 }}
-                          titleStyle={{ fontWeight: "700" }}
-                          buttonStyle={{
-                            backgroundColor: "rgb(21, 19, 19)",
-                            borderColor: "transparent",
-                            borderWidth: 0,
-                            borderRadius: 0,
-                          }}
-                          containerStyle={{
-                            width: 50,
-                            marginHorizontal: 10,
-                            marginVertical: 10,
-                          }}
-                          onPress={() => editOrder("-", idProducto, precioProducto, 1)}
-                        />
+                  borderRadius: 5,
+                }}
+                titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
+                containerStyle={{
+                  marginHorizontal: 50,
+                  height: 50,
+                  width: 300,
+                  marginVertical: 10,
+                }}
 
-                        <Text 
-                          style={{ fontWeight: 'bold', fontSize: 23 , color:"white", 
-                          borderColor: "transparent", backgroundColor: "rgb(21, 19, 19)",
-                          width: 50}}
-                        >{getOrderQty(idProducto)}</Text>
-
-                        <Button
-                          title="     +"
-                          icon={{
-                            name: "",
-                            type: "font-awesome",
-                            size: 15,
-                            color: "white",
-                          }}
-                          iconRight
-                          iconContainerStyle={{ marginLeft: 10 }}
-                          titleStyle={{ fontWeight: "700" }}
-                          buttonStyle={{
-                            backgroundColor: "rgb(21, 19, 19)",
-                            borderColor: "transparent",
-                            borderWidth: 0,
-                            borderRadius: 0,
-                          }}
-                          containerStyle={{
-                            width: 50,
-                            marginHorizontal: 10,
-                            marginVertical: 10,
-                          }}
-                          onPress={() => editOrder("+", idProducto, precioProducto, 1)}
-                        />
-                    </View>
-                  </Card> */}
+              onPress={async () => {
+                  await AsyncStorage.removeItem("cart");
+                  setOrderItems(null)
+              }}>
+            </Button>
           </View>
-
-          <View>
-            <Card>
+          {<View>
+            {orderItems && orderItems.map(item =>
+                // <Text key={item.idProducto}>{item.nombre}</Text>
+                <Card key={item.idProducto}>
               <Card.Title style={{ margin: 6, textAlign: 'center' }}>
-                LASAÑA ITALIANA</Card.Title>
+                {item.nombre}</Card.Title>
 
               <Card.Image
                 style={{ padding: 0 }}
                 source={{
                   uri:
-                    'https://pm1.narvii.com/6719/d40f6350d1db983e352b5c865938f2880b51f2ff_hq.jpg',
+                    `${item.foto}`
                 }}
               />
-              <Text style={{ marginBottom: 10, margin: 14, textAlign: 'center' }}>
-                Deliciosa pasta italiana cortada en forma de anchas cintas que pueden poseer
-                una forma lisa u ondulada, incluso distintos colores dependiendo de la verdura
-                con la que se deseen entintar.
-              </Text>
-
+              
               <View style={styles.buttonsContainer}>
-                <Button
-                  title="     -"
-                  icon={{
-                    name: "",
-                    type: "font-awesome",
-                    size: 15,
-                    color: "white",
-                  }}
-                  iconRight
-                  iconContainerStyle={{ marginLeft: 10 }}
-                  titleStyle={{ fontWeight: "700" }}
-                  buttonStyle={{
-                    backgroundColor: "rgb(21, 19, 19)",
-                    borderColor: "transparent",
-                    borderWidth: 0,
-                    borderRadius: 0,
-                  }}
-                  containerStyle={{
-                    width: 50,
-                    marginHorizontal: 10,
-                    marginVertical: 10,
-                  }}
-                  onPress={() => navigation.navigate("CashDetails")}
-                />
                 <Text
                   style={{
                     fontWeight: 'bold', fontSize: 23, color: "white",
                     borderColor: "transparent", backgroundColor: "rgb(21, 19, 19)",
                     width: 50
                   }}
-                >    5</Text>
-                <Button
-                  title="     +"
-                  icon={{
-                    name: "",
-                    type: "font-awesome",
-                    size: 15,
-                    color: "white",
-                  }}
-                  iconRight
-                  iconContainerStyle={{ marginLeft: 10 }}
-                  titleStyle={{ fontWeight: "700" }}
-                  buttonStyle={{
-                    backgroundColor: "rgb(21, 19, 19)",
-                    borderColor: "transparent",
-                    borderWidth: 0,
-                    borderRadius: 0,
-                  }}
-                  containerStyle={{
-                    width: 50,
-                    marginHorizontal: 10,
-                    marginVertical: 10,
-                  }}
-                  onPress={() => navigation.navigate("CardDetails")}
-                />
+                >    {item.quantity}</Text>
+                
               </View>
             </Card>
-          </View>
-
-          <View>
-            <Card>
-              <Card.Title style={{ margin: 6, textAlign: 'center' }}
-              >SUSHI</Card.Title>
-
-              <Card.Image
-                style={{ padding: 0 }}
-                source={{
-                  uri:
-                    'https://www.lavanguardia.com/files/og_thumbnail/uploads/2019/10/15/5e9977d4903ac.jpeg',
-                }}
-              />
-              <Text style={{ marginBottom: 10, margin: 14, textAlign: 'center' }}>
-                Seleccionar frutas y verduras frescas para hacer platos de alta calidad
-                (como aguacate, mango y zanahorias), disfruta en familia de este plato esquisito.
-              </Text>
-
-              <View style={styles.buttonsContainer}>
-                <Button
-                  title="     -"
-                  icon={{
-                    name: "",
-                    type: "font-awesome",
-                    size: 15,
-                    color: "white",
-                  }}
-                  iconRight
-                  iconContainerStyle={{ marginLeft: 10 }}
-                  titleStyle={{ fontWeight: "700" }}
-                  buttonStyle={{
-                    backgroundColor: "rgb(21, 19, 19)",
-                    borderColor: "transparent",
-                    borderWidth: 0,
-                    borderRadius: 0,
-                  }}
-                  containerStyle={{
-                    width: 50,
-                    marginHorizontal: 10,
-                    marginVertical: 10,
-                  }}
-                  onPress={() => navigation.navigate("CashDetails")}
-                />
-                <Text
-                  style={{
-                    fontWeight: 'bold', fontSize: 23, color: "white",
-                    borderColor: "transparent", backgroundColor: "rgb(21, 19, 19)",
-                    width: 50
-                  }}
-                >    5</Text>
-                <Button
-                  title="     +"
-                  icon={{
-                    name: "",
-                    type: "font-awesome",
-                    size: 15,
-                    color: "white",
-                  }}
-                  iconRight
-                  iconContainerStyle={{ marginLeft: 10 }}
-                  titleStyle={{ fontWeight: "700" }}
-                  buttonStyle={{
-                    backgroundColor: "rgb(21, 19, 19)",
-                    borderColor: "transparent",
-                    borderWidth: 0,
-                    borderRadius: 0,
-                  }}
-                  containerStyle={{
-                    width: 50,
-                    marginHorizontal: 10,
-                    marginVertical: 10,
-                  }}
-                  onPress={() => navigation.navigate("CardDetails")}
-                />
-              </View>
-            </Card>
-          </View>
+            )}
+            
+          </View>}
 
           <View style={styles.buttonsContainer}>
             <Button
@@ -387,7 +157,7 @@ const MyCart = ({ route, navigation }) => {
               containerStyle={{
                 marginHorizontal: 50,
                 height: 50,
-                width: 200,
+                width: 300,
                 marginVertical: 10,
               }}
               onPress={() => navigation.navigate('PaymentMethod')}

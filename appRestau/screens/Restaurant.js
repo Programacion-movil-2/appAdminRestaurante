@@ -274,11 +274,6 @@ const Restaurant = ({ route, navigation }) => {
                                 borderRadius: SIZE.radius
                             }}
                             onPress={ async() => {
-                                if(quantity === 0){
-                                    await AsyncStorage.removeItem("cart")
-                                    console.log("Reiniciando el AsyncStorage");
-                                }
-
                                 /* */
                                 if(quantity > 0){
                                     const item = {
@@ -286,6 +281,7 @@ const Restaurant = ({ route, navigation }) => {
                                         nombre,
                                         precio,
                                         quantity,
+                                        foto,
                                         total: (precio * quantity)
                                     };
 
