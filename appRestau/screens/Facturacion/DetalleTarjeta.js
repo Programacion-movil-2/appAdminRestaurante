@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  ScrollView,
 } from "react-native";
 import React, { useState } from "react";
 import {
@@ -148,7 +149,7 @@ const DetalleEfectivo = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       {renderHeader()}
       <View style={styles.view}>
         <Text style={styles.text} h2 h1Style={{ color: theme?.colors?.black }}>
@@ -248,7 +249,7 @@ const DetalleEfectivo = ({ navigation }) => {
           />
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, View, TouchableOpacity, Image, Alert } from "react-native";
+import { SafeAreaView, StyleSheet, View, TouchableOpacity, Image, Alert, ScrollView } from "react-native";
 import React, {useState} from 'react';
 import { Text, useTheme, Button, ButtonGroup, withTheme, Input } from "react-native-elements";
 import { icons, images, SIZES, SIZE, COLORS, FONT, FONTS } from '../../constants';
@@ -112,7 +112,7 @@ const DetalleEfectivo = ({ navigation }) => {
     const { theme } = useTheme();
 
     return (
-        <View style={styles.container}>
+        <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
             {renderHeader()}
 
             <View style={styles.view}>
@@ -183,7 +183,7 @@ const DetalleEfectivo = ({ navigation }) => {
             </View>
 
 
-        </View>
+        </ScrollView>
     );
 }
 
