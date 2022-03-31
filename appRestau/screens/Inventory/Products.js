@@ -1,6 +1,6 @@
-import { SafeAreaView, StyleSheet, View, TouchableOpacity, Image, Alert, ScrollView } from "react-native";
-import * as React from 'react';
-import { Text, Card, Button, Icon, useTheme } from 'react-native-elements';
+import { SafeAreaView, StyleSheet, View, TouchableOpacity, Image, Alert, ScrollView, StatusBar} from "react-native";
+import React, { forwardRef } from 'react';
+import { Text, Card, Button, useTheme, Icon } from 'react-native-elements';
 import { icons, images, SIZES, SIZE, COLORS, FONT, FONTS } from '../../constants';
 import { DataTable } from 'react-native-paper';
 
@@ -81,6 +81,9 @@ const Products = ({ navigation }) => {
 
     return (
         <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
+            <StatusBar
+                hidden={false}
+                backgroundColor="#808080" />
             {renderHeader()}
 
             <View style={styles.Encabezado}>
@@ -92,31 +95,39 @@ const Products = ({ navigation }) => {
                 </Text>
             </View>
 
+            {/* <MaterialTable
+                data={DEMO_DATA}
+                columns={DEMO_COLS}
+                icons={TABLE_ICONS}
+                actions={[
+                    {
+                        icon: () => <SaveIcon />,
+                        tooltip: "Save User",
+                        onClick: (event, rowData) => {
+                            const rowJson = JSON.stringify(rowData, null, 2);
+                            alert(`Do save operation : ${rowJson}`);
+                        },
+                    },
+                ]}
+            /> */}
+
             <View style={styles.Table}>
                 <DataTable>
                     <DataTable.Header>
+                        <DataTable.Title>ID</DataTable.Title>
                         <DataTable.Title>Nombre</DataTable.Title>
-                        <DataTable.Title numeric>Precio</DataTable.Title>
-                        <DataTable.Title numeric>Estado</DataTable.Title>
+                        <DataTable.Title>Precio</DataTable.Title>
                     </DataTable.Header>
 
-                    <DataTable.Row>
-                        <DataTable.Cell>Frozen yogurt</DataTable.Cell>
-                        <DataTable.Cell numeric>159</DataTable.Cell>
-                        <DataTable.Cell numeric>Activo</DataTable.Cell>
-                    </DataTable.Row>
-
-                    <DataTable.Row>
-                        <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
-                        <DataTable.Cell numeric>237</DataTable.Cell>
-                        <DataTable.Cell numeric>Activo</DataTable.Cell>
-                    </DataTable.Row>
-
-                    <DataTable.Row>
-                        <DataTable.Cell>Hamburguesa</DataTable.Cell>
-                        <DataTable.Cell numeric>237</DataTable.Cell>
-                        <DataTable.Cell numeric>Activo</DataTable.Cell>
-                    </DataTable.Row>
+                    <TouchableOpacity
+                    // onPress={() => navigation.navigate('InsertProduct')}
+                    >
+                        <DataTable.Row>
+                            <DataTable.Cell>1</DataTable.Cell>
+                            <DataTable.Cell>Hamburguesa</DataTable.Cell>
+                            <DataTable.Cell>250</DataTable.Cell>
+                        </DataTable.Row>
+                    </TouchableOpacity>
 
                     <DataTable.Pagination
                         page={page}
@@ -131,6 +142,31 @@ const Products = ({ navigation }) => {
                     />
                 </DataTable>
             </View>
+            {/* <Icon
+                name='pencil'
+                type='evilicon'
+                color='#0900FF'
+            />
+            <Icon
+                name='trash'
+                type='evilicon'
+                color='#FF2D00'
+            /> */}
+            <View style={styles.view}>
+                <Text
+                    style={styles.text}
+                    h4
+                    h4Style={{ color: theme?.colors?.success }}>
+                    Añadir producto
+                </Text>
+                <Icon
+                    name='plus'
+                    type='font-awesome'
+                    color='#008000'
+                    onPress={() => navigation.navigate('InsertProduct')}
+                />
+            </View>
+
         </ScrollView>
     );
 }
@@ -138,6 +174,9 @@ const Products = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    view: {
+        marginTop: 20,
     },
     fonts: {
         marginBottom: 8,
@@ -158,7 +197,7 @@ const styles = StyleSheet.create({
     Table: {
         paddingTop: 50,
     },
-    Encabezado:{
+    Encabezado: {
         paddingVertical: 20,
     },
     text: {

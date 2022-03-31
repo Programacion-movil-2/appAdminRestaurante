@@ -1,6 +1,6 @@
-import { SafeAreaView, StyleSheet, View, TouchableOpacity, Image, Alert, ScrollView } from "react-native";
+import { SafeAreaView, StyleSheet, View, TouchableOpacity, Image, Alert, ScrollView, StatusBar } from "react-native";
 import React, { useState } from 'react';
-import { Text, Card, Button, Icon, useTheme } from 'react-native-elements';
+import { Text, Card, Button, useTheme } from 'react-native-elements';
 import { icons, images, SIZES, SIZE, COLORS, FONT, FONTS } from '../../constants';
 
 const Inventory = ({ navigation }) => {
@@ -72,6 +72,9 @@ const Inventory = ({ navigation }) => {
 
     return (
         <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
+            <StatusBar
+                hidden={false}
+                backgroundColor="#808080" />
             {renderHeader()}
 
             <View style={styles.Card}>
@@ -86,7 +89,7 @@ const Inventory = ({ navigation }) => {
                     }}
                 />
                 <Button
-                    onPress={() => navigation.navigate('products')}
+                    onPress={() => navigation.navigate('Products')}
                     buttonStyle={{
                         borderRadius: 0,
                         marginLeft: 0,

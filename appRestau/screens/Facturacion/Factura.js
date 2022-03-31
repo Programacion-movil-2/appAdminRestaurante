@@ -6,6 +6,7 @@ import {
     Image,
     Alert,
     ScrollView,
+    StatusBar
 } from "react-native";
 import React, { useEffect, useState } from 'react';
 import {
@@ -196,6 +197,9 @@ const Factura = ({ navigation }) => {
 
     return (
         <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
+            <StatusBar
+                hidden={false}
+                backgroundColor="#808080" />
             {renderHeader()}
 
             <View style={styles.view}>
