@@ -47,7 +47,7 @@ const Products = ({ navigation }) => {
                             backgroundColor: COLORS.lightGray3
                         }}
                     >
-                        <Text style={styles.h5} >Carrito de Compras</Text>
+                        <Text style={styles.h5} >Productos</Text>
                     </View>
                 </View>
 
@@ -83,7 +83,7 @@ const Products = ({ navigation }) => {
         <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
             <StatusBar
                 hidden={false}
-                backgroundColor="#808080" />
+                backgroundColor="#000000" />
             {renderHeader()}
 
             <View style={styles.Encabezado}>

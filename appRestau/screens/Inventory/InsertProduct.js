@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, View, TouchableOpacity, Image, Alert, ScrollView, StatusBar} from "react-native";
+import { SafeAreaView, StyleSheet, View, TouchableOpacity, Image, Alert, ScrollView, StatusBar, Picker } from "react-native";
 import React, { useEffect, useState } from 'react';
 import { Text, Card, Button, Icon, useTheme, Input } from 'react-native-elements';
 import { icons, images, SIZES, SIZE, COLORS, FONT, FONTS } from '../../constants';
@@ -8,20 +8,24 @@ const InsertProduct = ({ navigation }) => {
     const [nombre, setNombre] = useState(null);
     const [precio, setPrecio] = useState(null);
     const [descripcion, setDescripcion] = useState(null);
+    const [imagen, setImagen] = useState(null);
     const [open, setOpen] = useState(false);
     const [idTipoProducto, setIdTipoProducto] = useState(null);
-    const [tipos, setTipos] = React.useState([]);
+    // const [tipos, setTipos] = React.useState([]);
 
-    const [items, setItems] = useState([ { label: 'Desayuno', value: '3' },
+    // const [tipoProductoList, setTipoProductoList] = useState(null);
+    // const [tipoProducto, setTipoProducto] = useState(null);
+
+    const [items, setItems] = useState([{ label: 'Desayuno', value: '3' },
     { label: 'Almuerzo', value: '4' },
     { label: 'Cena', value: '5' },
     { label: 'Bebida fría', value: '6' },
     { label: 'Bebida caliente', value: '7' }
     ]);
 
-    const [nombreTipo, setNombreTipo] = useState({
-        nombre: null
-    });
+    // const [nombreTipo, setNombreTipo] = useState({
+    //     nombre: null
+    // });
 
     useEffect(() => {
         obtenerTipos();
@@ -29,16 +33,16 @@ const InsertProduct = ({ navigation }) => {
 
     async function obtenerTipos() {
         try {
-            const respt = await fetch('http://192.168.0.3:5000/api/tipoProductos/listarTipoNombre');
+            const respt = await fetch('http://192.168.0.2:5000/api/tipoProductos/listarTipoNombre');
 
             const json = await respt.json();
-            setTipos(json);
-            {
-                tipos.map((name) => (
-                    console.log(name.nombre),
-                    console.log(name.idTipoProducto)
-                ))
-            }
+            setTipoProductoList(json.msj);
+            // {
+            //     tipos.map((name) => (
+            //         console.log(name.nombre),
+            //         console.log(name.idTipoProducto)
+            //     ))
+            // }
 
         } catch (error) {
             console.log(error);
@@ -58,7 +62,7 @@ const InsertProduct = ({ navigation }) => {
         }
         else {
             try {
-                const res = await fetch('http://192.168.0.3:5000/api/productos/guardar', {
+                const res = await fetch('http://192.168.0.2:5000/api/productos/guardar', {
                     method: 'POST',
                     headers: {
                         Accept: 'application/json',
@@ -67,6 +71,7 @@ const InsertProduct = ({ navigation }) => {
                     body: JSON.stringify({
                         nombre: nombre,
                         precio: precio,
+                        imagen: imagen,
                         descripcion: descripcion,
                         idTipoProducto: idTipoProducto
                     })
@@ -147,12 +152,16 @@ const InsertProduct = ({ navigation }) => {
     }
 
     const { theme } = useTheme();
-
+    // if (tipoProductoList != null) {
+    //     let dataArr = Array.from(tipoProductoList);
+    //     console.log("---------");
+    //     console.log(dataArr);
+    // }
     return (
         <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
             <StatusBar
                 hidden={false}
-                backgroundColor="#808080" />
+                backgroundColor="#000000" />
             {renderHeader()}
 
             <View style={styles.Encabezado}>
@@ -165,7 +174,7 @@ const InsertProduct = ({ navigation }) => {
                 </Text>
                 <Input
                     style={styles.input}
-                    placeholder='Hamburguesa'
+                    placeholder='Pollo'
                     value={nombre}
                     onChangeText={setNombre}
                 />
@@ -189,6 +198,20 @@ const InsertProduct = ({ navigation }) => {
                     h4
                     h1Style={{ color: theme?.colors?.black }}
                 >
+                    Link Imagen
+                </Text>
+                <Input
+                    style={styles.input}
+                    placeholder='https://pollo-frito-papas-fritas.jpg'
+                    value={imagen}
+                    onChangeText={setImagen}
+                />
+
+                <Text
+                    style={styles.text}
+                    h4
+                    h1Style={{ color: theme?.colors?.black }}
+                >
                     Descripción
                 </Text>
                 <Input
@@ -205,6 +228,20 @@ const InsertProduct = ({ navigation }) => {
                 >
                     Tipo Producto
                 </Text>
+                {/* <Picker
+                    selectedValue={tipoProducto}
+                    style={[styles.input, { color: 'white' }]}
+                    onValueChange={(itemValue, itemIndex) => setTipoProducto(itemValue)}
+                >
+                    {
+                        dataArr.map((tipo) => {
+                            return <Picker.item
+                                key={tipo.idTipoProducto.toString()}
+                                value={tipo.idTipoProducto}
+                                label={tipo.nombre} />
+                        })
+                    }
+                </Picker> */}
                 <DropDown
                     style={styles.DropDown}
                     open={open}

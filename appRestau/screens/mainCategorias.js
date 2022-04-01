@@ -7,13 +7,14 @@ import {
     TouchableOpacity,
     Image,
     FlatList,
-    Alert
+    Alert,
+    StatusBar
 } from 'react-native';
 
 import { icons, images, SIZE, COLORS } from '../constants'
 
 
-const MainCategorias = ({navigation}) => {
+const MainCategorias = ({ navigation }) => {
     useEffect(() => {
         obtenerCategorias();
         obtenerProductos();
@@ -23,7 +24,7 @@ const MainCategorias = ({navigation}) => {
 
     async function obtenerCategorias() {
         try {
-            const respt = await fetch('http://192.168.0.3:5000/api/tipoProductos/listarTipoProducto');
+            const respt = await fetch('http://192.168.0.2:5000/api/tipoProductos/listarTipoProducto');
 
             const json = await respt.json();
             setCategories(json);
@@ -38,7 +39,7 @@ const MainCategorias = ({navigation}) => {
     }
     async function obtenerProductos(idTipoProducto = 4) {
         try {
-            const respt = await fetch('http://192.168.0.3:5000/api/productos/listarProductosTipo?idTipoProducto=' + idTipoProducto);
+            const respt = await fetch('http://192.168.0.2:5000/api/productos/listarProductosTipo?idTipoProducto=' + idTipoProducto);
 
             const json = await respt.json();
             if (!json) {
@@ -54,7 +55,7 @@ const MainCategorias = ({navigation}) => {
     }
     async function obtenerTipo(idTipoProducto = 4) {
         try {
-            const tipo = await fetch('http://192.168.0.3:5000/api/tipoProductos/listarTipo?idTipoProducto=' + idTipoProducto);
+            const tipo = await fetch('http://192.168.0.2:5000/api/tipoProductos/listarTipo?idTipoProducto=' + idTipoProducto);
 
             const json = await tipo.json();
             if (!json) {
@@ -71,7 +72,7 @@ const MainCategorias = ({navigation}) => {
     }
     async function obtenerTipoPrincipal(idTipoProducto) {
         try {
-            const tipoPrincipal = await fetch('http://192.168.0.3:5000/api/productos/listarProductosDeCategorias?idTipoProducto=' + idTipoProducto);
+            const tipoPrincipal = await fetch('http://192.168.0.2:5000/api/productos/listarProductosDeCategorias?idTipoProducto=' + idTipoProducto);
 
             const json = await tipoPrincipal.json();
             if (!json) {
@@ -182,8 +183,8 @@ const MainCategorias = ({navigation}) => {
                     }}
                     onPress={() => onSelectCategory(item)}
                 >
-                    
-                    
+
+
                     <View
                         style={{
                             width: 50,
@@ -196,7 +197,7 @@ const MainCategorias = ({navigation}) => {
 
                         }}
                     >
-                         <Image
+                        <Image
                             source={{ uri: item.imagen }}
                             resizeMode="contain"
                             style={{
@@ -239,13 +240,13 @@ const MainCategorias = ({navigation}) => {
         const renderItem = ({ item }) => (
             <TouchableOpacity
                 style={{ marginBottom: SIZE.padding * 2 }}
-            onPress={() => navigation.navigate("ProductsDetails", {
-                idProducto:item.idProducto,
-                nombre:item.nombre,
-                descripcion:item.descripcion,
-                precio:item.precio,
-                foto:item.imagen,
-            })}
+                onPress={() => navigation.navigate("ProductsDetails", {
+                    idProducto: item.idProducto,
+                    nombre: item.nombre,
+                    descripcion: item.descripcion,
+                    precio: item.precio,
+                    foto: item.imagen,
+                })}
             >
                 {/* Image */}
                 <View
@@ -334,6 +335,9 @@ const MainCategorias = ({navigation}) => {
 
     return (
         <SafeAreaView style={Styles.container}>
+            <StatusBar
+                hidden={false}
+                backgroundColor="#000000" />
             {renderHeader()}
             {renderMainGategories()}
             {renderRestaurantList()}
