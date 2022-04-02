@@ -1,14 +1,15 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaView, StyleSheet, Text, View, ImageBackground } from 'react-native';
-
-import LNavigation from './navigation/menu';
+import Producto from "./screens/producto"
+import LNavigation from './navigation/menu'; 
+import Persona from "./screens/persona" 
 
 export default class App extends React.Component {
   render(){
     return (
             
-        <LNavigation />
+        <Producto/>
   
     );
   }

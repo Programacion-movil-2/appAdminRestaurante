@@ -8,7 +8,7 @@ import SignUpScreen from '../screens/SignUpScreen/SignUpScreen';
 import ConfirmEmail from '../screens/ConfirmEmail/ConfirmEmail';
 import ForgotPwdScreen from '../screens/ForgotPwdScreen/ForgotPwdScreen';
 import NewPassword from '../screens/NewPassword/NewPassword';
-import MainCategories from '../screens/mainCategorias';
+import Producto from '../screens/producto';
 import ProductsDetails from '../screens/Restaurant';
 import Cart from '../screens/Cart/MyCart';
 import CashDetails from '../screens/Facturacion/DetalleEfectivo';
@@ -16,7 +16,7 @@ import CardDetails from '../screens/Facturacion/DetalleTarjeta';
 import Billing from '../screens/Facturacion/Factura';
 import PaymentMethod from '../screens/Facturacion/MetodoPago';
 import UserProfile from '../screens/UserProfile/UserProfile';
-
+import Persona from "../screens/persona"
 import Inventory from "../screens/Inventory/Inventory";
 import Products from "../screens/Inventory/Products";
 import InsertProduct from "../screens/Inventory/InsertProduct";
@@ -43,7 +43,8 @@ export default function LNavigation(){
                 <Stack.Screen name="ForgotPassword" component={ForgotPwdScreen} />
                 <Stack.Screen name="NewPassword" component={NewPassword} />
                 <Stack.Screen name="ConfirmEmail" component={ConfirmEmail} />
-                <Stack.Screen name="MainCategories" component={MainCategories} />
+                <Stack.Screen name="Producto" component={Producto} />
+                <Stack.Screen name="Persona" component={Persona} />
                 <Stack.Screen name="ProductsDetails" component={ProductsDetails} />
                 <Stack.Screen name="Cart" component={Cart} />
                 <Stack.Screen name="CashDetails" component={CashDetails} />
@@ -51,7 +52,7 @@ export default function LNavigation(){
                 <Stack.Screen name="CardDetails" component={CardDetails} />
                 <Stack.Screen name="Billing" component={Billing} />
                 <Stack.Screen name="UserProfile" component={UserProfile} />
-
+               
                 <Stack.Screen name="Products" component={Products}/>
                 <Stack.Screen name="Inventory" component={Inventory}/>
                 <Stack.Screen name="InsertProduct" component={InsertProduct}/>
