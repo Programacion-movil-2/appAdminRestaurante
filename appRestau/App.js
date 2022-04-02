@@ -3,12 +3,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaView, StyleSheet, Text, View, ImageBackground } from 'react-native';
 
 import LNavigation from './navigation/menu';
+import MenuAdmin from "./navigation/menuAdmin"
 
 export default class App extends React.Component {
   render(){
     return (
             
-        <LNavigation />
+        <MenuAdmin />
   
     );
   }
