@@ -20,7 +20,7 @@ const Producto = ({navigation}) => {
       
     }, [])
     
-    async function obtenerProductos(id) {
+    async function obtenerProductos() {
         try {
             const respt = await fetch('http://192.168.100.8:5000/api/productos/listar');
 
@@ -223,7 +223,7 @@ const Producto = ({navigation}) => {
                     style={{
                         padding: SIZE.padding,
                         paddingBottom: SIZE.padding * 2,
-                       // backgroundColor: (selectedCategory?.id == item.id) ? COLORS.primary : COLORS.white,
+                        backgroundColor: (selectedCategory?.id == item.id) ? COLORS.primary : COLORS.white,
                         borderRadius: SIZE.radius,
                         alignItems: "center",
                         justifyContent: "center",

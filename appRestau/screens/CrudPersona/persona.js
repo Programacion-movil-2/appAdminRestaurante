@@ -11,7 +11,7 @@ import {
     StatusBar
 } from 'react-native';
 
-import { icons, images, SIZE, COLORS } from '../constants'
+import { icons, images, SIZE, COLORS } from '../../constants'
 
 
 const Persona = ({ navigation }) => {
@@ -220,18 +220,19 @@ const Persona = ({ navigation }) => {
             </View>
         )
     }
-
+ 
     function renderRestaurantList() {
         const renderItem = ({ item }) => (
             <TouchableOpacity
                 style={{ marginBottom: SIZE.padding * 2 }}
-                onPress={() => navigation.navigate("CreatePerson", {
+                onPress={() => navigation.navigate("CrudPersona", {
                     idPersona: item.idPersona,
                     nombre: item.nombre,
                     apellido:item.apellido,
                     telefono:item.telefono,
                     idCargo:item.idCargo,
-                    direccion:item.direccion
+                    direccion:item.direccion,
+                    identidad:item.identidad
                 })}
             >
                 {/* Image */}

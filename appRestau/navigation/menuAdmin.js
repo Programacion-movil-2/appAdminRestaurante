@@ -3,8 +3,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Producto from "../screens/producto";
-import Persona from "../screens/persona"
-import CreatePerson from "../screens/CreatePerson/CreatePerson";
+import Persona from "../screens/CrudPersona/persona"
+import CrudPersona from "../screens/CrudPersona/CrudPersona"
 
 const Stack = createNativeStackNavigator();
 
@@ -18,7 +18,7 @@ export default function LNavigation(){
             > 
                 <Stack.Screen name="Producto" component={Producto} />
                 <Stack.Screen name="Persona" component={Persona} />
-                <Stack.Screen name="CreatePerson" component={CreatePerson} />
+                <Stack.Screen name="CrudPersona" component={CrudPersona} />
                 
                
 
