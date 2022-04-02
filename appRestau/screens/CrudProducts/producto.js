@@ -11,7 +11,7 @@ import {
     StatusBar
 } from 'react-native';
 
-import { icons, images, SIZE, COLORS } from '../constants'
+import { icons, images, SIZE, COLORS } from '../../constants';
 
 
 const Producto = ({navigation}) => {
@@ -22,7 +22,7 @@ const Producto = ({navigation}) => {
     
     async function obtenerProductos() {
         try {
-            const respt = await fetch('http://192.168.100.8:5000/api/productos/listar');
+            const respt = await fetch('http://192.168.1.39:5000/api/productos/listar');
 
             const json = await respt.json();
             if (!json) {
@@ -133,13 +133,15 @@ const Producto = ({navigation}) => {
         const renderItem = ({ item }) => (
             <TouchableOpacity
                 style={{ marginBottom: SIZE.padding * 2 }}
-                // onPress={() => navigation.navigate("ProductsDetails", {
-                //     idProducto: item.idProducto,
-                //     nombre: item.nombre,
-                //     descripcion: item.descripcion,
-                //     precio: item.precio,
-                //     foto: item.imagen,
-                // })}
+                onPress={() => navigation.navigate("CrudProducts", {
+                    IDPRODUCTO: item.idProducto,
+                    NOMBRE: item.nombre,
+                    PRECIO: item.precio,
+                    LINKIMAGEN: item.imagen,
+                    DESCRIPCION: item.descripcion,
+                    TIPOPRODUCTO: item.idTipoProducto
+                })}
+                
             >
                 {/* Image */}
                 <View
@@ -202,6 +204,7 @@ const Producto = ({navigation}) => {
                 </View>
             </TouchableOpacity>
         )
+        
         return (
             <View style={{ padding: SIZE.padding * 2 }}>
                 <FlatList
