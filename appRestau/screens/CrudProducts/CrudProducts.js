@@ -30,10 +30,10 @@ import {
   import DropDown from "react-native-dropdown-picker";
   
   const InsertProduct = ({ route, navigation }) => {
-    const {IDPRODUCTO, NOMBRE, LINKIMAGEN, IDTIPOPRODUCTO, PRECIO, DESCRIPCION} = route.params;
-
+    const {IDPRODUCTO, NOMBRE, precio, LINKIMAGEN, DESCRIPCION} = route.params;
+    
     const [nombre, setNombre] = useState(NOMBRE);
-    const [precio, setPrecio] = useState(PRECIO);
+    const [PRECIO, setPRECIO] = useState(precio);
     const [descripcion, setDescripcion] = useState(DESCRIPCION);
     const [imagen, setImagen] = useState(LINKIMAGEN);
     const [open, setOpen] = useState(false);
@@ -187,7 +187,7 @@ import {
             </Text>
             <Input
               style={styles.input}
-              placeholder="Pollo"
+              placeholder="Nombre"
               value={nombre}
               onChangeText={setNombre}
             />
@@ -198,8 +198,8 @@ import {
             <Input
               style={styles.input}
               placeholder="Precio"
-              value={precio}
-              onChangeText={setPrecio}
+              value={PRECIO.toString()}
+              onChangeText={setPRECIO}
             />
     
             <Text style={styles.text} h4 h1Style={{ color: theme?.colors?.black }}>
@@ -221,21 +221,6 @@ import {
               value={descripcion}
               onChangeText={setDescripcion}
             />
-    
-            <Text  h4 h1Style={{ color: theme?.colors?.black }}>
-              Tipo Producto
-            </Text>
-    
-            {/*Picker */}
-            <Picker
-              selectedValue={tipoProducto}
-              style={[styles.picker,{height: 50, width: 200}]}
-              onValueChange={(itemValue, itemIndex) => setTipoProducto(itemValue)}
-            >
-              {dataArr.map((tipo) => {
-                return <Picker.Item key={tipo.idTipoProducto.toString()} value={tipo.idTipoProducto} label={tipo.nombre}/>
-              })}
-            </Picker>
           </View>
     
           <View style={styles.buttonsContainer}>

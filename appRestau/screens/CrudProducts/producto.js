@@ -136,10 +136,9 @@ const Producto = ({navigation}) => {
                 onPress={() => navigation.navigate("CrudProducts", {
                     IDPRODUCTO: item.idProducto,
                     NOMBRE: item.nombre,
-                    PRECIO: item.precio,
+                    precio: item.precio,
                     LINKIMAGEN: item.imagen,
                     DESCRIPCION: item.descripcion,
-                    TIPOPRODUCTO: item.idTipoProducto
                 })}
                 
             >
