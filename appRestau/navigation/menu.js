@@ -19,7 +19,7 @@ import UserProfile from '../screens/UserProfile/UserProfile';
 import Persona from "../screens/persona"
 import Inventory from "../screens/Inventory/Inventory";
 import Products from "../screens/Inventory/Products";
-import InsertProduct from "../screens/Inventory/InsertProduct";
+// import InsertProduct from "../screens/Inventory/InsertProduct";
 
 const Stack = createNativeStackNavigator();
 

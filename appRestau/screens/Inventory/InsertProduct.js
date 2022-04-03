@@ -27,42 +27,25 @@ import {
   FONT,
   FONTS,
 } from "../../constants";
-import DropDown from "react-native-dropdown-picker";
 
 const InsertProduct = ({ navigation }) => {
   const [nombre, setNombre] = useState(null);
   const [precio, setPrecio] = useState(null);
   const [descripcion, setDescripcion] = useState(null);
   const [imagen, setImagen] = useState(null);
-  const [open, setOpen] = useState(false);
-  const [idTipoProducto, setIdTipoProducto] = useState(null);
-  const [selectedValue, setSelectedValue] = useState(null);
 
   const [tipoProductoList, setTipoProductoList] = useState(null);
   const [tipoProducto, setTipoProducto] = useState(null);
-  // const [items, setItems] = useState([{ label: 'Desayuno', value: '3' },
-  // { label: 'Almuerzo', value: '4' },
-  // { label: 'Cena', value: '5' },
-  // { label: 'Bebida fría', value: '6' },
-  // { label: 'Bebida caliente', value: '7' }
-  // ]);
-
   const obtenerTipos = async() => {
     try {
       const respt = await fetch(
-        "http://192.168.1.39:5000/api/tipoProductos/listarTipoNombre"
+        "http://192.168.0.8:5000/api/tipoProductos/listarTipoNombre"
       );
 
       const json = await respt.json();
       console.log("_______________________________________________");
       console.log(json);
       setTipoProductoList(json);
-      // {
-      //     tipos.map((name) => (
-      //         console.log(name.nombre),
-      //         console.log(name.idTipoProducto)
-      //     ))
-      // }
     } catch (error) {
       console.log(error);
     }
@@ -74,7 +57,7 @@ const InsertProduct = ({ navigation }) => {
 
   const insertarProducto = async () => {
     const re = /^[0-9\b]+$/;
-    if (!nombre || !precio || !idTipoProducto) {
+    if (!nombre || !precio || !tipoProducto) {
       console.log("Debe llenar todos los campos oblicatorios");
       Alert.alert("Restaurante", "Debe llenar todos los campos obligatorios");
     } else if (!re.test(precio) || re.test(nombre)) {
@@ -83,7 +66,7 @@ const InsertProduct = ({ navigation }) => {
     } else {
       try {
         const res = await fetch(
-          "http://192.168.0.2:5000/api/productos/guardar",
+          "http://192.168.0.8:5000/api/productos/guardar",
           {
             method: "POST",
             headers: {
@@ -95,13 +78,13 @@ const InsertProduct = ({ navigation }) => {
               precio: precio,
               imagen: imagen,
               descripcion: descripcion,
-              idTipoProducto: idTipoProducto,
+              idTipoProducto: tipoProducto,
             }),
           }
         );
         const json = await res.json();
         Alert.alert("Portales Restaurant", json.msj);
-        navigation.navigate("Products");
+        navigation.goBack();
       } catch (error) {
         console.log(error);
         Alert.alert("Portales Restaurant", "Error");
@@ -109,8 +92,6 @@ const InsertProduct = ({ navigation }) => {
     }
   };
 
-  console.log("**********************************");
-  console.log(tipoProductoList);
   function renderHeader() {
     return (
       <View style={{ flexDirection: "row" }}>
@@ -177,8 +158,6 @@ const InsertProduct = ({ navigation }) => {
   const { theme } = useTheme();
   if (tipoProductoList != null) {
     let dataArr = Array.from(tipoProductoList);
-    console.log("*************************************************");
-    console.log(dataArr);
 
     return (
       <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
@@ -234,7 +213,7 @@ const InsertProduct = ({ navigation }) => {
           <Picker
             selectedValue={tipoProducto}
             style={[styles.picker,{height: 50, width: 200}]}
-            onValueChange={(itemValue, itemIndex) => setTipoProducto(itemValue)}
+            onValueChange={(idTipoProducto, itemIndex) => setTipoProducto(idTipoProducto)}
           >
             {dataArr.map((tipo) => {
               return <Picker.Item key={tipo.idTipoProducto.toString()} value={tipo.idTipoProducto} label={tipo.nombre}/>

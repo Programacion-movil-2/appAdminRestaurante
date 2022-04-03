@@ -14,15 +14,15 @@ import {
 import { icons, images, SIZE, COLORS } from '../constants'
 
 
-const Producto = ({navigation}) => {
+const Producto = ({ navigation }) => {
     useEffect(() => {
         obtenerProductos();
-      
+
     }, [])
-    
+
     async function obtenerProductos(id) {
         try {
-            const respt = await fetch('http://192.168.100.8:5000/api/productos/listar');
+            const respt = await fetch('http://192.168.0.8:5000/api/productos/listar');
 
             const json = await respt.json();
             if (!json) {
@@ -35,47 +35,47 @@ const Producto = ({navigation}) => {
             console.log(error);
         }
     }
-    const navbar =[
+    const navbar = [
 
         {
             id: 1,
-            name:"Usuarios",
+            name: "Usuarios",
             icon: icons.user
         },
         {
             id: 2,
-            name:"Productos",
+            name: "Productos",
             icon: icons.burger
         },
         {
             id: 3,
-            name:"Personas",
+            name: "Personas",
             icon: icons.user
         },
         {
             id: 4,
-            name:"Pedidos",
+            name: "Pedidos",
             icon: icons.list
         },
-        ]
-        
-    const onSelectCategory = (category) =>{
+    ]
+
+    const onSelectCategory = (category) => {
 
         switch (category.id) {
             case 1:
-              
+
                 break;
             case 2:
                 navigation.navigate('Persona');
                 break
             default:
-                    break;
-            }
-    
+                break;
+        }
+
     }
     const [selectedCategory, setSelectedCategory] = React.useState(null)
     const [restaurants, setRestaurants] = React.useState([])
-    
+
     function renderHeader() {
         return (
             <View style={{ flexDirection: 'row', height: 50 }}>
@@ -134,13 +134,13 @@ const Producto = ({navigation}) => {
         const renderItem = ({ item }) => (
             <TouchableOpacity
                 style={{ marginBottom: SIZE.padding * 2 }}
-                // onPress={() => navigation.navigate("ProductsDetails", {
-                //     idProducto: item.idProducto,
-                //     nombre: item.nombre,
-                //     descripcion: item.descripcion,
-                //     precio: item.precio,
-                //     foto: item.imagen,
-                // })}
+            // onPress={() => navigation.navigate("ProductsDetails", {
+            //     idProducto: item.idProducto,
+            //     nombre: item.nombre,
+            //     descripcion: item.descripcion,
+            //     precio: item.precio,
+            //     foto: item.imagen,
+            // })}
             >
                 {/* Image */}
                 <View
@@ -176,7 +176,7 @@ const Producto = ({navigation}) => {
                 </View>
 
                 {/* Restaurant Info */}
-                <Text style={{ ...Styles.h2}}>{item.nombre}</Text>
+                <Text style={{ ...Styles.h2 }}>{item.nombre}</Text>
 
                 <View
                     style={{
@@ -194,7 +194,7 @@ const Producto = ({navigation}) => {
                     >
                         <View
                             style={{ flexDirection: 'row' }}
-                        >  
+                        >
                         </View>
                         <Text
                             style={{ ...Styles.body3 }}
@@ -224,7 +224,7 @@ const Producto = ({navigation}) => {
                     style={{
                         padding: SIZE.padding,
                         paddingBottom: SIZE.padding * 2,
-                       // backgroundColor: (selectedCategory?.id == item.id) ? COLORS.primary : COLORS.white,
+                        // backgroundColor: (selectedCategory?.id == item.id) ? COLORS.primary : COLORS.white,
                         borderRadius: SIZE.radius,
                         alignItems: "center",
                         justifyContent: "center",
@@ -233,8 +233,8 @@ const Producto = ({navigation}) => {
                     }}
                     onPress={onSelectCategory(item)}
                 >
-                    
-                    
+
+
                     <View
                         style={{
                             width: 50,
@@ -247,7 +247,7 @@ const Producto = ({navigation}) => {
 
                         }}
                     >
-                         <Image
+                        <Image
                             source={item.icon}
                             resizeMode="contain"
                             style={{
@@ -271,8 +271,8 @@ const Producto = ({navigation}) => {
             )
         }
         return (
-               <View style={{ padding: SIZE.padding * 2 }}>
-                <Text style={[Styles.text ,{...Styles.h1}]}>Administración </Text>
+            <View style={{ padding: SIZE.padding * 2 }}>
+                <Text style={[Styles.text, { ...Styles.h1 }]}>Administración </Text>
                 <Text></Text>
 
                 <FlatList
@@ -313,8 +313,8 @@ const Styles = StyleSheet.create({
         shadowRadius: 3,
         elevation: 1,
     },
-    text:{
-        textAlign:"center"
+    text: {
+        textAlign: "center"
     },
     largeTitle: { fontSize: SIZE.largeTitle, lineHeight: 55 },
     h1: { fontSize: SIZE.h1, lineHeight: 36 },
