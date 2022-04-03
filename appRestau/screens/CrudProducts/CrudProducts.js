@@ -52,7 +52,7 @@ import {
     const obtenerTipos = async() => {
       try {
         const respt = await fetch(
-          "http://192.168.1.39:5000/api/tipoProductos/listarTipoNombre"
+          "http://192.168.100.8:5000/api/tipoProductos/listarTipoNombre"
         );
   
         const json = await respt.json();

@@ -14,19 +14,19 @@ import {
 import { icons, images, SIZE, COLORS } from '../../constants'
 
 
-const Persona = ({ navigation }) => {
+const Users = ({ navigation }) => {
     useEffect(() => {
-        obtenerPersonas();
+        obtenerUsers();
     }, [])
-    async function obtenerPersonas() {
+    async function obtenerUsers() {
         try {
-            const respt = await fetch('http://192.168.100.8:5000/api/personas/listar');
+            const respt = await fetch('http://192.168.100.8:5000/api/usuarios/listar');
 
             const json = await respt.json();
             if (!json) {
                 Alert.alert("Portales Restaurant", json.msj);
             } else {
-                setPersonas(json);
+                setUsers(json);
                 console.log(json);
             }
         } catch (error) {
@@ -34,23 +34,24 @@ const Persona = ({ navigation }) => {
         }
     }
 
-    function cargo(id) {
-        switch (id) {
-            case 1:
-                return "Administrador"
-                break;
-            case 2:
-                return "Empleado"
-                break;
-             case 3:
-                return "Cliente"
-                break;
-        
-            default:
-                return 0
-                break;
-        }
-    }
+    // async function identidad(id) {
+    //     try {
+    //         const respt = await fetch('http://192.168.100.8:5000/api/personas/identidad?idPersona=' + id);
+            
+    //         const json = await respt.json();
+    //         if (!json) {
+    //             Alert.alert("Portales Restaurant", json.msj);
+    //         } else {
+
+    //             var ID=json
+    //             return ID
+
+    //             console.log(json);
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
 
     const navbar =[
 
@@ -84,18 +85,19 @@ const Persona = ({ navigation }) => {
                 navigation.navigate('Producto');
                 break;
             case 2:
+                navigation.navigate('Persona');
                 break;
             case 3:
-                navigation.navigate('Users');
-                break;
+                 break;
             default:
                 break;
             }
         setSelectedCategory(category)
 
     }
+
     const [selectedCategory, setSelectedCategory] = React.useState(null)
-    const [personas, setPersonas] = React.useState([])
+    const [users, setUsers] = React.useState([])
     
     
     function renderHeader() {
@@ -209,7 +211,7 @@ const Persona = ({ navigation }) => {
         }
         return (
                <View style={{ padding: SIZE.padding * 2 }}>
-                <Text style={[Styles.text ,{...Styles.h1}]}>Persona </Text>
+                <Text style={[Styles.text ,{...Styles.h1}]}>Usuarios </Text>
                 <Text></Text>
 
                 <FlatList
@@ -228,14 +230,7 @@ const Persona = ({ navigation }) => {
         const renderItem = ({ item }) => (
             <TouchableOpacity
                 style={{ marginBottom: SIZE.padding * 2 }}
-                onPress={() => navigation.navigate("CrudPersona", {
-                    idPersona: item.idPersona,
-                    nombre: item.nombre,
-                    apellido:item.apellido,
-                    telefono:item.telefono,
-                    idCargo:item.idCargo,
-                    direccion:item.direccion,
-                    identidad:item.identidad
+                onPress={() => navigation.navigate("CrudUsers", {
                 })}
             >
                 {/* Image */}
@@ -258,7 +253,7 @@ const Persona = ({ navigation }) => {
                             position: 'absolute',
                             bottom: 0,
                             height: 50,
-                            width: SIZE.width * 0.5,
+                            width: SIZE.width * 0.3,
                             backgroundColor: COLORS.white,
                             borderTopRightRadius: SIZE.radius,
                             borderBottomLeftRadius: SIZE.radius,
@@ -267,12 +262,12 @@ const Persona = ({ navigation }) => {
                             ...Styles.shadow
                         }}
                     >
-                        <Text style={{ ...Styles.body2 }}>ID: {item.identidad} </Text>
+                        <Text style={{ ...Styles.body2 }}>Código: {item.idPersona} </Text>
                     </View>
                 </View>
 
                 {/* Restaurant Info */}
-                <Text style={{ ...Styles.h2}}>{item.nombre} {item.apellido} </Text>
+                <Text style={{ ...Styles.h2}}>{item.nombreUsuario} </Text>
 
                 <View
                     style={{
@@ -285,7 +280,7 @@ const Persona = ({ navigation }) => {
                     <View
                         style={{
                             flexDirection: 'row',
-                            marginLeft: 10
+                            marginLeft: 8
                         }}
                     >
                         <View
@@ -293,8 +288,8 @@ const Persona = ({ navigation }) => {
                         >  
                         </View>
                         <Text
-                            style={{ ...Styles.body3 }}
-                        >Cargo: {cargo(item.idCargo)}</Text>
+                            style={{ ...Styles.h4 }}
+                        >Correo: {item.correo}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -302,8 +297,8 @@ const Persona = ({ navigation }) => {
         return (
             <View style={{ padding: SIZE.padding * 2 }}>
                 <FlatList
-                    data={personas}
-                    keyExtractor={item => `${item.idProducto}`}
+                    data={users}
+                    keyExtractor={item => `${item.idUsuario}`}
                     renderItem={renderItem}
                     contentContainerStyle={{
                         paddingHorizontal: SIZE.padding * 2,
@@ -354,4 +349,4 @@ const Styles = StyleSheet.create({
     body4: { fontSize: SIZE.body4, lineHeight: 22 },
     body5: { fontSize: SIZE.body5, lineHeight: 22 },
 })
-export default Persona;
+export default Users;

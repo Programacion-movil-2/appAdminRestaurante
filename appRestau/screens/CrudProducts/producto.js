@@ -22,7 +22,7 @@ const Producto = ({navigation}) => {
     
     async function obtenerProductos() {
         try {
-            const respt = await fetch('http://192.168.1.39:5000/api/productos/listar');
+            const respt = await fetch('http://192.168.100.8:5000/api/productos/listar');
 
             const json = await respt.json();
             if (!json) {
@@ -66,6 +66,9 @@ const Producto = ({navigation}) => {
                 break;
             case 2:
                 navigation.navigate('Persona');
+                break;
+            case 3:
+                navigation.navigate('Users');
                 break;
             default:
                     break;

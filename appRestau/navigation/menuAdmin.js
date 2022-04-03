@@ -6,6 +6,8 @@ import Producto from "../screens/CrudProducts/producto";
 import CrudProducts from "../screens/CrudProducts/CrudProducts";
 import Persona from "../screens/CrudPersona/persona"
 import CrudPersona from "../screens/CrudPersona/CrudPersona"
+import Users from "../screens/crudUsers/users";
+import CrudUsers from "../screens/crudUsers/CrudUsers"
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +23,9 @@ export default function LNavigation(){
                 <Stack.Screen name="CrudProducts" component={CrudProducts} />
                 <Stack.Screen name="Persona" component={Persona} />
                 <Stack.Screen name="CrudPersona" component={CrudPersona} />
+                <Stack.Screen name="Users" component={Users} />
+                <Stack.Screen name="CrudUsers" component={CrudUsers} />
+
                 
                
 
