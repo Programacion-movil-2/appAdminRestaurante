@@ -1,5 +1,5 @@
 import { SafeAreaView, StyleSheet, View, TouchableOpacity, Image, Alert, ScrollView } from "react-native";
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Text, useTheme, Button, ButtonGroup, withTheme, Input } from "react-native-elements";
 import { icons, images, SIZES, SIZE, COLORS, FONT, FONTS } from '../../constants';
 
@@ -7,13 +7,13 @@ const DetalleEfectivo = ({ navigation }) => {
     const [direccionEntrega, setDireccion] = useState(null);
     let estado = "listo";
 
-    const insertarPedido = async () =>{
+    const insertarPedido = async () => {
 
-        if(!direccionEntrega){
+        if (!direccionEntrega) {
             console.log("Debe llenar todos los campos oblicatorios");
             Alert.alert("Restaurante", "Ingrese todos los campos");
         }
-        else{
+        else {
             navegarFactura();
             // try {
             //     const res = await fetch('http://192.168.0.3:5000/api/pedidos/modificarDireccionEstado?idUsuario=4', {
@@ -41,7 +41,7 @@ const DetalleEfectivo = ({ navigation }) => {
 
     }
 
-    const navegarFactura = () =>{
+    const navegarFactura = () => {
         navigation.navigate('Billing')
 
     }
@@ -66,7 +66,7 @@ const DetalleEfectivo = ({ navigation }) => {
                         }}
                     />
                 </TouchableOpacity>
-    
+
                 {/* Restaurant Name Section */}
                 <View
                     style={{
@@ -85,10 +85,10 @@ const DetalleEfectivo = ({ navigation }) => {
                             backgroundColor: COLORS.lightGray3
                         }}
                     >
-                        <Text style ={styles.h5} >Carrito de Compras</Text>
+                        <Text style={styles.h5} >Carrito de Compras</Text>
                     </View>
                 </View>
-    
+
                 <TouchableOpacity
                     style={{
                         width: 50,
@@ -134,9 +134,9 @@ const DetalleEfectivo = ({ navigation }) => {
                     Dirección de entrega
                 </Text>
                 <Input
-                    style={styles.input} 
+                    style={styles.input}
                     placeholder='Ej. Barrio San Juan'
-                    value={direccionEntrega} 
+                    value={direccionEntrega}
                     onChangeText={setDireccion}
                 />
                 <Text
@@ -178,7 +178,7 @@ const DetalleEfectivo = ({ navigation }) => {
                         titleStyle={{ fontWeight: 'bold' }}
                         onPress={insertarPedido}
                     />
-                    
+
                 </View>
             </View>
 
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     view: {
         margin: 10,
     },
-    view1:{
+    view1: {
         marginTop: 80,
     },
     text: {
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
         width: '100%',
         marginVertical: 20,
         marginTop: 100,
-      },
+    },
     shadow: {
         shadowColor: '#000',
         shadowOffset: {

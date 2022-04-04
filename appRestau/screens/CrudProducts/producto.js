@@ -11,35 +11,18 @@ import {
     StatusBar
 } from 'react-native';
 
-import { icons, images, SIZE, COLORS } from '../constants'
+import { icons, images, SIZE, COLORS } from '../../constants';
 
 
-const MainCategorias = ({ navigation }) => {
+const Producto = ({navigation}) => {
     useEffect(() => {
-        obtenerCategorias();
         obtenerProductos();
-        obtenerTipo();
+      
     }, [])
-
-
-    async function obtenerCategorias() {
+    
+    async function obtenerProductos() {
         try {
-            const respt = await fetch('http://192.168.0.111:5000/api/tipoProductos/listarTipoProducto');
-
-            const json = await respt.json();
-            setCategories(json);
-            console.log(json);
-
-
-
-        } catch (error) {
-            console.log(error);
-
-        }
-    }
-    async function obtenerProductos(idTipoProducto = 4) {
-        try {
-            const respt = await fetch('http://192.168.0.111:5000/api/productos/listarProductosTipo?idTipoProducto=' + idTipoProducto);
+            const respt = await fetch('http://192.168.1.39:5000/api/productos/listar');
 
             const json = await respt.json();
             if (!json) {
@@ -50,68 +33,48 @@ const MainCategorias = ({ navigation }) => {
             }
         } catch (error) {
             console.log(error);
-
         }
     }
-    async function obtenerTipo(idTipoProducto = 4) {
-        try {
-            const tipo = await fetch('http://192.168.0.111:5000/api/tipoProductos/listarTipo?idTipoProducto=' + idTipoProducto);
-
-            const json = await tipo.json();
-            if (!json) {
-                Alert.alert("Portales Restaurant", json.msj);
-            } else {
-                setTipo(json);
-                console.log(json);
+    const navbar =[
+        {
+            id: 1,
+            name:"Productos",
+            icon: icons.burger
+        },
+        {
+            id: 2,
+            name:"Personas",
+            icon: icons.user
+        },
+        {
+            id: 3,
+            name:"Usuarios",
+            icon: icons.user
+        },
+        
+        {
+            id: 4,
+            name:"Pedidos",
+            icon: icons.list
+        },
+        ]
+        
+    const onSelectCategory = (category) =>{
+        
+        switch (category.id) {
+            case 1:
+                break;
+            case 2:
+                navigation.navigate('Persona');
+                break;
+            default:
+                    break;
             }
-        } catch (error) {
-            console.log(error);
-
-        }
-
+    
     }
-    async function obtenerTipoPrincipal(idTipoProducto) {
-        try {
-            const tipoPrincipal = await fetch('http://192.168.0.111:5000/api/productos/listarProductosDeCategorias?idTipoProducto=' + idTipoProducto);
-
-            const json = await tipoPrincipal.json();
-            if (!json) {
-                Alert.alert("Portales Restaurant", json.msj);
-            } else {
-                setRestaurants(json);
-                console.log(json);
-            }
-        } catch (error) {
-            console.log(error);
-
-        }
-
-    }
-    function prueba(id) {
-        if (id == 1) {
-            return "comida"
-        } else {
-            return "Bebida"
-        }
-    }
-    const [categories, setCategories] = React.useState([])
-    const [tipo, setTipo] = React.useState([])
     const [selectedCategory, setSelectedCategory] = React.useState(null)
     const [restaurants, setRestaurants] = React.useState([])
-
-    function onSelectCategory(category) {
-        if (category.idTipoProducto == 1 || category.idTipoProducto == 2) {
-            obtenerTipoPrincipal(category.idTipoProducto);
-            obtenerTipo(category.idTipoProducto);
-        } else {
-            obtenerProductos(category.idTipoProducto);
-            obtenerTipo(category.idTipoProducto);
-        }
-        setSelectedCategory(category)
-
-    }
-
-
+    
     function renderHeader() {
         return (
             <View style={{ flexDirection: 'row', height: 50 }}>
@@ -166,87 +129,18 @@ const MainCategorias = ({ navigation }) => {
             </View>
         )
     }
-
-    function renderMainGategories() {
-        const renderItem = ({ item }) => {
-            return (
-                <TouchableOpacity
-                    style={{
-                        padding: SIZE.padding,
-                        paddingBottom: SIZE.padding * 2,
-                        backgroundColor: (selectedCategory?.id == item.idTipoProducto) ? COLORS.primary : COLORS.white,
-                        borderRadius: SIZE.radius,
-                        alignItems: "center",
-                        justifyContent: "center",
-                        marginRight: SIZE.padding,
-                        ...Styles.shadow
-                    }}
-                    onPress={() => onSelectCategory(item)}
-                >
-
-
-                    <View
-                        style={{
-                            width: 50,
-                            height: 50,
-                            borderRadius: 25,
-                            alignItems: "center",
-                            justifyContent: "center",
-                            backgroundColor: (selectedCategory?.id == item.idTipoProducto) ?
-                                COLORS.white : COLORS.lightGray
-
-                        }}
-                    >
-                        <Image
-                            source={{ uri: item.imagen }}
-                            resizeMode="contain"
-                            style={{
-                                width: 30,
-                                height: 30
-                            }}
-                        />
-                    </View>
-
-
-                    <Text
-                        style={{
-                            marginTop: SIZE.padding,
-                            color: (selectedCategory?.id == item.idTipoProducto) ? COLORS.white : COLORS.black,
-                            ...Styles.body5
-                        }}
-                    >
-                        {item.nombre}
-                    </Text>
-                </TouchableOpacity>
-            )
-        }
-        return (
-            <View style={{ padding: SIZE.padding * 2 }}>
-                <Text style={{ ...Styles.h1 }}>Menú</Text>
-                <Text style={{ ...Styles.h1 }}>Categorias </Text>
-
-                <FlatList
-                    data={categories}
-                    horizontal
-                    showsHorizontalscrollIndicator={false}
-                    keyExtractor={item => `${item.idTipoProducto}`}
-                    renderItem={renderItem}
-                    contentContainerStyle={{ paddingVertical: SIZE.padding * 2 }}
-                />
-            </View>
-        )
-    }
     function renderRestaurantList() {
         const renderItem = ({ item }) => (
             <TouchableOpacity
                 style={{ marginBottom: SIZE.padding * 2 }}
-                onPress={() => navigation.navigate("ProductsDetails", {
-                    idProducto: item.idProducto,
-                    nombre: item.nombre,
-                    descripcion: item.descripcion,
+                onPress={() => navigation.navigate("CrudProducts", {
+                    IDPRODUCTO: item.idProducto,
+                    NOMBRE: item.nombre,
                     precio: item.precio,
-                    foto: item.imagen,
+                    LINKIMAGEN: item.imagen,
+                    DESCRIPCION: item.descripcion,
                 })}
+                
             >
                 {/* Image */}
                 <View
@@ -263,7 +157,6 @@ const MainCategorias = ({ navigation }) => {
                             borderRadius: SIZE.radius
                         }}
                     />
-
                     <View
                         style={{
                             position: 'absolute',
@@ -278,12 +171,12 @@ const MainCategorias = ({ navigation }) => {
                             ...Styles.shadow
                         }}
                     >
-                        <Text style={{ ...Styles.h4 }}>15-20 min</Text>
+                        <Text style={{ ...Styles.body2 }}>Código: {item.idProducto} </Text>
                     </View>
                 </View>
 
                 {/* Restaurant Info */}
-                <Text style={{ ...Styles.body2 }}>{item.nombre}</Text>
+                <Text style={{ ...Styles.h2}}>{item.nombre}</Text>
 
                 <View
                     style={{
@@ -299,40 +192,101 @@ const MainCategorias = ({ navigation }) => {
                             marginLeft: 10
                         }}
                     >
-
-
                         <View
                             style={{ flexDirection: 'row' }}
-
-                        >
-
-                            <Text style={{ ...Styles.body3 }}>{tipo.nombre}---</Text>
-                            <Text style={{ ...Styles.body3 }}>{prueba(tipo.idTipoPrincipal)}</Text>
-                            <Text style={{ ...Styles.h3, color: COLORS.darkgray }}>---</Text>
+                        >  
                         </View>
-
                         <Text
                             style={{ ...Styles.body3 }}
-                        >L{item.precio}</Text>
-
+                        >Precio: L {item.precio}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
         )
+        
         return (
-            <FlatList
-                data={restaurants}
-                keyExtractor={item => `${item.idProducto}`}
-                renderItem={renderItem}
-                contentContainerStyle={{
-                    paddingHorizontal: SIZE.padding * 2,
-                    paddingBottom: 30
-                }}
-            />
+            <View style={{ padding: SIZE.padding * 2 }}>
+                <FlatList
+                    data={restaurants}
+                    keyExtractor={item => `${item.idProducto}`}
+                    renderItem={renderItem}
+                    contentContainerStyle={{
+                        paddingHorizontal: SIZE.padding * 2,
+                        paddingBottom: 30
+                    }}
+                />
+            </View>
         )
     }
+    function renderMainGategories() {
+        const renderItem = ({ item }) => {
+            return (
+                <TouchableOpacity
+                    style={{
+                        padding: SIZE.padding,
+                        paddingBottom: SIZE.padding * 2,
+                        backgroundColor: (selectedCategory?.id == item.id) ? COLORS.primary : COLORS.white,
+                        borderRadius: SIZE.radius,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginRight: SIZE.padding,
+                        ...Styles.shadow
+                    }}
+                    onPress={()=> onSelectCategory(item)}
+                >
+                    
+                    
+                    <View
+                        style={{
+                            width: 50,
+                            height: 50,
+                            borderRadius: 25,
+                            alignItems: "center",
+                            justifyContent: "center",
+                            backgroundColor: (selectedCategory?.id == item.id) ?
+                                COLORS.white : COLORS.lightGray
+
+                        }}
+                    >
+                         <Image
+                            source={item.icon}
+                            resizeMode="contain"
+                            style={{
+                                width: 30,
+                                height: 30
+                            }}
+                        />
+                    </View>
 
 
+                    <Text
+                        style={{
+                            marginTop: SIZE.padding,
+                            color: (selectedCategory?.id == item.id) ? COLORS.white : COLORS.black,
+                            ...Styles.body5
+                        }}
+                    >
+                        {item.name}
+                    </Text>
+                </TouchableOpacity>
+            )
+        }
+        return (
+               <View style={{ padding: SIZE.padding * 2 }}>
+                <Text style={[Styles.text ,{...Styles.h1}]}>Producto </Text>
+                <Text></Text>
+
+                <FlatList
+                    data={navbar}
+                    horizontal
+                    showsHorizontalscrollIndicator={false}
+                    keyExtractor={item => `${item.id}`}
+                    renderItem={renderItem}
+                    contentContainerStyle={{ paddingVertical: SIZE.padding * 2 }}
+                />
+            </View>
+        )
+    }
     return (
         <SafeAreaView style={Styles.container}>
             <StatusBar
@@ -360,6 +314,9 @@ const Styles = StyleSheet.create({
         shadowRadius: 3,
         elevation: 1,
     },
+    text:{
+        textAlign:"center"
+    },
     largeTitle: { fontSize: SIZE.largeTitle, lineHeight: 55 },
     h1: { fontSize: SIZE.h1, lineHeight: 36 },
     h2: { fontSize: SIZE.h2, lineHeight: 30 },
@@ -370,7 +327,5 @@ const Styles = StyleSheet.create({
     body3: { fontSize: SIZE.body3, lineHeight: 22 },
     body4: { fontSize: SIZE.body4, lineHeight: 22 },
     body5: { fontSize: SIZE.body5, lineHeight: 22 },
-
 })
-
-export default MainCategorias;
+export default Producto;
