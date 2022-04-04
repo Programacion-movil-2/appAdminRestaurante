@@ -8,10 +8,12 @@ import {
     Image,
     FlatList,
     Alert,
-    StatusBar
+    StatusBar, 
+    ScrollView
 } from 'react-native';
+import { FAB } from 'react-native-elements';
 
-import { icons, images, SIZE, COLORS } from '../../constants'
+import { icons, images, SIZE, COLORS } from '../../constants';
 
 
 const Persona = ({ navigation }) => {
@@ -20,7 +22,7 @@ const Persona = ({ navigation }) => {
     }, [])
     async function obtenerPersonas() {
         try {
-            const respt = await fetch('http://172.20.10.4:5000/api/personas/listar');
+            const respt = await fetch('http://192.168.238.181:5000/api/personas/listar');
 
             const json = await respt.json();
             if (!json) {
@@ -84,6 +86,7 @@ const Persona = ({ navigation }) => {
                 navigation.navigate('Producto');
                 break;
             case 2:
+                navigation.navigate('Persona');
                 break;
             case 3:
                 navigation.navigate('Users');
@@ -300,7 +303,8 @@ const Persona = ({ navigation }) => {
             </TouchableOpacity>
         )
         return (
-            <View style={{ padding: SIZE.padding * 2 }}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={{ padding: SIZE.padding * 2 }}>
                 <FlatList
                     data={personas}
                     keyExtractor={item => `${item.idProducto}`}
@@ -311,6 +315,7 @@ const Persona = ({ navigation }) => {
                     }}
                 />
             </View>
+            </ScrollView>
         )
     }
     return (
@@ -318,9 +323,15 @@ const Persona = ({ navigation }) => {
             <StatusBar
                 hidden={false}
                 backgroundColor="#000000" />
-            {renderHeader()}
             {renderMainGategories()}
             {renderRestaurantList()}
+
+            <FAB style={Styles.fab}
+            title="+"
+                    color='#3871F3'
+                    onPress={() => navigation.navigate('CreatePerson')}
+            />
+
 
         </SafeAreaView>
     )
@@ -329,6 +340,10 @@ const Styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: COLORS.lightGray4
+    },
+    fab:{
+        paddingLeft: 300,
+        paddingBottom: 20,
     },
     shadow: {
         shadowColor: '#000',

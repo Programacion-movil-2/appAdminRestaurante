@@ -8,10 +8,12 @@ import {
     Image,
     FlatList,
     Alert,
-    StatusBar
+    StatusBar, ScrollView
 } from 'react-native';
 
-import { icons, images, SIZE, COLORS } from '../../constants'
+import { icons, images, SIZE, COLORS } from '../../constants';
+import { FAB } from 'react-native-elements';
+
 
 
 const Users = ({ navigation }) => {
@@ -20,7 +22,7 @@ const Users = ({ navigation }) => {
     }, [])
     async function obtenerUsers() {
         try {
-            const respt = await fetch('http://172.20.10.4:5000/api/usuarios/listar');
+            const respt = await fetch('http://192.168.238.181:5000/api/usuarios/listar');
 
             const json = await respt.json();
             if (!json) {
@@ -88,7 +90,8 @@ const Users = ({ navigation }) => {
                 navigation.navigate('Persona');
                 break;
             case 3:
-                 break;
+                navigation.navigate('Users');
+                break;
             default:
                 break;
             }
@@ -231,6 +234,7 @@ const Users = ({ navigation }) => {
             <TouchableOpacity
                 style={{ marginBottom: SIZE.padding * 2 }}
                 onPress={() => navigation.navigate("CrudUsers", {
+                    nombreUsuario: item.nombreUsuario
                 })}
             >
                 {/* Image */}
@@ -295,7 +299,8 @@ const Users = ({ navigation }) => {
             </TouchableOpacity>
         )
         return (
-            <View style={{ padding: SIZE.padding * 2 }}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={{ padding: SIZE.padding * 2 }}>
                 <FlatList
                     data={users}
                     keyExtractor={item => `${item.idUsuario}`}
@@ -306,6 +311,7 @@ const Users = ({ navigation }) => {
                     }}
                 />
             </View>
+            </ScrollView>
         )
     }
     return (
@@ -313,9 +319,14 @@ const Users = ({ navigation }) => {
             <StatusBar
                 hidden={false}
                 backgroundColor="#000000" />
-            {renderHeader()}
             {renderMainGategories()}
             {renderRestaurantList()}
+
+            <FAB style={Styles.fab}
+            title="+"
+                    color='#3871F3'
+                    onPress={() => navigation.navigate('SignUpScreen')}
+            />
 
         </SafeAreaView>
     )
@@ -324,6 +335,10 @@ const Styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: COLORS.lightGray4
+    },
+    fab:{
+        paddingLeft: 300,
+        paddingBottom: 20,
     },
     shadow: {
         shadowColor: '#000',

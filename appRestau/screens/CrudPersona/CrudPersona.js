@@ -28,7 +28,7 @@ const CreatePerson = ({ route, navigation }) => {
         }
         else {
             try {
-                const res = await fetch('http://192.168.100.8:5000/api/personas/modificar?identidad=' + IDENTIDAD, {
+                const res = await fetch('http://192.168.238.181:5000/api/personas/modificar?identidad=' + IDENTIDAD, {
 
                     method: 'PUT',
                     headers: {
@@ -61,7 +61,7 @@ const CreatePerson = ({ route, navigation }) => {
         }
         else {
             try {
-                const res = await fetch('http://192.168.100.8:5000/api/personas/eliminar?identidad=' + IDENTIDAD, {
+                const res = await fetch('http://192.168.238.181:5000/api/personas/eliminar?identidad=' + IDENTIDAD, {
 
                     method: 'DELETE',
                     headers: {
@@ -192,10 +192,11 @@ const CreatePerson = ({ route, navigation }) => {
                     text="Modificar"
                     onPress={onRegisterPressed}
                 />
-                <BotonEliminar
-                    style={styles.espacio}
-                    text="Eliminar"
+                <CustomButton
+                    text="Eliminar" 
                     onPress={eliminarPersona}
+                    bgColor="rgb(250, 233, 234)"
+                    fgColor="rgb(221, 77, 68)"
                 />
             </View>
         </ScrollView>

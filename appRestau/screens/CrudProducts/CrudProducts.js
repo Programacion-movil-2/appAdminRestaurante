@@ -48,7 +48,7 @@ const InsertProduct = ({ route, navigation }) => {
     } else {
       try {
         const res = await fetch(
-          "http://172.20.10.4:5000/api/productos/modificar?idProducto="+IDPRODUCTO,
+          "http://192.168.0.9:5000/api/productos/modificar?idProducto="+IDPRODUCTO,
           {
             method: "PUT",
             headers: {
@@ -82,7 +82,7 @@ const InsertProduct = ({ route, navigation }) => {
     else {
       try {
         const res = await fetch(
-          "http://192.168.0.8:5000/api/productos/eliminar?idProducto="+IDPRODUCTO,
+          "http://192.168.238.181:5000/api/productos/eliminar?idProducto="+IDPRODUCTO,
           {
             method: "PUT",
             headers: {
@@ -224,9 +224,11 @@ const InsertProduct = ({ route, navigation }) => {
             text="Modificar"
             onPress={ModificarProducto}
           />
-          <BotonEliminar
-            text="Eliminar"
+          <CustomButton
+            text="Eliminar" 
             onPress={EliminarProducto}
+            bgColor="rgb(250, 233, 234)"
+            fgColor="rgb(221, 77, 68)"
           />
         </View>
       </ScrollView>

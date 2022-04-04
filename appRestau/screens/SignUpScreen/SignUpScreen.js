@@ -67,7 +67,7 @@ const SignUpScreen = ({navigation}) => {
 
     const onSignInPressed = () =>{
 
-        navigation.navigate('SignIn')
+        navigation.navigate('SignInScreen')
 
     }
 
@@ -118,7 +118,7 @@ const SignUpScreen = ({navigation}) => {
                     onPress={onRegisterPressed} 
                 />
 
-                <Text style={styles.text1}>
+                {/* <Text style={styles.text1}>
                     By registering, you confirm that you accept our {' '} 
                     <Text style={styles.link}>Terms of Use</Text> and{' '}
                     <Text style={styles.link}>Privacy Policy.</Text>
@@ -139,7 +139,7 @@ const SignUpScreen = ({navigation}) => {
                     onPress={onSignInGoogle}
                     bgColor="rgb(250, 233, 234)"
                     fgColor="rgb(221, 77, 68)"
-                />
+                /> */}
 
                 <CustomButton2 
                     text="Have an account? Sign In" 

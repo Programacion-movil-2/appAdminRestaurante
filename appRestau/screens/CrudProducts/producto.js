@@ -23,7 +23,7 @@ const Producto = ({ navigation }) => {
 
     async function obtenerProductos() {
         try {
-            const respt = await fetch('http://172.20.10.4:5000/api/productos/listar');
+            const respt = await fetch('http://192.168.238.181:5000/api/productos/listar');
 
             const json = await respt.json();
             if (!json) {
@@ -64,6 +64,7 @@ const Producto = ({ navigation }) => {
 
         switch (category.id) {
             case 1:
+                navigation.navigate('Producto');
                 break;
             case 2:
                 navigation.navigate('Persona');
@@ -296,7 +297,6 @@ const Producto = ({ navigation }) => {
             <StatusBar
                 hidden={false}
                 backgroundColor="#000000" />
-            {renderHeader()}
             {renderMainGategories()}
             <ScrollView showsVerticalScrollIndicator={false} style={Styles.container}>
                 
@@ -306,7 +306,7 @@ const Producto = ({ navigation }) => {
             title="+"
                     color='#3871F3'
                     onPress={() => navigation.navigate('InsertProduct')}
-                />
+            />
 
         </SafeAreaView>
     )

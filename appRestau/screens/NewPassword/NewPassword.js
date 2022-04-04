@@ -23,7 +23,7 @@ const NewPassword = ({route, navigation}) => {
         else{
             
             try {
-                const respt = await fetch('http://192.168.0.3:5000/api/usuarios/modificarContrasena', {
+                const respt = await fetch('http://192.168.238.181:5000/api/usuarios/modificarContrasena', {
 
                     method: 'PUT',
                     headers: {
@@ -42,7 +42,7 @@ const NewPassword = ({route, navigation}) => {
                 console.log(json);
                 console.log(correo);
                 Alert.alert("Portales Restaurant", json.msj);
-                navigation.navigate('SignIn');
+                navigation.navigate('SignInScreen');
 
             } catch (error) {
                 console.log(error);
@@ -55,7 +55,7 @@ const NewPassword = ({route, navigation}) => {
 
     const onSignInPressed = () =>{
 
-        navigation.navigate('SignIn')
+        navigation.navigate('SignInScreen')
 
     }
 

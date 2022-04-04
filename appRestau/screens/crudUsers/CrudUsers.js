@@ -3,16 +3,41 @@ import { View, Text, Image, StyleSheet, ScrollView, Alert, TextInput } from 'rea
 import CustomButton from '../../elements/login/customButton';
 import CustomButton2 from '../../elements/login/customButton2';
 
-const CrudUsers = ({navigation}) => {
+const CrudUsers = ({route, navigation}) => {
+
+    const {nombreUsuario} = route.params;
     
     const onRegisterPressed = () =>{
         navigation.navigate('ForgotPwdScreen');
-       
     }
 
-    const onSignInGoogle = () =>{
+    const DeleteUser = async () =>{
 
-        console.warn('Login with Google')
+
+        if (!nombreUsuario) {
+            console.log("El nombre no se envió");
+            Alert.alert("Restaurante", "No existe el Nombre de Usuario");
+        }
+        else{
+            try {
+            
+                const res = await fetch('http://192.168.238.181:5000/api/usuarios/eliminar?nombreUsuario=' + nombreUsuario, {
+
+                    method: 'DELETE',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                })
+
+                const json = await res.json();
+                Alert.alert("Portales Restaurant", json.msj);
+
+            } catch (error) {
+                console.log(error);
+                Alert.alert("Portales Restaurant", "Error");
+            }
+        }
 
     }
 
@@ -22,7 +47,7 @@ const CrudUsers = ({navigation}) => {
 
             <View style={styles.root}>
 
-                <Text style={styles.title}>Create an Account</Text>
+                <Text style={styles.title}>Modificar Cuenta</Text>
 
                 <CustomButton
                     text="Modificar contraseña" 
@@ -31,7 +56,7 @@ const CrudUsers = ({navigation}) => {
                
                 <CustomButton
                     text="Eliminar" 
-                    onPress={onSignInGoogle}
+                    onPress={DeleteUser}
                     bgColor="rgb(250, 233, 234)"
                     fgColor="rgb(221, 77, 68)"
                 />

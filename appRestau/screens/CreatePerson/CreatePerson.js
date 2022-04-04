@@ -98,17 +98,6 @@ const CreatePerson = ({navigation}) => {
                     onPress={onRegisterPressed} 
                 />
 
-                <Text style={styles.text1}>
-                    By registering, you confirm that you accept our {' '} 
-                    <Text style={styles.link}>Terms of Use</Text> and{' '}
-                    <Text style={styles.link}>Privacy Policy.</Text>
-                </Text>
-
-                <CustomButton2 
-                    text="Create Account" 
-                    onPress={onCreateAPressed} 
-                />
-
             </View>
         </ScrollView>
         

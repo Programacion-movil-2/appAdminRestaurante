@@ -18,7 +18,7 @@ const SignInScreen = ({navigation}) => {
         }
         else{
             try {
-                const respt = await fetch('http://172.20.10.4:5000/api/autenticacion/iniciosesion', {
+                const respt = await fetch('http://192.168.238.181:5000/api/autenticacion/iniciosesion', {
 
                     method: 'POST',
                     headers: {
@@ -42,7 +42,7 @@ const SignInScreen = ({navigation}) => {
                     await AsyncStorage.setItem('token', token);
                     const usuario = json.data.usuario;
                     await AsyncStorage.setItem('UserName', usuario);
-                    navigation.navigate('MainCategories');
+                    navigation.navigate('Producto');
                     console.log(usuario);
                 }
                 
@@ -127,11 +127,6 @@ const SignInScreen = ({navigation}) => {
                 onPress={onSignInGoogle}
                 bgColor="rgb(250, 233, 234)"
                 fgColor="rgb(221, 77, 68)"
-            />
-
-            <CustomButton2 
-                text="Don't have an account? Create One" 
-                onPress={onSignUpPressed} 
             />
 
             </View>
