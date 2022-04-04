@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { View, Text, StyleSheet, ScrollView, Alert, TextInput } from 'react-native';
+import DropDown from 'react-native-dropdown-picker';
 import CustomButton from '../../elements/login/customButton';
 import CustomButton2 from '../../elements/login/customButton2';
 
@@ -9,7 +10,14 @@ const CreatePerson = ({navigation}) => {
     const [apellido, setApellido] = useState(null);
     const [telefono, setTelefono] = useState(null);
     const [direccion, setDireccion] = useState(null);
-
+    const [idCargo, setIdCargo] = useState(null);
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([
+        {label: 'Administrador', value: 1},
+        {label: 'Empleado', value: 2},
+        {label: 'Cliente', value: 3}
+    ]);
 
     const onRegisterPressed = async () =>{
 
@@ -19,7 +27,7 @@ const CreatePerson = ({navigation}) => {
         }
         else{
             try {
-                const res = await fetch('http://192.168.0.3:5000/api/personas/guardar', {
+                const res = await fetch('http://192.168.0.111:5000/api/personas/guardar', {
 
                     method: 'POST',
                     headers: {
@@ -31,10 +39,11 @@ const CreatePerson = ({navigation}) => {
                         nombre: nombre,
                         apellido: apellido,
                         telefono: telefono,
-                        direccion: direccion
+                        direccion: direccion,
+                        idCargo: idCargo
                     })
 
-                })
+                }) 
 
                 const json = await res.json();
                 Alert.alert("Portales Restaurant", json.msj);
@@ -91,6 +100,19 @@ const CreatePerson = ({navigation}) => {
                     placeholder="Dirección" 
                     value={direccion} 
                     onChangeText={setDireccion} 
+                />
+
+                <DropDown
+                    style={styles.input} 
+                    open={open}
+                    value={value}
+                    items={items}
+                    setOpen={setOpen}
+                    setValue={setValue}
+                    setItems={setItems}
+                    onSelectItem={(item) => {
+                       setIdCargo(item.value);
+                    }}
                 />
 
                 <CustomButton
