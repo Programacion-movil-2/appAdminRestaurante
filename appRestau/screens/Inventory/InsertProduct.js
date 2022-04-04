@@ -39,7 +39,7 @@ const InsertProduct = ({ navigation }) => {
   const obtenerTipos = async() => {
     try {
       const respt = await fetch(
-        "http://192.168.0.8:5000/api/tipoProductos/listarTipoNombre"
+        "http://172.20.10.4:5000/api/tipoProductos/listarTipoNombre"
       );
 
       const json = await respt.json();
