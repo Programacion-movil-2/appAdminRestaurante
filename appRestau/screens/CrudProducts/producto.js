@@ -68,6 +68,9 @@ const Producto = ({ navigation }) => {
             case 2:
                 navigation.navigate('Persona');
                 break;
+            case 3:
+                navigation.navigate('Users');
+                break;
             default:
                 break;
         }

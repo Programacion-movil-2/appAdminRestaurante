@@ -17,41 +17,67 @@ const CreatePerson = ({ route, navigation }) => {
     const [TELEFONO, setTELEFONO] = useState(telefono);
     const [DIRECCION, setDIRECCION] = useState(direccion);
 
+    
 
     const onRegisterPressed = async () => {
+        
 
-        if (!IDENTIDAD || !NOMBRE || !APELLIDO || !TELEFONO) {
+        if (!IDENTIDAD || !NOMBRE || !APELLIDO || !TELEFONO ) {
             console.log("Debe llenar todos los campos oblicatorios");
             Alert.alert("Restaurante", "Ingrese todos los campos");
         }
         else {
             try {
-                const res = await fetch('http://172.20.10.4:5000/api/personas/guardar', {
+                const res = await fetch('http://192.168.100.8:5000/api/personas/modificar?identidad=' + IDENTIDAD, {
 
-                    method: 'POST',
+                    method: 'PUT',
                     headers: {
                         Accept: 'application/json',
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        IDENTIDAD: IDENTIDAD,
-                        NOMBRE: NOMBRE,
-                        APELLIDO: APELLIDO,
-                        TELEFONO: TELEFONO,
-                        DIRECCION: DIRECCION
+                        nombre: NOMBRE,
+                        apellido: APELLIDO,
+                        telefono: TELEFONO,
+                        direccion: DIRECCION
                     })
 
                 })
 
                 const json = await res.json();
                 Alert.alert("Portales Restaurant", json.msj);
-                onCreateAPressed();
             } catch (error) {
                 console.log(error);
                 Alert.alert("Portales Restaurant", "Error");
             }
         }
 
+    }
+    
+    const eliminarPersona = async()=>{
+        if (!IDENTIDAD) {
+            console.log("Debe llenar todos los campos oblicatorios");
+            Alert.alert("Restaurante", "Ingrese todos los campos");
+        }
+        else {
+            try {
+                const res = await fetch('http://192.168.100.8:5000/api/personas/eliminar?identidad=' + IDENTIDAD, {
+
+                    method: 'DELETE',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                })
+
+                const json = await res.json();
+                Alert.alert("Portales Restaurant", json.msj);
+            } catch (error) {
+                console.log(error);
+                Alert.alert("Portales Restaurant", "Error");
+            }
+        }
+        
     }
     function renderHeader(){
         return(
@@ -118,12 +144,7 @@ const CreatePerson = ({ route, navigation }) => {
         )
     }
 
-    const onCreateAPressed = () => {
-
-        navigation.navigate('SignUp')
-
-    }
-
+  
     return (
        
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -132,7 +153,7 @@ const CreatePerson = ({ route, navigation }) => {
             {renderHeader()}
             <View style={styles.root}>
 
-                <Text style={styles.title}>Register</Text>
+                <Text style={styles.title}>Modificar</Text>
 
 
                 <TextInput
@@ -174,7 +195,7 @@ const CreatePerson = ({ route, navigation }) => {
                 <BotonEliminar
                     style={styles.espacio}
                     text="Eliminar"
-                    //onPress={}
+                    onPress={eliminarPersona}
                 />
             </View>
         </ScrollView>
