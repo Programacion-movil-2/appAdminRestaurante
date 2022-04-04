@@ -20,7 +20,7 @@ const Persona = ({ navigation }) => {
     }, [])
     async function obtenerPersonas() {
         try {
-            const respt = await fetch('http://192.168.1.39:5000/api/personas/listar');
+            const respt = await fetch('http://172.20.10.4:5000/api/personas/listar');
 
             const json = await respt.json();
             if (!json) {

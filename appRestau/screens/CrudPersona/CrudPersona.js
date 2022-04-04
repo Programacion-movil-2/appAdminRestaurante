@@ -26,7 +26,7 @@ const CreatePerson = ({ route, navigation }) => {
         }
         else {
             try {
-                const res = await fetch('http://192.168.1.39:5000/api/personas/guardar', {
+                const res = await fetch('http://172.20.10.4:5000/api/personas/guardar', {
 
                     method: 'POST',
                     headers: {

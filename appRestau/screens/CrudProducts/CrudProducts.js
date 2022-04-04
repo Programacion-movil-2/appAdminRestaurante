@@ -48,7 +48,7 @@ const InsertProduct = ({ route, navigation }) => {
     } else {
       try {
         const res = await fetch(
-          "http://192.168.0.8:5000/api/productos/modificar?idProducto="+IDPRODUCTO,
+          "http://172.20.10.4:5000/api/productos/modificar?idProducto="+IDPRODUCTO,
           {
             method: "PUT",
             headers: {

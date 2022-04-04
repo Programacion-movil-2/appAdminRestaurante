@@ -66,7 +66,7 @@ const InsertProduct = ({ navigation }) => {
     } else {
       try {
         const res = await fetch(
-          "http://192.168.0.8:5000/api/productos/guardar",
+          "http://172.20.10.4:5000/api/productos/guardar",
           {
             method: "POST",
             headers: {
