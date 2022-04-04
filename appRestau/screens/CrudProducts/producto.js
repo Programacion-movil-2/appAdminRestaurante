@@ -8,21 +8,22 @@ import {
     Image,
     FlatList,
     Alert,
-    StatusBar
+    StatusBar,
+    ScrollView
 } from 'react-native';
 
 import { icons, images, SIZE, COLORS } from '../../constants';
+import { FAB } from 'react-native-elements';
 
-
-const Producto = ({navigation}) => {
+const Producto = ({ navigation }) => {
     useEffect(() => {
         obtenerProductos();
-      
+
     }, [])
-    
+
     async function obtenerProductos() {
         try {
-            const respt = await fetch('http://192.168.1.39:5000/api/productos/listar');
+            const respt = await fetch('http://172.20.10.4:5000/api/productos/listar');
 
             const json = await respt.json();
             if (!json) {
@@ -35,32 +36,32 @@ const Producto = ({navigation}) => {
             console.log(error);
         }
     }
-    const navbar =[
+    const navbar = [
         {
             id: 1,
-            name:"Productos",
+            name: "Productos",
             icon: icons.burger
         },
         {
             id: 2,
-            name:"Personas",
+            name: "Personas",
             icon: icons.user
         },
         {
             id: 3,
-            name:"Usuarios",
+            name: "Usuarios",
             icon: icons.user
         },
-        
+
         {
             id: 4,
-            name:"Pedidos",
+            name: "Pedidos",
             icon: icons.list
         },
-        ]
-        
-    const onSelectCategory = (category) =>{
-        
+    ]
+
+    const onSelectCategory = (category) => {
+
         switch (category.id) {
             case 1:
                 break;
@@ -68,13 +69,13 @@ const Producto = ({navigation}) => {
                 navigation.navigate('Persona');
                 break;
             default:
-                    break;
-            }
-    
+                break;
+        }
+
     }
     const [selectedCategory, setSelectedCategory] = React.useState(null)
     const [restaurants, setRestaurants] = React.useState([])
-    
+
     function renderHeader() {
         return (
             <View style={{ flexDirection: 'row', height: 50 }}>
@@ -84,7 +85,7 @@ const Producto = ({navigation}) => {
                         paddingLeft: SIZE.padding * 2,
                         justifyContent: 'center'
                     }}
-                    onPress={() => navigation.navigate('Inventory')}
+                //onPress={() => navigation.navigate('UserProfile')}
                 >
                     <Image
                         source={icons.user}
@@ -131,6 +132,7 @@ const Producto = ({navigation}) => {
     }
     function renderRestaurantList() {
         const renderItem = ({ item }) => (
+
             <TouchableOpacity
                 style={{ marginBottom: SIZE.padding * 2 }}
                 onPress={() => navigation.navigate("CrudProducts", {
@@ -140,7 +142,7 @@ const Producto = ({navigation}) => {
                     LINKIMAGEN: item.imagen,
                     DESCRIPCION: item.descripcion,
                 })}
-                
+
             >
                 {/* Image */}
                 <View
@@ -176,7 +178,7 @@ const Producto = ({navigation}) => {
                 </View>
 
                 {/* Restaurant Info */}
-                <Text style={{ ...Styles.h2}}>{item.nombre}</Text>
+                <Text style={{ ...Styles.h2 }}>{item.nombre}</Text>
 
                 <View
                     style={{
@@ -194,7 +196,7 @@ const Producto = ({navigation}) => {
                     >
                         <View
                             style={{ flexDirection: 'row' }}
-                        >  
+                        >
                         </View>
                         <Text
                             style={{ ...Styles.body3 }}
@@ -203,7 +205,7 @@ const Producto = ({navigation}) => {
                 </View>
             </TouchableOpacity>
         )
-        
+
         return (
             <View style={{ padding: SIZE.padding * 2 }}>
                 <FlatList
@@ -232,10 +234,10 @@ const Producto = ({navigation}) => {
                         marginRight: SIZE.padding,
                         ...Styles.shadow
                     }}
-                    onPress={()=> onSelectCategory(item)}
+                    onPress={() => onSelectCategory(item)}
                 >
-                    
-                    
+
+
                     <View
                         style={{
                             width: 50,
@@ -248,7 +250,7 @@ const Producto = ({navigation}) => {
 
                         }}
                     >
-                         <Image
+                        <Image
                             source={item.icon}
                             resizeMode="contain"
                             style={{
@@ -269,13 +271,12 @@ const Producto = ({navigation}) => {
                         {item.name}
                     </Text>
                 </TouchableOpacity>
+
             )
         }
         return (
-               <View style={{ padding: SIZE.padding * 2 }}>
-                <Text style={[Styles.text ,{...Styles.h1}]}>Producto </Text>
-                <Text></Text>
-
+            <View style={{ padding: SIZE.padding * 2 }}>
+                <Text style={[Styles.text, { ...Styles.h1 }]}>Producto </Text>
                 <FlatList
                     data={navbar}
                     horizontal
@@ -294,7 +295,15 @@ const Producto = ({navigation}) => {
                 backgroundColor="#000000" />
             {renderHeader()}
             {renderMainGategories()}
-            {renderRestaurantList()}
+            <ScrollView showsVerticalScrollIndicator={false} style={Styles.container}>
+                
+                {renderRestaurantList()}
+            </ScrollView>
+            <FAB style={Styles.fab}
+            title="+"
+                    color='#3871F3'
+                    onPress={() => navigation.navigate('InsertProduct')}
+                />
 
         </SafeAreaView>
     )
@@ -303,6 +312,10 @@ const Styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: COLORS.lightGray4
+    },
+    fab:{
+        paddingLeft: 300,
+        paddingBottom: 20,
     },
     shadow: {
         shadowColor: '#000',
@@ -314,8 +327,8 @@ const Styles = StyleSheet.create({
         shadowRadius: 3,
         elevation: 1,
     },
-    text:{
-        textAlign:"center"
+    text: {
+        textAlign: "center"
     },
     largeTitle: { fontSize: SIZE.largeTitle, lineHeight: 55 },
     h1: { fontSize: SIZE.h1, lineHeight: 36 },

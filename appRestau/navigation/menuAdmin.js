@@ -6,23 +6,23 @@ import Producto from "../screens/CrudProducts/producto";
 import CrudProducts from "../screens/CrudProducts/CrudProducts";
 import Persona from "../screens/CrudPersona/persona"
 import CrudPersona from "../screens/CrudPersona/CrudPersona"
+import InsertProduct from "../screens/Inventory/InsertProduct";
 
 const Stack = createNativeStackNavigator();
 
-export default function LNavigation(){
-    return(
+export default function LNavigation() {
+    return (
         <NavigationContainer>
             <Stack.Navigator
                 screenOptions={{
                     headerShown: false,
                 }}
-            > 
+            >
                 <Stack.Screen name="Producto" component={Producto} />
                 <Stack.Screen name="CrudProducts" component={CrudProducts} />
                 <Stack.Screen name="Persona" component={Persona} />
                 <Stack.Screen name="CrudPersona" component={CrudPersona} />
-                
-               
+                <Stack.Screen name="InsertProduct" component={InsertProduct} />
 
             </Stack.Navigator>
 
