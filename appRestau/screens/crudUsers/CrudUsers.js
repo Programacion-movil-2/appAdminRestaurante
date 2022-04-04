@@ -4,70 +4,15 @@ import CustomButton from '../../elements/login/customButton';
 import CustomButton2 from '../../elements/login/customButton2';
 
 const CrudUsers = ({navigation}) => {
-    const [identidad, setIdentidad] = useState('');
-    const [nombreUsuario, setNombreUsuario] = useState('');
-    const [correo, setCorreo] = useState('');
-    const [contrasena, setContrasena] = useState('');
-    const [passwordConfirm, setPasswordConfirm] = useState('');
     
-
-    const onRegisterPressed = async () =>{
-
-        if(!identidad || !nombreUsuario || !correo || !contrasena || !passwordConfirm){
-            console.log("Debe llenar todos los campos obligatorios");
-            Alert.alert("Portales Restaurant", "Ingrese todos los campos");
-        }
-        else if (contrasena != passwordConfirm) {
-            
-            console.log("Las contraseñas no coinciden");
-            Alert.alert("Portales Restaurant", "Las contraseñas no coinciden");
-            
-        }
-        else{
-            try {
-                const res = await fetch('http://192.168.1.39:5000/api/usuarios/guardar', {
-
-                    method: 'POST',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        identidad: identidad,
-                        nombreUsuario: nombreUsuario,
-                        correo: correo,
-                        contrasena: contrasena,
-                    })
-
-                })
-                
-                const json = await res.json();
-                console.log(json);
-                Alert.alert("Portales Restaurant", json.msj);
-                onSignInPressed();               
-
-            } catch (error) {
-                console.log(error);
-                Alert.alert("Portales Restaurant", "Error");
-            }
-        }
-    }
-
-    const onSignInFaceboock = () =>{
-
-        console.warn('Login with Facebook')
-
+    const onRegisterPressed = () =>{
+        navigation.navigate('ForgotPwdScreen');
+       
     }
 
     const onSignInGoogle = () =>{
 
         console.warn('Login with Google')
-
-    }
-
-    const onSignInPressed = () =>{
-
-        navigation.navigate('SignIn')
 
     }
 
@@ -79,71 +24,16 @@ const CrudUsers = ({navigation}) => {
 
                 <Text style={styles.title}>Create an Account</Text>
 
-
-                <TextInput 
-                    style={styles.input}
-                    placeholder="Identidad" 
-                    value={identidad} 
-                    onChangeText={setIdentidad} 
-                />
-                <TextInput 
-                    style={styles.input}
-                    placeholder="Usuario" 
-                    value={nombreUsuario} 
-                    onChangeText={setNombreUsuario} 
-                />
-                <TextInput 
-                    style={styles.input}
-                    placeholder="Email" 
-                    value={correo} 
-                    onChangeText={setCorreo} 
-                />
-                <TextInput 
-                    style={styles.input}
-                    placeholder="Password" 
-                    value={contrasena} 
-                    onChangeText={setContrasena}
-                    secureTextEntry={true} 
-                />
-                <TextInput 
-                    style={styles.input}
-                    placeholder="Confirm Password" 
-                    value={passwordConfirm} 
-                    onChangeText={setPasswordConfirm}
-                    secureTextEntry={true} 
-                />
-
                 <CustomButton
-                    text="Register" 
+                    text="Modificar contraseña" 
                     onPress={onRegisterPressed} 
                 />
-
-                <Text style={styles.text1}>
-                    By registering, you confirm that you accept our {' '} 
-                    <Text style={styles.link}>Terms of Use</Text> and{' '}
-                    <Text style={styles.link}>Privacy Policy.</Text>
-                </Text>
-
-                <Text style={styles.text}>
-                    -- Or Sign with --
-                </Text>
-
+               
                 <CustomButton
-                    text="Facebook" 
-                    onPress={onSignInFaceboock}
-                    bgColor="#E7EAF4"
-                    fgColor="#4765A9"
-                />
-                <CustomButton
-                    text="Google" 
+                    text="Eliminar" 
                     onPress={onSignInGoogle}
                     bgColor="rgb(250, 233, 234)"
                     fgColor="rgb(221, 77, 68)"
-                />
-
-                <CustomButton2 
-                    text="Have an account? Sign In" 
-                    onPress={onSignInPressed} 
                 />
 
             </View>

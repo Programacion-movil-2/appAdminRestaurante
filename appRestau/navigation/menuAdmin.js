@@ -8,6 +8,9 @@ import Persona from "../screens/CrudPersona/persona"
 import CrudPersona from "../screens/CrudPersona/CrudPersona"
 import InsertProduct from "../screens/Inventory/InsertProduct";
 import Users from "../screens/crudUsers/users";
+import ForgotPwdScreen from "../screens/ForgotPwdScreen/ForgotPwdScreen";
+import NewPassword from "../screens/NewPassword/NewPassword";
+import SignInScreen from "../screens/SignInScreen/SignInScreen";
 import CrudUsers from "../screens/crudUsers/CrudUsers"
 
 const Stack = createNativeStackNavigator();
@@ -27,10 +30,9 @@ export default function LNavigation() {
                 <Stack.Screen name="InsertProduct" component={InsertProduct} />
                 <Stack.Screen name="Users" component={Users} />
                 <Stack.Screen name="CrudUsers" component={CrudUsers} />
-
-                
-               
-
+                <Stack.Screen name="ForgotPwdScreen" component={ForgotPwdScreen} />
+                <Stack.Screen name="NewPassword" component={NewPassword} />   
+            
             </Stack.Navigator>
 
         </NavigationContainer>

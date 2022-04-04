@@ -20,7 +20,7 @@ const Users = ({ navigation }) => {
     }, [])
     async function obtenerUsers() {
         try {
-            const respt = await fetch('http://192.168.100.8:5000/api/usuarios/listar');
+            const respt = await fetch('http://172.20.10.4:5000/api/usuarios/listar');
 
             const json = await respt.json();
             if (!json) {
